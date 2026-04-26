@@ -10,18 +10,16 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] != "user") {
 $user_id = $_SESSION['user_id'];
 $user = $conn->query("SELECT * FROM users WHERE id='$user_id'")->fetch_assoc();
 
-/* MARK AS READ */
 if (isset($_GET['read'])) {
     $id = $_GET['read'];
-    $conn->query("UPDATE notifications SET status='read' WHERE id='$id'");
+    $conn->query("UPDATE notifications SET status='read' WHERE id='$id' AND user_id='$user_id'");
     header("Location: user_notifications.php");
     exit();
 }
 
-/* GET NOTIFICATIONS */
 $notifications = $conn->query("
     SELECT * FROM notifications
-    WHERE user_id='$user_id' OR role_target='user'
+    WHERE user_id='$user_id'
     ORDER BY created_at DESC
 ");
 ?>
@@ -56,28 +54,40 @@ $notifications = $conn->query("
 
 <table>
 <tr>
+    <th>Type</th>
     <th>Title</th>
     <th>Message</th>
-    <th>Type</th>
     <th>Status</th>
     <th>Date</th>
     <th>Action</th>
 </tr>
 
 <?php while($n = $notifications->fetch_assoc()): ?>
-<tr style="<?php echo $n['status']=='unread' ? 'background:#eef;' : ''; ?>">
+<tr style="<?php echo ($n['status']=='unread') ? 'background:#eef8fc;' : ''; ?>">
+    <td>
+        <?php
+        if($n['type'] == "payment"){
+            echo "Payment";
+        } elseif($n['type'] == "bill"){
+            echo "Bill";
+        } elseif($n['type'] == "complaint"){
+            echo "Complaint";
+        } else {
+            echo "Notice";
+        }
+        ?>
+    </td>
     <td><?php echo $n['title']; ?></td>
     <td><?php echo $n['message']; ?></td>
-    <td><?php echo $n['type']; ?></td>
-    <td><?php echo $n['status']; ?></td>
+    <td><?php echo strtoupper($n['status']); ?></td>
     <td><?php echo $n['created_at']; ?></td>
     <td>
         <?php if($n['status'] == "unread"): ?>
             <a href="?read=<?php echo $n['id']; ?>">
-                <button>Mark as Read</button>
+                <button type="button">Mark as Read</button>
             </a>
         <?php else: ?>
-            ✔
+            Done
         <?php endif; ?>
     </td>
 </tr>
