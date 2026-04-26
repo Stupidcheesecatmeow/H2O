@@ -1,0 +1,68 @@
+/* SECTION */
+.notif-section{
+    margin-bottom:30px;
+}
+
+.notif-title{
+    font-size:20px;
+    margin-bottom:10px;
+    font-weight:bold;
+}
+
+/* BOX */
+.notif-box{
+    background:#fff;
+    padding:15px;
+    border-radius:10px;
+    margin-bottom:10px;
+    box-shadow:0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* UNREAD HIGHLIGHT */
+.notif-box.unread{
+    border-left:5px solid #2ca7d8;
+    background:#eef8fc;
+}
+
+/* HEADER */
+.notif-header{
+    display:flex;
+    justify-content:space-between;
+    font-weight:bold;
+    font-size:14px;
+}
+
+/* MESSAGE */
+.notif-msg{
+    margin:8px 0;
+    font-size:14px;
+}
+
+/* FOOTER */
+.notif-footer{
+    font-size:12px;
+    color:#666;
+}
+
+/* BUTTON */
+.notif-action button{
+    margin-top:5px;
+    padding:8px 12px;
+    border:none;
+    border-radius:20px;
+    background:#2ca7d8;
+    color:white;
+    cursor:pointer;
+}
+
+.notif-action button:hover{
+    background:#1e88c7;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+    .notif-header{
+        flex-direction:column;
+        gap:5px;
+    }
+}
