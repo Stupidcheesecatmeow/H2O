@@ -40,7 +40,31 @@ if (isset($_GET['reject'])) {
 
     if ($payment) {
         $conn->query("UPDATE payments SET status='rejected', verified_by='$accountant_id' WHERE id='$payment_id'");
+
+        $conn->query("
+            INSERT INTO notifications (user_id, role_target, title, message, type, status)
+            VALUES (
+            '{$payment['user_id']}',
+            'user',
+            'Payment Verified',
+            'Your payment has been verified. Receipt is now available.',
+            'payment',
+            'unread'
+            )
+        ");
         $conn->query("UPDATE invoices SET status='unpaid' WHERE id='{$payment['invoice_id']}'");
+
+        $conn->query("
+            INSERT INTO notifications (user_id, role_target, title, message, type, status)
+            VALUES (
+            '{$payment['user_id']}',
+            'user',
+            'Payment Rejected',
+            'Your payment was rejected. Please review and submit again.',
+            'payment',
+            'unread'
+            )
+        ");
 
         echo "<script>alert('Payment rejected'); window.location='payments.php';</script>";
         exit();
