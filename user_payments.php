@@ -28,7 +28,7 @@ if(isset($_POST['pay'])){
 
     $conn->query("UPDATE invoices SET status='pending_verification' WHERE id='$invoice_id'");
 
-    echo "<script>alert('Payment submitted!'); window.location='payment.php';</script>";
+    echo "<script>alert('Payment submitted!'); window.location='user_payments.php';</script>";
     exit();
 }
 
@@ -83,7 +83,7 @@ LIMIT 1
 
 </select>
 
-<input type="number" name="amount" id="amountInput" placeholder="Amount" required>
+<input type="number" step="0.01" name="amount" id="amountInput" placeholder="Amount" required>
 
 <select name="payment_method" required>
 <option value="">Select MOP</option>
