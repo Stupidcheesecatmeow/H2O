@@ -31,6 +31,8 @@ ORDER BY i.created_at DESC
             <li><a href="user_payments.php">Payment</a></li>
             <li><a href="user_history.php">History</a></li>
             <li><a href="user_complaints.php">Complaints</a></li>
+            <li><a href="profile.php">Profile</a></li>
+            <li><a href="logout.php">Logout</a></li>
         </ul>
     </div>
 
