@@ -28,7 +28,7 @@ ORDER BY i.created_at DESC
         <ul>
             <li><a href="user_dashboard.php">Dashboard</a></li>
             <li><a href="billing.php">Billing</a></li>
-            <li><a href="payment.php">Payment</a></li>
+            <li><a href="user_payments.php">Payment</a></li>
             <li><a href="history.php">History</a></li>
             <li><a href="complaints.php">Complaints</a></li>
         </ul>

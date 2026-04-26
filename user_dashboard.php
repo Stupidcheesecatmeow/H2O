@@ -173,8 +173,8 @@ $account_status = ($overdue_count > 0) ? "Overdue" : $user['status'];
     <ul>
         
     <li><a href="user_dashboard.php">Dashboard</a></li>
-    <li><a href="billing.php">Billing</a></li>
-    <li><a href="payment.php">Payment</a></li>
+    <li><a href="user_billing.php">Billing</a></li>
+    <li><a href="user_payments.php">Payment</a></li>
     <li><a href="history.php">History</a></li>
     <li><a href="complaints.php">Complaints</a></li>
     <li><a href="profile.php">Profile</a></li>
