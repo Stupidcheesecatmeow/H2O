@@ -138,7 +138,7 @@ while($row = $usage_query->fetch_assoc()){
                 </div>
 
                 <div class="card">
-                    Profile Updates<br>
+                    Notifications<br>
                     <strong><?php echo $profile_update_count; ?></strong><br>
                     <a href="admin_notifications.php">View updates</a>
                 </div>
@@ -158,31 +158,6 @@ while($row = $usage_query->fetch_assoc()){
             </div>
 
             <div class="tables">
-
-                <div class="table-box">
-                    <h2>New Complaints</h2>
-
-                    <?php if($latest_complaints->num_rows > 0): ?>
-                    <table>
-                        <tr>
-                            <th>Customer</th>
-                            <th>Concern</th>
-                            <th>Date</th>
-                        </tr>
-
-                        <?php while($c = $latest_complaints->fetch_assoc()): ?>
-                        <tr>
-                            <td><?php echo $c['first_name']." ".$c['last_name']; ?></td>
-                            <td><?php echo $c['complaint_type'] ?? $c['subject']; ?></td>
-                            <td><?php echo $c['created_at']; ?></td>
-                        </tr>
-                        <?php endwhile; ?>
-                    </table>
-                    <?php else: ?>
-                    <p>No new complaints.</p>
-                    <?php endif; ?>
-
-                </div>
 
                 <div class="table-box">
                     <h2>Recent Announcements</h2>
