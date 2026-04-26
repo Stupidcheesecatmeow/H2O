@@ -55,6 +55,24 @@ body{
     padding-right:5px;
 }
 
+<<<<<<< HEAD
+=======
+/* LOGIN LINKS */
+.login-links{
+    margin-top:5px;
+    font-size:14px;
+}
+
+.login-links a{
+    color:#2ca7d8;
+    text-decoration:none;
+}
+
+.login-links a:hover{
+    text-decoration:underline;
+}
+
+>>>>>>> be3ddca4134d56b51216987ef9432112f9f42a32
 /* GROUP ROW */
 .form-row{
     display:grid;
