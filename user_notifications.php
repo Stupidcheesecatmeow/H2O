@@ -13,22 +13,28 @@ $user = $conn->query("SELECT * FROM users WHERE id='$user_id'")->fetch_assoc();
 if (isset($_GET['read'])) {
     $id = $_GET['read'];
 
-    $n = $conn->query("
-        SELECT link 
-        FROM notifications 
-        WHERE id='$id' AND user_id='$user_id'
-    ")->fetch_assoc();
+    $result = $conn->query("
+    SELECT link 
+    FROM notifications 
+    WHERE id='$id' AND user_id='$user_id'
+");
+
+if ($result && $result->num_rows > 0) {
+    $n = $result->fetch_assoc();
+} else {
+    $n = null;
+}
 
     $conn->query("
-        UPDATE notifications 
-        SET status='read' 
-        WHERE id='$id' AND user_id='$user_id'
-    ");
+    UPDATE notifications 
+    SET status='read' 
+    WHERE id='$id' AND user_id='$user_id'
+");
 
-    if (!empty($n['link'])) {
-        header("Location: " . $n['link']);
-        exit();
-    }
+if ($n && !empty($n['link'])) {
+    header("Location: " . $n['link']);
+    exit();
+}
 
     header("Location: user_notifications.php");
     exit();
@@ -40,12 +46,20 @@ $system_notifications = $conn->query("
     ORDER BY created_at DESC
 ");
 
+if (!$system_notifications) {
+    die("Error in notifications query: " . $conn->error);
+}
+
 $announcements = $conn->query("
     SELECT * FROM announcements
     WHERE target_type='everyone'
     OR (target_type='barangay' AND barangay='{$user['barangay']}')
     ORDER BY created_at DESC
 ");
+
+if (!$announcements) {
+    die("Error in announcements query: " . $conn->error);
+}
 ?>
 
 <!DOCTYPE html>
