@@ -13,8 +13,13 @@ $user = $conn->query("SELECT * FROM users WHERE id='$user_id'")->fetch_assoc();
 /* SUBMIT COMPLAINT */
 if (isset($_POST['submit_complaint'])) {
 
-    $type = $_POST['complaint_type'];
-    $desc = $_POST['description'];
+    $type = $_POST['complaint_type'] ?? '';
+    $desc = $_POST['description'] ?? '';
+
+    if ($type == "" || $desc == "") {
+        echo "<script>alert('Please complete the complaint form'); window.location='user_complaints.php';</script>";
+        exit();
+    }
 
     $stmt = $conn->prepare("INSERT INTO complaints 
     (user_id, complaint_type, description, status)
@@ -23,7 +28,6 @@ if (isset($_POST['submit_complaint'])) {
     $stmt->bind_param("iss", $user_id, $type, $desc);
     $stmt->execute();
 
-    /* NOTIFY ADMIN */
     $conn->query("
         INSERT INTO notifications (user_id, role_target, title, message, type, status)
         VALUES ('$user_id','admin','New Complaint','A user submitted a complaint.','complaint','unread')
@@ -69,9 +73,8 @@ $complaints = $conn->query("
 
 <h1>Complaints</h1>
 
-<!-- FORM -->
 <div class="table-box">
-<form method="POST">
+<form method="POST" action="user_complaints.php">
 
     <label>Complaint Type</label>
     <select name="complaint_type" required>
@@ -86,12 +89,11 @@ $complaints = $conn->query("
     <label>Description</label>
     <textarea name="description" placeholder="Describe your concern..." required></textarea>
 
-    <button name="submit_complaint">Submit Complaint</button>
+    <button type="submit" name="submit_complaint">Submit Complaint</button>
 
 </form>
 </div>
 
-<!-- LIST -->
 <h2>Your Complaints</h2>
 
 <table>
@@ -104,10 +106,10 @@ $complaints = $conn->query("
 
 <?php while($c = $complaints->fetch_assoc()): ?>
 <tr>
-    <td><?php echo $c['complaint_type']; ?></td>
-    <td><?php echo $c['description']; ?></td>
-    <td><?php echo $c['reply'] ?: "No reply yet"; ?></td>
-    <td><?php echo $c['status']; ?></td>
+    <td><?php echo $c['complaint_type'] ?? $c['subject'] ?? "N/A"; ?></td>
+    <td><?php echo $c['description'] ?? $c['message'] ?? "N/A"; ?></td>
+    <td><?php echo $c['reply'] ?? "No reply yet"; ?></td>
+    <td><?php echo $c['status'] ?? "open"; ?></td>
 </tr>
 <?php endwhile; ?>
 
