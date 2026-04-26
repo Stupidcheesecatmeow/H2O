@@ -25,8 +25,10 @@
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" placeholder="Enter your password" required>
 
-                    
-                <p>Don't have an account? <a href="register.php">Sign up</a></p>
+                <div class="login-links">
+                    <a href="forgot_password.php">Forgot Password?</a>
+                    <p>Don't have an account? <a href="register.php">Sign up</a></p>
+                </div>
 
                 <div class="tnc">
                     <input type="checkbox" id="tnc" name="tnc" disabled>
