@@ -1,64 +1,69 @@
 const modal = document.getElementById("termsMod");
-const openBtn = document.getElementById("openTerms");
+const openTerms = document.getElementById("openTerms");
 const closeBtn = document.querySelector(".close");
+
+const nextPageBtn = document.getElementById("nextPageBtn");
 const acceptBtn = document.getElementById("aksipT");
-const checkbox = document.getElementById("tnc");
+
 const loginBtn = document.getElementById("lgnBtn");
-const termsText = document.getElementById("termT");
-const scrollMsg = document.getElementById("scrllMsg");
+const checkbox = document.getElementById("tnc");
 
+const page1 = document.getElementById("page1");
+const page2 = document.getElementById("page2");
 
-openBtn.onclick = function(e){
-  e.preventDefault();
-  modal.style.display = "block";
-}
+/* open modal */
+openTerms.addEventListener("click", (e) => {
+    e.preventDefault();
+    modal.style.display = "block";
 
-closeBtn.onclick = function(){
-  modal.style.display = "none";
-}
+    page1.style.display = "block";
+    page2.style.display = "none";
 
-window.onclick = function(e){
-  if(e.target == modal){
+    acceptBtn.disabled = true;
+});
+
+/* close modal */
+closeBtn.addEventListener("click", () => {
     modal.style.display = "none";
-  }
-}
-
-termsText.addEventListener("scroll", function(){
-  const atBottom = termsText.scrollTop + termsText.clientHeight >= termsText.scrollHeight - 5;
-
-  if(atBottom){
-    acceptBtn.disabled = false;
-    scrollMsg.style.display = "none";
-  }
 });
 
-acceptBtn.onclick = function(){
-  checkbox.disabled = false;
-  checkbox.checked = true;
-  modal.style.display = "none";
-  loginBtn.disabled = false;
-}
+/* next page */
+nextPageBtn.addEventListener("click", () => {
+    page1.style.display = "none";
+    page2.style.display = "block";
 
-checkbox.addEventListener("change", function(){
-  loginBtn.disabled = !this.checked;
+    acceptBtn.disabled = false; 
 });
 
-document.addEventListener("DOMContentLoaded", function(){
+/* aksip */
+acceptBtn.addEventListener("click", () => {
 
-// ===== SIDEBAR TOGGLE =====
-const toggleBtn = document.getElementById("toggleBtn");
-const sidebar = document.getElementById("sidebar");
+    checkbox.disabled = false;
+    checkbox.checked = true;
 
-if(toggleBtn && sidebar){
-    toggleBtn.addEventListener("click", function(){
+    loginBtn.disabled = false;
 
-        // desktop toggle
-        sidebar.classList.toggle("collapsed");
+    modal.style.display = "none";
+});
 
-        // mobile toggle
-        sidebar.classList.toggle("active");
+/* close */
+window.addEventListener("click", (e) => {
+    if (e.target === modal) {
+        modal.style.display = "none";
+    }
+});
 
-    });
-}
-
+/* forgot pass */
+document.addEventListener("DOMContentLoaded", () => {
+    const forgotLink = document.querySelector(".login-links a"); 
+    
+    if (forgotLink) {
+        forgotLink.addEventListener("click", function(e) {
+            e.preventDefault();
+            const target = this.href;
+            document.body.style.transition = "opacity 0.25s ease";
+            document.body.style.opacity = "0";
+            setTimeout(() => { window.location.href = target; }, 250);
+        });
+    }
 });
