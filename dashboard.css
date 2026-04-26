@@ -1,0 +1,106 @@
+.cards{
+    display:flex;
+    gap:20px;
+    margin-bottom:20px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    flex:1;
+    box-shadow:0 2px 5px rgba(0,0,0,0.1);
+}
+
+textarea, input, select{
+    padding:10px;
+    margin:5px;
+    border-radius:8px;
+    border:1px solid #ccc;
+}
+
+@media (max-width: 768px){
+
+    .layout{
+        display:block;
+    }
+
+    .sidebar{
+        position:relative;
+        width:100%;
+        height:auto;
+        padding:10px;
+    }
+
+    .sidebar.collapsed{
+        width:100%;
+    }
+
+    .sidebar .profile{
+        display:block;
+    }
+
+    .sidebar.collapsed .text{
+        display:inline;
+    }
+
+    .sidebar ul{
+        display:flex;
+        overflow-x:auto;
+        gap:10px;
+        padding-bottom:8px;
+    }
+
+    .sidebar li{
+        white-space:nowrap;
+        min-width:max-content;
+    }
+
+    .main{
+        margin-left:0;
+        padding:12px;
+    }
+
+    .cards,
+    .top,
+    .tables{
+        flex-direction:column;
+        display:flex;
+    }
+
+    .card,
+    .box,
+    .table-box,
+    .big,
+    .small{
+        width:100%;
+        flex:none;
+    }
+
+    .right-cards{
+        flex-direction:column;
+    }
+
+    table{
+        display:block;
+        overflow-x:auto;
+        white-space:nowrap;
+    }
+
+    form{
+        display:flex;
+        flex-direction:column;
+        gap:8px;
+    }
+
+    input,
+    select,
+    textarea,
+    button{
+        width:100%;
+    }
+
+    canvas{
+        max-width:100%;
+    }
+}

@@ -1,0 +1,294 @@
+*{
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#f1f1f1;
+    margin:0;
+    padding:30px;
+}
+
+.invoice{
+    position:relative;
+    width:800px;
+    margin:auto;
+    background:white;
+    padding:35px;
+    border-radius:12px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.1);
+    overflow:hidden;
+}
+
+.watermark{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    opacity:0.04;
+    z-index:0;
+    pointer-events:none;
+}
+
+.watermark img{
+    width:430px;
+}
+
+.header,
+.section,
+.total,
+.signature-section,
+.footer{
+    position:relative;
+    z-index:1;
+}
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    border-bottom:3px solid #2ca7d8;
+    padding-bottom:20px;
+    margin-bottom:25px;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.brand img{
+    width:90px;
+    height:90px;
+    object-fit:contain;
+}
+
+.brand h1{
+    margin:0;
+    color:#2ca7d8;
+    font-size:30px;
+}
+
+.brand p{
+    margin:3px 0;
+    font-size:13px;
+    color:#555;
+}
+
+.invoice-title{
+    text-align:right;
+}
+
+.invoice-title h2{
+    margin:0 0 8px;
+    color:#222;
+    letter-spacing:1px;
+}
+
+.invoice-title p{
+    margin:4px 0;
+    font-size:14px;
+}
+
+#qrcode{
+    margin-top:10px;
+    display:flex;
+    justify-content:flex-end;
+}
+
+#barcode{
+    margin-top:10px;
+    max-width:230px;
+}
+
+.section{
+    margin-top:20px;
+}
+
+.section h3{
+    color:#2ca7d8;
+    margin-bottom:10px;
+}
+
+.info-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+.box{
+    border:1px solid #ddd;
+    padding:15px;
+    border-radius:10px;
+    background:rgba(255,255,255,0.9);
+}
+
+.box p{
+    margin:8px 0;
+    font-size:14px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+    background:white;
+}
+
+th{
+    background:#2ca7d8;
+    color:white;
+    padding:12px;
+    text-align:left;
+    font-size:14px;
+}
+
+td{
+    padding:12px;
+    border-bottom:1px solid #ddd;
+    font-size:14px;
+}
+
+.total{
+    display:flex;
+    justify-content:flex-end;
+    margin-top:25px;
+}
+
+.total-box{
+    width:300px;
+    border:1px solid #2ca7d8;
+    padding:20px;
+    border-radius:10px;
+    background:#f7fbfd;
+}
+
+.total-box p{
+    display:flex;
+    justify-content:space-between;
+    margin:8px 0;
+    font-size:14px;
+}
+
+.total-box h2{
+    display:flex;
+    justify-content:space-between;
+    color:#2ca7d8;
+    margin-top:15px;
+    font-size:22px;
+}
+
+.signature-section{
+    display:flex;
+    justify-content:space-between;
+    margin-top:45px;
+    gap:40px;
+}
+
+.signature-section div{
+    width:50%;
+    text-align:center;
+}
+
+.signature-section p{
+    margin-bottom:25px;
+    font-size:14px;
+}
+
+.signature-section span{
+    display:block;
+    margin-bottom:5px;
+}
+
+.signature-section small{
+    color:#555;
+}
+
+.footer{
+    margin-top:30px;
+    text-align:center;
+    font-size:13px;
+    color:#666;
+    border-top:1px solid #ddd;
+    padding-top:15px;
+}
+
+.print-btn{
+    display:block;
+    margin:0 auto 20px;
+    padding:12px 25px;
+    border:none;
+    border-radius:25px;
+    background:#2ca7d8;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.print-btn:hover{
+    background:#1e88c7;
+}
+
+@media print{
+    body{
+        background:white;
+        padding:0;
+    }
+
+    .invoice{
+        width:100%;
+        min-height:100vh;
+        box-shadow:none;
+        border-radius:0;
+        padding:30px;
+    }
+
+    .print-btn{
+        display:none;
+    }
+}
+
+@media(max-width:768px){
+    body{
+        padding:10px;
+    }
+
+    .invoice{
+        width:100%;
+        padding:20px;
+    }
+
+    .header{
+        flex-direction:column;
+        gap:20px;
+    }
+
+    .invoice-title{
+        text-align:left;
+    }
+
+    #qrcode{
+        justify-content:flex-start;
+    }
+
+    .info-grid{
+        grid-template-columns:1fr;
+    }
+
+    .total{
+        justify-content:stretch;
+    }
+
+    .total-box{
+        width:100%;
+    }
+
+    .signature-section{
+        flex-direction:column;
+    }
+
+    .signature-section div{
+        width:100%;
+    }
+}
