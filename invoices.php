@@ -77,15 +77,15 @@ $rate = 0;
 =======
 
     $notif = $conn->prepare("INSERT INTO notifications 
-    (user_id, role_target, title, message, type, status)
-    VALUES (?, 'user', 'New Bill Released', 'A new billing invoice has been released. Please check your billing page.', 'bill', 'unread')");
+    (user_id, role_target, title, message, type, status, link)
+    VALUES (?, 'user', 'New Bill Released', 'A new water bill has been released. Please check your billing page.', 'bill', 'unread', 'user_billing.php')");
 
     $notif->bind_param("i", $reading['user_id']);
     $notif->execute();
 
     echo "<script>alert('Billing invoice released'); window.location='invoices.php';</script>";
     exit();
-
+    
 } else {
     echo "<script>alert('Failed to release invoice'); window.location='invoices.php';</script>";
     exit();

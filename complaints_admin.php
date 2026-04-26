@@ -8,13 +8,38 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] != "admin") {
 }
 
 if (isset($_POST['reply_complaint'])) {
+
     $complaint_id = $_POST['complaint_id'];
     $reply = $_POST['reply'];
     $status = $_POST['status'];
 
-    $stmt = $conn->prepare("UPDATE complaints SET reply=?, status=?, replied_at=NOW() WHERE id=?");
+    /* KUHANIN USER NG COMPLAINT */
+    $c = $conn->query("
+        SELECT user_id, complaint_type 
+        FROM complaints 
+        WHERE id='$complaint_id'
+    ")->fetch_assoc();
+
+    /* UPDATE COMPLAINT */
+    $stmt = $conn->prepare("UPDATE complaints 
+    SET reply=?, status=?, replied_at=NOW() 
+    WHERE id=?");
+
     $stmt->bind_param("ssi", $reply, $status, $complaint_id);
     $stmt->execute();
+
+    /* NOTIFY USER */
+    $title = "Complaint Update";
+
+    $message = "Your complaint '{$c['complaint_type']}' has been reviewed. 
+    Status: $status. Click to view reply.";
+
+    $notif = $conn->prepare("INSERT INTO notifications
+    (user_id, role_target, title, message, type, status, link)
+    VALUES (?, 'user', ?, ?, 'complaint', 'unread', 'user_complaints.php')");
+
+    $notif->bind_param("iss", $c['user_id'], $title, $message);
+    $notif->execute();
 
     echo "<script>alert('Complaint updated'); window.location='complaints_admin.php';</script>";
     exit();
