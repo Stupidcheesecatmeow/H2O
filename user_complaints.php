@@ -25,18 +25,27 @@ if (isset($_POST['submit_complaint'])) {
     (user_id, complaint_type, description, status)
     VALUES (?, ?, ?, 'open')");
 
-    $stmt->bind_param("iss", $user_id, $type, $desc);
-    $stmt->execute();
+    /* NOTIFY ADMIN */
+$admin_title = "New Complaint Submitted";
+$admin_msg = "Complaint Type: $type | Description: $desc";
 
-    $notif_title = "New Complaint Submitted";
-    $notif_msg = "Complaint Type: $type | Description: $desc";
+$adminNotif = $conn->prepare("INSERT INTO notifications 
+(user_id, role_target, title, message, type, status, link)
+VALUES (?, 'admin', ?, ?, 'complaint', 'unread', 'complaints_admin.php')");
 
-    $notif = $conn->prepare("INSERT INTO notifications 
-    (user_id, role_target, title, message, type, status)
-    VALUES (?, 'admin', ?, ?, 'complaint', 'unread')");
+$adminNotif->bind_param("iss", $user_id, $admin_title, $admin_msg);
+$adminNotif->execute();
 
-    $notif->bind_param("iss", $user_id, $notif_title, $notif_msg);
-    $notif->execute();
+/* NOTIFY USER */
+$user_title = "Complaint Successfully Sent";
+$user_msg = "Your complaint about '$type' was submitted successfully. You can review its status anytime.";
+
+$userNotif = $conn->prepare("INSERT INTO notifications 
+(user_id, role_target, title, message, type, status, link)
+VALUES (?, 'user', ?, ?, 'complaint', 'unread', 'user_complaints.php')");
+
+$userNotif->bind_param("iss", $user_id, $user_title, $user_msg);
+$userNotif->execute();
 
     echo "<script>alert('Complaint submitted'); window.location='user_complaints.php';</script>";
     exit();

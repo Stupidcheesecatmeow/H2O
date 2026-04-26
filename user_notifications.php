@@ -12,14 +12,38 @@ $user = $conn->query("SELECT * FROM users WHERE id='$user_id'")->fetch_assoc();
 
 if (isset($_GET['read'])) {
     $id = $_GET['read'];
-    $conn->query("UPDATE notifications SET status='read' WHERE id='$id' AND user_id='$user_id'");
+
+    $n = $conn->query("
+        SELECT link 
+        FROM notifications 
+        WHERE id='$id' AND user_id='$user_id'
+    ")->fetch_assoc();
+
+    $conn->query("
+        UPDATE notifications 
+        SET status='read' 
+        WHERE id='$id' AND user_id='$user_id'
+    ");
+
+    if (!empty($n['link'])) {
+        header("Location: " . $n['link']);
+        exit();
+    }
+
     header("Location: user_notifications.php");
     exit();
 }
 
-$notifications = $conn->query("
+$system_notifications = $conn->query("
     SELECT * FROM notifications
-    WHERE user_id='$user_id'
+    WHERE user_id='$user_id' AND role_target='user'
+    ORDER BY created_at DESC
+");
+
+$announcements = $conn->query("
+    SELECT * FROM announcements
+    WHERE target_type='everyone'
+    OR (target_type='barangay' AND barangay='{$user['barangay']}')
     ORDER BY created_at DESC
 ");
 ?>
@@ -27,7 +51,7 @@ $notifications = $conn->query("
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Notifications</title>
+    <title>User Notifications</title>
     <link rel="stylesheet" href="dashboard.css">
 </head>
 <body>
@@ -52,6 +76,9 @@ $notifications = $conn->query("
 
 <h1>Notifications</h1>
 
+<h2>System Updates</h2>
+
+<?php if($system_notifications->num_rows > 0): ?>
 <table>
 <tr>
     <th>Type</th>
@@ -62,7 +89,7 @@ $notifications = $conn->query("
     <th>Action</th>
 </tr>
 
-<?php while($n = $notifications->fetch_assoc()): ?>
+<?php while($n = $system_notifications->fetch_assoc()): ?>
 <tr style="<?php echo ($n['status']=='unread') ? 'background:#eef8fc;' : ''; ?>">
     <td>
         <?php
@@ -82,18 +109,44 @@ $notifications = $conn->query("
     <td><?php echo strtoupper($n['status']); ?></td>
     <td><?php echo $n['created_at']; ?></td>
     <td>
-        <?php if($n['status'] == "unread"): ?>
-            <a href="?read=<?php echo $n['id']; ?>">
-                <button type="button">Mark as Read</button>
-            </a>
-        <?php else: ?>
-            Done
-        <?php endif; ?>
+        <a href="?read=<?php echo $n['id']; ?>">
+            <button type="button">
+                <?php echo ($n['status'] == "unread") ? "Open / Mark Read" : "Open"; ?>
+            </button>
+        </a>
     </td>
 </tr>
 <?php endwhile; ?>
-
 </table>
+<?php else: ?>
+<p>No system notifications yet.</p>
+<?php endif; ?>
+
+<h2>Announcements</h2>
+
+<?php if($announcements->num_rows > 0): ?>
+<table>
+<tr>
+    <th>Title</th>
+    <th>Message</th>
+    <th>Barangay</th>
+    <th>Date</th>
+</tr>
+
+<?php while($a = $announcements->fetch_assoc()): ?>
+<tr>
+    <td><?php echo $a['title']; ?></td>
+    <td><?php echo $a['message']; ?></td>
+    <td>
+        <?php echo ($a['target_type'] == "everyone") ? "All Barangays" : $a['barangay']; ?>
+    </td>
+    <td><?php echo $a['announcement_date']; ?></td>
+</tr>
+<?php endwhile; ?>
+</table>
+<?php else: ?>
+<p>No announcements yet.</p>
+<?php endif; ?>
 
 </div>
 </div>
