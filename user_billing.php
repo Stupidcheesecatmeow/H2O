@@ -27,6 +27,7 @@ ORDER BY i.created_at DESC
         <h2><?php echo $user['first_name']; ?></h2>
         <ul>
             <li><a href="user_dashboard.php">Dashboard</a></li>
+            <li><a href="user_notifications.php">Notifications</a></li>
             <li><a href="user_billing.php">Billing</a></li>
             <li><a href="user_payments.php">Payment</a></li>
             <li><a href="user_history.php">History</a></li>
