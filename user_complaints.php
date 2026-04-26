@@ -28,10 +28,15 @@ if (isset($_POST['submit_complaint'])) {
     $stmt->bind_param("iss", $user_id, $type, $desc);
     $stmt->execute();
 
-    $conn->query("
-        INSERT INTO notifications (user_id, role_target, title, message, type, status)
-        VALUES ('$user_id','admin','New Complaint','A user submitted a complaint.','complaint','unread')
-    ");
+    $notif_title = "New Complaint Submitted";
+    $notif_msg = "Complaint Type: $type | Description: $desc";
+
+    $notif = $conn->prepare("INSERT INTO notifications 
+    (user_id, role_target, title, message, type, status)
+    VALUES (?, 'admin', ?, ?, 'complaint', 'unread')");
+
+    $notif->bind_param("iss", $user_id, $notif_title, $notif_msg);
+    $notif->execute();
 
     echo "<script>alert('Complaint submitted'); window.location='user_complaints.php';</script>";
     exit();
