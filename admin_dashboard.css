@@ -102,7 +102,6 @@ body.fade-in { opacity: 1; }
 .announcement-row small { opacity: 0.5; font-size: 0.7rem; }
 .announcement-row p { margin: 5px 0 0 0; font-size: 0.85rem; line-height: 1.4; }
 
-/* --- SIDEBAR RIGHT --- */
 /* --- SIDEBAR --- */
 .sidebar-right {
     width: 280px;
