@@ -7,7 +7,7 @@ if(isset($_POST['check'])){
     $meter_no = mysqli_real_escape_string($conn, $_POST['meter_no']);
     $account_name = mysqli_real_escape_string($conn, $_POST['account_name']);
 
-    $query = "SELECT * FROM users WHERE email='$email' AND meter_no='$meter_no' AND first_name='$account_name'";
+    $query = "SELECT * FROM users WHERE email='$email' AND meter_number='$meter_no' AND first_name='$account_name'";
     $check = $conn->query($query);
 
     if($check->num_rows > 0){
