@@ -31,33 +31,33 @@ if(isset($_POST['check'])){
 </head>
 <body>
 
-<div class="container">
+    <div class="container">
 
-    <div class="left">
-        <img src="assets/logo_name.png" class="logo">
+        <div class="left">
+            <img src="assets/logo_name.png" class="logo">
 
-        <form method="POST">
-            <h2>Forgot Password</h2>
-            <p class="subtitle">Please verify your account details to proceed.</p>
+            <form method="POST">
+                <h2>Forgot Password</h2>
+                <p class="subtitle">Please verify your account details to proceed.</p>
 
-            <label>Account Name</label>
-            <input type="text" name="account_name" placeholder="Enter Account Name" required>
+                <label>Account Name</label>
+                <input type="text" name="account_name" placeholder="Enter Account Name" required>
 
-            <label>Meter Number</label>
-            <input type="text" name="meter_no" placeholder="Enter Meter Number" required>
+                <label>Meter Number</label>
+                <input type="text" name="meter_no" placeholder="Enter Meter Number" required>
 
-            <label>Email</label>
-            <input type="email" name="email" placeholder="Enter your registered email" required>
+                <label>Email</label>
+                <input type="email" name="email" placeholder="Enter your registered email" required>
 
-            <button name="check" id="forgotBtn">Continue</button>
+                <button name="check" id="forgotBtn">Continue</button>
 
-            <div class="back-link">
-                <a href="index.php">Back to Login</a>
-            </div>
-        </form>
+                <div class="back-link">
+                    <a href="index.php">Back to Login</a>
+                </div>
+            </form>
+        </div>
+
     </div>
-
-</div>
 
 </body>
 </html>

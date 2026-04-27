@@ -117,92 +117,65 @@ $history = $conn->query("
 <body>
 >>>>>>> be3ddca4134d56b51216987ef9432112f9f42a32
 
-<div class="layout">
+    <div class="layout">
 
 <div class="sidebar">
 <h2>Field Agent</h2>
 <ul>
     <li><a href="agent_dashboard.php">Dashboard</a></li>
     <li><a href="meter_reading.php">Meter Reading</a></li>
-<<<<<<< HEAD
-=======
     <li><a href="profile.php">Profile</a></li>
     <li><a href="logout.php">Logout</a></li>
->>>>>>> be3ddca4134d56b51216987ef9432112f9f42a32
 </ul>
 </div>
 
-<div class="main">
+        <div class="main">
 
-<<<<<<< HEAD
-<h1>Meter Reading</h1>
-
-<form method="POST" action="agent_dashboard.php">
-
-<input type="text" value="<?php echo $assigned_barangay; ?>" readonly>
-
-<select id="streetSelect">
-<option>Select Street</option>
-</select>
-
-<select name="user_id" id="meterSelect" required>
-<option>Select Meter</option>
-</select>
-
-<input type="text" id="customerName" readonly>
-
-<input type="number" name="current" placeholder="Current Reading" required>
-
-<button name="save">Submit</button>
-
-</form>
-
-=======
 <h1>Meter Reading Input</h1>
 
-<div class="card">
-    Assigned Barangay<br>
-    <strong><?php echo $assigned_barangay ?: "Not Assigned"; ?></strong>
-</div>
+            <div class="card">
+                Assigned Barangay<br>
+                <strong><?php echo $assigned_barangay ?: "Not Assigned"; ?></strong>
+            </div>
 
-<?php if($assigned_barangay == ""): ?>
+            <?php if($assigned_barangay == ""): ?>
 
-<p>No barangay assigned yet. Please contact admin.</p>
+            <p>No barangay assigned yet. Please contact admin.</p>
 
-<?php else: ?>
+            <?php else: ?>
 
-<form method="POST">
+            <form method="POST">
 
-    <input type="text" value="<?php echo $assigned_barangay; ?>" readonly>
+                <input type="text" value="<?php echo $assigned_barangay; ?>" readonly>
 
-    <select id="streetSelect" required>
-        <option value="">Select Street</option>
-    </select>
+                <select id="streetSelect" required>
+                    <option value="">Select Street</option>
+                </select>
 
-    <select name="user_id" id="meterSelect" required>
-        <option value="">Select Meter Number</option>
-    </select>
+                <select name="user_id" id="meterSelect" required>
+                    <option value="">Select Meter Number</option>
+                </select>
 
-    <input type="text" id="customerName" placeholder="Customer Name" readonly>
+                <input type="text" id="customerName" placeholder="Customer Name" readonly>
 
-    <input type="number" name="current" placeholder="Current Reading" required>
+                <input type="number" name="current" placeholder="Current Reading" required>
 
-    <button type="submit" name="save">Submit Reading</button>
+                <button type="submit" name="save">Submit Reading</button>
 
-</form>
+            </form>
 
-<h2>Reading History</h2>
+            <h2>Reading History</h2>
 
-<table>
-<tr>
-    <th>Customer</th>
-    <th>Street</th>
-    <th>Meter No.</th>
-    <th>Previous</th>
-    <th>Current</th>
-    <th>Consumption</th>
-    <th>Date</th>
-</tr>
+            <table>
+                <tr>
+                    <th>Customer</th>
+                    <th>Street</th>
+                    <th>Meter No.</th>
+                    <th>Previous</th>
+                    <th>Current</th>
+                    <th>Consumption</th>
+                    <th>Date</th>
+                </tr>
 
 <?php while($h = $history->fetch_assoc()): ?>
 <tr>
@@ -219,7 +192,6 @@ $history = $conn->query("
 
 <?php endif; ?>
 
->>>>>>> be3ddca4134d56b51216987ef9432112f9f42a32
 </div>
 </div>
 
@@ -228,54 +200,46 @@ const customers = [
 <?php while($c = $customers->fetch_assoc()): ?>
 {
     id: "<?php echo $c['id']; ?>",
-<<<<<<< HEAD
-    name: "<?php echo $c['first_name']." ".$c['last_name']; ?>",
-    barangay: "<?php echo $c['barangay']; ?>",
-=======
     code: "<?php echo $c['user_code']; ?>",
     name: "<?php echo $c['first_name'].' '.$c['last_name']; ?>",
->>>>>>> be3ddca4134d56b51216987ef9432112f9f42a32
     street: "<?php echo $c['street']; ?>",
     meter: "<?php echo $c['meter_number']; ?>"
 },
 <?php endwhile; ?>
 ];
-<<<<<<< HEAD
-</script>
-=======
 
-const streetSelect = document.getElementById("streetSelect");
-const meterSelect = document.getElementById("meterSelect");
-const customerName = document.getElementById("customerName");
+        const streetSelect = document.getElementById("streetSelect");
+        const meterSelect = document.getElementById("meterSelect");
+        const customerName = document.getElementById("customerName");
 
-const streets = [...new Set(customers.map(c => c.street))];
+        const streets = [...new Set(customers.map(c => c.street))];
 
-streets.forEach(street => {
-    streetSelect.innerHTML += `<option value="${street}">${street}</option>`;
-});
-
-streetSelect.addEventListener("change", function(){
-    const selectedStreet = this.value;
-
-    meterSelect.innerHTML = '<option value="">Select Meter Number</option>';
-    customerName.value = "";
-
-    customers
-        .filter(c => c.street === selectedStreet)
-        .forEach(c => {
-            meterSelect.innerHTML += `
-                <option value="${c.id}" data-name="${c.name}">
-                    ${c.meter}
-                </option>
-            `;
+        streets.forEach(street => {
+            streetSelect.innerHTML += `<option value="${street}">${street}</option>`;
         });
-});
 
-meterSelect.addEventListener("change", function(){
-    const selectedOption = this.options[this.selectedIndex];
-    customerName.value = selectedOption.getAttribute("data-name") || "";
-});
-</script>
+        streetSelect.addEventListener("change", function(){
+            const selectedStreet = this.value;
+
+            meterSelect.innerHTML = '<option value="">Select Meter Number</option>';
+            customerName.value = "";
+
+            customers
+                .filter(c => c.street === selectedStreet)
+                .forEach(c => {
+                    meterSelect.innerHTML += `
+                        <option value="${c.id}" data-name="${c.name}">
+                            ${c.meter}
+                        </option>
+                    `;
+                });
+        });
+
+        meterSelect.addEventListener("change", function(){
+            const selectedOption = this.options[this.selectedIndex];
+            customerName.value = selectedOption.getAttribute("data-name") || "";
+        });
+    </script>
 
 </body>
 </html>

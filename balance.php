@@ -41,66 +41,65 @@ $total_overdue = $conn->query("
 </head>
 <body>
 
-<div class="layout">
+    <div class="layout">
 
-<div class="sidebar">
-<h2>Accountant</h2>
-<ul>
-    <li><a href="accountant_dashboard.php">Dashboard</a></li>
-    <li><a href="payments.php">Payments</a></li>
-    <li><a href="receipts.php">Receipts</a></li>
-    <li><a href="reports_accountant.php">Reports</a></li>
-    <li><a href="balance.php">Balance Tracker</a></li>
-    <li><a href="profile.php">Profile</a></li>
-    <li><a href="logout.php">Logout</a></li>
-</ul>
-</div>
+        <div class="sidebar">
+            <h2>Accountant</h2>
+            <ul>
+                <li><a href="accountant_dashboard.php">Dashboard</a></li>
+                <li><a href="payments.php">Payments</a></li>
+                <li><a href="receipts.php">Receipts</a></li>
+                <li><a href="reports_accountant.php">Reports</a></li>
+                <li><a href="balance.php">Balance Tracker</a></li>
+                <li><a href="profile.php">Profile</a></li>
+                <li><a href="logout.php">Logout</a></li>
+            </ul>
+        </div>
 
-<div class="main">
+        <div class="main">
 
-<h1>Balance Tracker</h1>
+            <h1>Balance Tracker</h1>
 
-<div class="cards">
-    <div class="card">
-        Total Unpaid Balance<br>
-        <strong>₱<?php echo number_format($total_unpaid, 2); ?></strong>
+            <div class="cards">
+                <div class="card">
+                    Total Unpaid Balance<br>
+                    <strong>₱<?php echo number_format($total_unpaid, 2); ?></strong>
+                </div>
+
+                <div class="card">
+                    Overdue Accounts<br>
+                    <strong><?php echo $total_overdue; ?></strong>
+                </div>
+            </div>
+
+            <table>
+                <tr>
+                    <th>Customer</th>
+                    <th>Meter No.</th>
+                    <th>Invoice No.</th>
+                    <th>Amount</th>
+                    <th>Due Date</th>
+                    <th>Overdue Days</th>
+                    <th>Status</th>
+                </tr>
+
+                <?php while($u = $unpaid->fetch_assoc()): ?>
+                <tr>
+                    <td><?php echo $u['first_name']." ".$u['last_name']; ?></td>
+                    <td><?php echo $u['meter_number']; ?></td>
+                    <td><?php echo $u['invoice_no']; ?></td>
+                    <td>₱<?php echo number_format($u['amount'], 2); ?></td>
+                    <td><?php echo $u['due_date']; ?></td>
+                    <td>
+                        <?php echo ($u['overdue_days'] > 0) ? $u['overdue_days'] : 0; ?>
+                    </td>
+                    <td><?php echo $u['status']; ?></td>
+                </tr>
+                <?php endwhile; ?>
+            </table>
+
+        </div>
     </div>
-
-    <div class="card">
-        Overdue Accounts<br>
-        <strong><?php echo $total_overdue; ?></strong>
-    </div>
-</div>
-
-<table>
-<tr>
-    <th>Customer</th>
-    <th>Meter No.</th>
-    <th>Invoice No.</th>
-    <th>Amount</th>
-    <th>Due Date</th>
-    <th>Overdue Days</th>
-    <th>Status</th>
-</tr>
-
-<?php while($u = $unpaid->fetch_assoc()): ?>
-<tr>
-    <td><?php echo $u['first_name']." ".$u['last_name']; ?></td>
-    <td><?php echo $u['meter_number']; ?></td>
-    <td><?php echo $u['invoice_no']; ?></td>
-    <td>₱<?php echo number_format($u['amount'], 2); ?></td>
-    <td><?php echo $u['due_date']; ?></td>
-    <td>
-        <?php echo ($u['overdue_days'] > 0) ? $u['overdue_days'] : 0; ?>
-    </td>
-    <td><?php echo $u['status']; ?></td>
-</tr>
-<?php endwhile; ?>
-
-</table>
-
-</div>
-</div>
 
 </body>
 </html>

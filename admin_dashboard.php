@@ -214,29 +214,29 @@ while($row = $usage_query->fetch_assoc()){
     </div>
 
     <script>
-    new Chart(document.getElementById("collectionChart"), {
-        type: "bar",
-        data: {
-            labels: <?php echo json_encode($collection_labels); ?>,
-            datasets: [{
-                label: "Collection",
-                data: <?php echo json_encode($collection_data); ?>,
-                borderWidth: 1
-            }]
-        }
-    });
+        new Chart(document.getElementById("collectionChart"), {
+            type: "bar",
+            data: {
+                labels: <?php echo json_encode($collection_labels); ?>,
+                datasets: [{
+                    label: "Collection",
+                    data: <?php echo json_encode($collection_data); ?>,
+                    borderWidth: 1
+                }]
+            }
+        });
 
-    new Chart(document.getElementById("usageChart"), {
-        type: "line",
-        data: {
-            labels: <?php echo json_encode($usage_labels); ?>,
-            datasets: [{
-                label: "Usage",
-                data: <?php echo json_encode($usage_data); ?>,
-                borderWidth: 2
-            }]
-        }
-    });
+        new Chart(document.getElementById("usageChart"), {
+            type: "line",
+            data: {
+                labels: <?php echo json_encode($usage_labels); ?>,
+                datasets: [{
+                    label: "Usage",
+                    data: <?php echo json_encode($usage_data); ?>,
+                    borderWidth: 2
+                }]
+            }
+        });
     </script>
 
 </body>
