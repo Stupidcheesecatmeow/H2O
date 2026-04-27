@@ -36,8 +36,8 @@ $total_overdue = $conn->query("
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Balance Tracker | H2O</title>
-    <link rel="stylesheet" href="balance.css">
+    <title>H.O.H Balance Tracker</title>
+    <link rel="stylesheet" href="styles/balance.css">
 </head>
 <body id="mainBody">
 
@@ -46,7 +46,7 @@ $total_overdue = $conn->query("
             <h1>Balance Tracker</h1>
         </div>
 
-        <!-- STAT CARDS -->
+        <!-- STAT -->
         <div class="stats-grid">
             <div class="stat-card">
                 <span class="stat-label">Total Unpaid Balance</span>
@@ -59,7 +59,7 @@ $total_overdue = $conn->query("
             </div>
         </div>
 
-        <!-- TABLE SECTION -->
+        <!-- TABLE -->
         <div class="glass-panel">
             <div class="panel-title-bar">Delinquent Account List</div>
             <div class="table-area">
@@ -99,43 +99,43 @@ $total_overdue = $conn->query("
         </div>
     </div>
 
-    <!-- SIDEBAR RIGHT -->
-    <div class="sidebar-right">
-        <img src="assets/logo_name.png" class="side-logo">
-        <div class="agent-info" style="color: white; text-align: center; margin-bottom: 30px;">
-            <h3>ACCOUNTANT</h3>
-            <p style="font-size: 0.7rem; opacity: 0.6;">FINANCE DEPT</p>
+        <!-- SIDEBAR -->
+        <div class="sidebar-right">
+            <img src="assets/logo_name.png" class="side-logo">
+            <div class="agent-info" style="color: white; text-align: center; margin-bottom: 30px;">
+                <h3>ACCOUNTANT</h3>
+                <p style="font-size: 0.7rem; opacity: 0.6;">FINANCE DEPT</p>
+            </div>
+            <nav class="nav-menu" style="width: 100%;">
+                <a href="accountant_dashboard.php" class="nav-item">DASHBOARD</a>
+                <a href="payments.php" class="nav-item">PAYMENTS</a>
+                <a href="receipts.php" class="nav-item">RECEIPTS</a>
+                <a href="reports_accountant.php" class="nav-item">REPORTS</a>
+                <a href="balance.php" class="nav-item active">BALANCE TRACKER</a>
+                <a href="profile.php" class="nav-item">PROFILE</a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="logout.php" class="logout-btn-container">LOG OUT</a>
+            </div>
         </div>
-        <nav class="nav-menu" style="width: 100%;">
-            <a href="accountant_dashboard.php" class="nav-item">DASHBOARD</a>
-            <a href="payments.php" class="nav-item">PAYMENTS</a>
-            <a href="receipts.php" class="nav-item">RECEIPTS</a>
-            <a href="reports_accountant.php" class="nav-item">REPORTS</a>
-            <a href="balance.php" class="nav-item active">BALANCE TRACKER</a>
-            <a href="profile.php" class="nav-item">PROFILE</a>
-        </nav>
-        <div class="sidebar-footer">
-            <a href="logout.php" class="logout-btn-container">LOG OUT</a>
-        </div>
-    </div>
 
-    <script>
-        // Turbo Fade-In
-        window.addEventListener('DOMContentLoaded', () => {
-            document.body.classList.add('fade-in');
-        });
-
-        // Fast Fade-Out
-        document.querySelectorAll('.nav-item, .logout-btn').forEach(link => {
-            link.addEventListener('click', function(e) {
-                const target = this.getAttribute('href');
-                if (target && target !== '#') {
-                    e.preventDefault();
-                    document.body.classList.add('fade-out-fast');
-                    setTimeout(() => { window.location.href = target; }, 200);
-                }
+        <script>
+            // Turbo Fade-In
+            window.addEventListener('DOMContentLoaded', () => {
+                document.body.classList.add('fade-in');
             });
-        });
-    </script>
+
+            // Fast Fade-Out
+            document.querySelectorAll('.nav-item, .logout-btn').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const target = this.getAttribute('href');
+                    if (target && target !== '#') {
+                        e.preventDefault();
+                        document.body.classList.add('fade-out-fast');
+                        setTimeout(() => { window.location.href = target; }, 200);
+                    }
+                });
+            });
+        </script>
 </body>
 </html>

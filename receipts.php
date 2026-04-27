@@ -30,8 +30,8 @@ $receipts = $conn->query("
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Receipts | H2O</title>
-    <link rel="stylesheet" href="receipt.css">
+    <title>H.O.H Receipts</title>
+    <link rel="stylesheet" href="styles/receipt.css">
 </head>
 <body id="mainBody">
 
@@ -76,7 +76,7 @@ $receipts = $conn->query("
         </div>
     </div>
 
-    <!-- SIDEBAR RIGHT -->
+    <!-- SIDEBAR -->
     <div class="sidebar-right">
         <img src="assets/logo_name.png" class="side-logo">
         <div class="agent-info" style="color: white; text-align: center; margin-bottom: 30px;">

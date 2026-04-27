@@ -119,8 +119,8 @@ $invoices = $conn->query("
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Invoices | Admin Portal</title>
-    <link rel="stylesheet" href="invoices.css">
+    <title>H.O.H Invoices | Admin</title>
+    <link rel="stylesheet" href="styles/invoices.css">
 </head>
 <body id="mainBody">
 
@@ -129,7 +129,7 @@ $invoices = $conn->query("
             <h1>BILLING INVOICE ISSUANCE</h1>
         </div>
 
-        <!-- PENDING READINGS SECTION -->
+        <!-- PENDING READINGS -->
         <h2>Pending Meter Readings</h2>
         <div class="glass-panel">
             <div class="panel-title-bar">Awaiting Invoice Release</div>
@@ -169,7 +169,7 @@ $invoices = $conn->query("
             </div>
         </div>
 
-        <!-- RELEASED INVOICES SECTION -->
+        <!-- RELEASED INVOICES -->
         <h2>Released Invoices</h2>
         <div class="glass-panel">
             <div class="panel-title-bar">Billing History Records</div>
@@ -214,32 +214,32 @@ $invoices = $conn->query("
         </div>
     </div>
 
-    <!-- SIDEBAR RIGHT -->
-    <div class="sidebar-right">
-        <img src="assets/logo_name.png" class="side-logo">
-        <div class="agent-info" style="color: white; text-align: center; margin-bottom: 30px;">
-            <h3>ACCOUNTANT</h3>
-            <p style="font-size: 0.7rem; opacity: 0.6;">FINANCE DEPT</p>
+        <!-- SIDEBAR -->
+        <div class="sidebar-right">
+            <img src="assets/logo_name.png" class="side-logo">
+            <div class="agent-info" style="color: white; text-align: center; margin-bottom: 30px;">
+                <h3>ADMIN</h3>
+                <p style="font-size: 0.7rem; opacity: 0.6;">ADMIN DEPT</p>
+            </div>
+            <nav class="nav-menu">
+                <a href="admin_dashboard.php" class="nav-item">DASHBOARD</a>
+                <a href="admin_notifications.php" class="nav-item">NOTIFICATIONS</a>
+                <a href="announcements.php" class="nav-item">ANNOUNCEMENTS</a>
+                <a href="user_management.php" class="nav-item">USER MANAGEMENT</a>
+                <a href="agent_management.php" class="nav-item">FIELD AGENTS</a>
+                <a href="invoices.php" class="nav-item active">INVOICES</a>
+                <a href="transactions.php" class="nav-item">TRANSACTIONS</a>
+                <a href="complaints_admin.php" class="nav-item">COMPLAINTS</a>
+                <a href="reports.php" class="nav-item">REPORTS</a>
+                <a href="profile.php" class="nav-item">PROFILE</a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="logout.php" class="logout-btn-container">LOG OUT</a>
+            </div>
         </div>
-        <nav class="nav-menu">
-            <a href="admin_dashboard.php" class="nav-item">DASHBOARD</a>
-            <a href="admin_notifications.php" class="nav-item">NOTIFICATIONS</a>
-            <a href="announcements.php" class="nav-item">ANNOUNCEMENTS</a>
-            <a href="user_management.php" class="nav-item">USER MANAGEMENT</a>
-            <a href="agent_management.php" class="nav-item">FIELD AGENTS</a>
-            <a href="invoices.php" class="nav-item  active">INVOICES</a>
-            <a href="transactions.php" class="nav-item">TRANSACTIONS</a>
-            <a href="complaints_admin.php" class="nav-item">COMPLAINTS</a>
-            <a href="reports.php" class="nav-item">REPORTS</a>
-            <a href="profile.php" class="nav-item">PROFILE</a>
-        </nav>
-        <div class="sidebar-footer">
-            <a href="logout.php" class="logout-btn-container">LOG OUT</a>
-        </div>
-    </div>
 
-    <script>
-        window.onload = () => { document.body.classList.add('fade-in'); };
-    </script>
+        <script>
+            window.onload = () => { document.body.classList.add('fade-in'); };
+        </script>
 </body>
 </html>

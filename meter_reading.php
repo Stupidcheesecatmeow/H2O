@@ -95,8 +95,8 @@ $history = $conn->query("
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meter Reading | H2O</title>
-    <link rel="stylesheet" href="meter_reading.css">
+    <title>H.O.H Meter Reading</title>
+    <link rel="stylesheet" href="styles/meter_reading.css">
 </head>
 <body id="mainBody">
 
@@ -105,7 +105,7 @@ $history = $conn->query("
             <h1>METER READING INPUT</h1>
         </div>
 
-        <!-- TOP BARANGAY INFO -->
+        <!-- TOP BARANGAY -->
         <div class="glass-panel" style="padding: 20px; margin-bottom: 20px;">
             <span style="font-size: 0.7rem; opacity: 0.7; text-transform: uppercase;">Current Assignment</span><br>
             <strong style="font-size: 1.5rem; color: var(--accent-blue);">
@@ -115,7 +115,7 @@ $history = $conn->query("
 
         <?php if($assigned_barangay != ""): ?>
         
-        <!-- INPUT FORM PANEL -->
+        <!-- INPUT FORM -->
         <div class="glass-panel">
             <div class="panel-title-bar">New Reading Entry</div>
             <div class="table-area">
@@ -195,73 +195,73 @@ $history = $conn->query("
         <?php endif; ?>
     </div>
 
-    <!-- SIDEBAR RIGHT -->
-    <div class="sidebar-right">
-        <img src="assets/logo_name.png" class="side-logo">
-        <div class="agent-info">
-            <h3>FIELD AGENT</h3>
-            <p>METER DEPARTMENT</p>
+        <!-- SIDEBAR -->
+        <div class="sidebar-right">
+            <img src="assets/logo_name.png" class="side-logo">
+            <div class="agent-info">
+                <h3>FIELD AGENT</h3>
+                <p>METER DEPARTMENT</p>
+            </div>
+            <nav class="nav-menu">
+                <a href="agent_dashboard.php" class="nav-item">DASHBOARD</a>
+                <a href="meter_reading.php" class="nav-item active">METER READING</a>
+                <a href="profile.php" class="nav-item">PROFILE</a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="logout.php" class="logout-btn-container">LOG OUT</a>
+            </div>
         </div>
-        <nav class="nav-menu">
-            <a href="agent_dashboard.php" class="nav-item">DASHBOARD</a>
-            <a href="meter_reading.php" class="nav-item active">METER READING</a>
-            <a href="profile.php" class="nav-item">PROFILE</a>
-        </nav>
-        <div class="sidebar-footer">
-            <a href="logout.php" class="logout-btn-container">LOG OUT</a>
-        </div>
-    </div>
 
-    <script>
-        window.onload = () => { document.body.style.opacity = "1"; };
+        <script>
+            window.onload = () => { document.body.style.opacity = "1"; };
 
-        const customers = [
-            <?php 
-            // Reset pointer if loop was used before
-            $customers->data_seek(0); 
-            while($c = $customers->fetch_assoc()): 
-            ?>
-            {
-                id: "<?php echo $c['id']; ?>",
-                name: "<?php echo $c['first_name'].' '.$c['last_name']; ?>",
-                street: "<?php echo $c['street']; ?>",
-                meter: "<?php echo $c['meter_number']; ?>"
-            },
-            <?php endwhile; ?>
-        ];
+            const customers = [
+                <?php 
+                // Reset pointer if loop was used before
+                $customers->data_seek(0); 
+                while($c = $customers->fetch_assoc()): 
+                ?>
+                {
+                    id: "<?php echo $c['id']; ?>",
+                    name: "<?php echo $c['first_name'].' '.$c['last_name']; ?>",
+                    street: "<?php echo $c['street']; ?>",
+                    meter: "<?php echo $c['meter_number']; ?>"
+                },
+                <?php endwhile; ?>
+            ];
 
-        const streetSelect = document.getElementById("streetSelect");
-        const meterSelect = document.getElementById("meterSelect");
-        const customerName = document.getElementById("customerName");
+            const streetSelect = document.getElementById("streetSelect");
+            const meterSelect = document.getElementById("meterSelect");
+            const customerName = document.getElementById("customerName");
 
-        const streets = [...new Set(customers.map(c => c.street))];
-        streets.forEach(street => {
-            const opt = document.createElement("option");
-            opt.value = street;
-            opt.textContent = street;
-            streetSelect.appendChild(opt);
-        });
+            const streets = [...new Set(customers.map(c => c.street))];
+            streets.forEach(street => {
+                const opt = document.createElement("option");
+                opt.value = street;
+                opt.textContent = street;
+                streetSelect.appendChild(opt);
+            });
 
-        streetSelect.addEventListener("change", function(){
-            const selectedStreet = this.value;
-            meterSelect.innerHTML = '<option value="">-- Select Meter --</option>';
-            customerName.value = "";
+            streetSelect.addEventListener("change", function(){
+                const selectedStreet = this.value;
+                meterSelect.innerHTML = '<option value="">-- Select Meter --</option>';
+                customerName.value = "";
 
-            customers
-                .filter(c => c.street === selectedStreet)
-                .forEach(c => {
-                    const opt = document.createElement("option");
-                    opt.value = c.id;
-                    opt.setAttribute("data-name", c.name);
-                    opt.textContent = c.meter;
-                    meterSelect.appendChild(opt);
-                });
-        });
+                customers
+                    .filter(c => c.street === selectedStreet)
+                    .forEach(c => {
+                        const opt = document.createElement("option");
+                        opt.value = c.id;
+                        opt.setAttribute("data-name", c.name);
+                        opt.textContent = c.meter;
+                        meterSelect.appendChild(opt);
+                    });
+            });
 
-        meterSelect.addEventListener("change", function(){
-            const selectedOption = this.options[this.selectedIndex];
-            customerName.value = selectedOption.getAttribute("data-name") || "";
-        });
-    </script>
+            meterSelect.addEventListener("change", function(){
+                const selectedOption = this.options[this.selectedIndex];
+                customerName.value = selectedOption.getAttribute("data-name") || "";
+            });
+        </script>
 </body>
 </html>

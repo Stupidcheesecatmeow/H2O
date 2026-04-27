@@ -61,8 +61,8 @@ LIMIT 3
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Dashboard | H2O</title>
-    <link rel="stylesheet" href="user_design.css">
+    <title>H.O.H User Dashboard</title>
+    <link rel="stylesheet" href="styles/user_design.css">
 </head>
 <body id="mainBody">
 
@@ -71,7 +71,7 @@ LIMIT 3
             <h1>WELCOME, <?php echo strtoupper($user['first_name']); ?>!</h1>
         </div>
 
-        <!-- STATS CARDS -->
+        <!-- STATS -->
         <div class="stats-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 25px;">
             <div class="stat-card">
                 <span class="stat-label">Current Bill</span>
@@ -92,7 +92,7 @@ LIMIT 3
             </div>
         </div>
 
-        <!-- ANNOUNCEMENTS SECTION -->
+        <!-- ANNOUNCEMENTS -->
         <div class="glass-panel">
             <div class="panel-title-bar">Announcements</div>
             <div class="table-area" style="padding: 20px;">
@@ -110,7 +110,7 @@ LIMIT 3
             </div>
         </div>
 
-        <!-- ROW FOR NOTIFS AND PAYMENTS -->
+        <!-- NOTIFS AND PAYMENTS -->
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
             <!-- NOTIFICATIONS -->
             <div class="glass-panel">
@@ -148,7 +148,7 @@ LIMIT 3
         </div>
     </div>
 
-    <!-- SIDEBAR RIGHT -->
+    <!-- SIDEBAR -->
     <div class="sidebar-right">
         <img src="assets/logo_name.png" class="side-logo">
         <div class="agent-info">

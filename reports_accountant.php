@@ -87,9 +87,8 @@ while($s = $status_chart->fetch_assoc()){
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Financial Reports | H2O</title>
-    <link rel="stylesheet" href="dashboard.css">
-    <link rel="stylesheet" href="report_accountant.css">
+    <title>H.O.H Financial Reports</title>
+    <link rel="stylesheet" href="styles/report_accountant.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body id="mainBody">
@@ -102,7 +101,7 @@ while($s = $status_chart->fetch_assoc()){
             </a>
         </div>
 
-        <!-- CHARTS SECTION -->
+        <!-- CHARTS -->
         <div class="flex-grid">
             <div class="glass-panel">
                 <div class="panel-title-bar">Daily Collection Graph</div>
@@ -125,7 +124,7 @@ while($s = $status_chart->fetch_assoc()){
             </div>
         </div>
 
-        <!-- COLLECTION SUMMARY TABLES -->
+        <!-- COLLECTION SUMMARY -->
         <div class="flex-grid">
             <div class="glass-panel">
                 <div class="panel-title-bar">Daily Collection Log</div>
@@ -166,7 +165,7 @@ while($s = $status_chart->fetch_assoc()){
             </div>
         </div>
 
-        <!-- FULL HISTORY TABLE -->
+        <!-- FULL HISTORY -->
         <div class="glass-panel">
             <div class="panel-title-bar">Detailed Customer Payment History</div>
             <div class="table-area">
@@ -198,7 +197,7 @@ while($s = $status_chart->fetch_assoc()){
         </div>
     </div>
 
-    <!-- SIDEBAR RIGHT -->
+    <!-- SIDEBAR -->
     <div class="sidebar-right">
         <img src="assets/logo_name.png" class="side-logo">
         <div class="agent-info" style="color: white; text-align: center; margin-bottom: 30px;">

@@ -33,12 +33,12 @@ $receipts = $conn->query("
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transaction History | H2O</title>
-    <link rel="stylesheet" href="user_design.css">
+    <title>H.O.H Transaction History </title>
+    <link rel="stylesheet" href="styles/user_design.css">
 </head>
 <body id="mainBody">
 
-    <!-- MAIN CONTENT AREA -->
+    <!-- MAIN CONTENT -->
     <div class="main-content">
         <div class="header-row">
             <h1>PAYMENT HISTORY</h1>
@@ -115,7 +115,7 @@ $receipts = $conn->query("
         </div>
     </div>
 
-    <!-- SIDEBAR RIGHT -->
+    <!-- SIDEBAR -->
     <div class="sidebar-right">
         <img src="assets/logo_name.png" class="side-logo">
         <div class="agent-info">

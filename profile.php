@@ -152,8 +152,8 @@ $avatar = !empty($user['avatar']) ? $user['avatar'] : "default.png";
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile Settings | H2O</title>
-    <link rel="stylesheet" href="user_design.css">
+    <title>H.O.H Profile Settings</title>
+    <link rel="stylesheet" href="styles/user_design.css">
 </head>
 <body id="mainBody">
 

@@ -5,16 +5,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>H2O</title>
+    <title>H.O.H</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
 
     <form action="login.php" method="POST">
         
     <div class="container">
-        <!--left-->
+        <!-- LEFT -->
         <div class="left">
             <img src="assets/logo_name.png" alt="logo" class="logo">
 
@@ -43,7 +43,7 @@
             </form>
         </div>
 
-        <!--right-->
+        <!-- RIGHT -->
         <div class="right">
             <div class="overlay">
                 <img src="assets/logo_whole.png" alt="logo" class="logo">
@@ -51,7 +51,7 @@
         </div>
     </div> 
 
-    <!-- terms n condition n policy -->
+    <!-- TERMS N POLICY -->
     <div id="termsMod" class="modal">
 
         <div class="mContent">

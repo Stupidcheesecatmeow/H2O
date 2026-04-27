@@ -82,8 +82,8 @@ while($row = $usage_query->fetch_assoc()){
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Admin Dashboard | H2O</title>
-    <link rel="stylesheet" href="admin_dashboard.css">
+    <title>H.O.H Admin Dashboard</title>
+    <link rel="stylesheet" href="styles/admin_dashboard.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body id="mainBody">
@@ -93,7 +93,7 @@ while($row = $usage_query->fetch_assoc()){
             <h1>ADMIN DASHBOARD</h1>
         </div>
 
-        <!-- STATS ROW 1 -->
+        <!-- ROW 1 -->
         <div class="stats-grid">
             <div class="stat-card"><span class="stat-label">Total Users</span><span class="stat-value"><?php echo $total_users; ?></span></div>
             <div class="stat-card"><span class="stat-label">Field Agents</span><span class="stat-value"><?php echo $total_agents; ?></span></div>
@@ -102,7 +102,7 @@ while($row = $usage_query->fetch_assoc()){
             <div class="stat-card"><span class="stat-label">Pending</span><span class="stat-value" style="color:var(--warning);"><?php echo $pending; ?></span></div>
         </div>
 
-        <!-- STATS ROW 2 (With Links) -->
+        <!-- ROW 2 -->
         <div class="stats-grid">
             <div class="stat-card">
                 <span class="stat-label">Complaints</span>
@@ -126,7 +126,7 @@ while($row = $usage_query->fetch_assoc()){
             </div>
         </div>
 
-        <!-- CHARTS SECTION -->
+        <!-- CHARTS -->
         <div class="flex-grid">
             <div class="glass-panel">
                 <div class="panel-title-bar">Monthly Collection Graph</div>
@@ -156,29 +156,29 @@ while($row = $usage_query->fetch_assoc()){
         </div>
     </div>
 
-    <!-- SIDEBAR RIGHT -->
-    <div class="sidebar-right">
-        <img src="assets/logo_name.png" class="side-logo">
-        <div class="agent-info" style="color: white; text-align: center; margin-bottom: 30px;">
-            <h3>ACCOUNTANT</h3>
-            <p style="font-size: 0.7rem; opacity: 0.6;">FINANCE DEPT</p>
+        <!-- SIDEBAR -->
+        <div class="sidebar-right">
+            <img src="assets/logo_name.png" class="side-logo">
+            <div class="agent-info" style="color: white; text-align: center; margin-bottom: 30px;">
+                <h3>ADMIN</h3>
+                <p style="font-size: 0.7rem; opacity: 0.6;">ADMIN DEPT</p>
+            </div>
+            <nav class="nav-menu">
+                <a href="admin_dashboard.php" class="nav-item active">DASHBOARD</a>
+                <a href="admin_notifications.php" class="nav-item">NOTIFICATIONS</a>
+                <a href="announcements.php" class="nav-item">ANNOUNCEMENTS</a>
+                <a href="user_management.php" class="nav-item">USER MANAGEMENT</a>
+                <a href="agent_management.php" class="nav-item">FIELD AGENTS</a>
+                <a href="invoices.php" class="nav-item">INVOICES</a>
+                <a href="transactions.php" class="nav-item">TRANSACTIONS</a>
+                <a href="complaints_admin.php" class="nav-item">COMPLAINTS</a>
+                <a href="reports.php" class="nav-item">REPORTS</a>
+                <a href="profile.php" class="nav-item">PROFILE</a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="logout.php" class="logout-btn-container">LOG OUT</a>
+            </div>
         </div>
-        <nav class="nav-menu">
-            <a href="admin_dashboard.php" class="nav-item active">DASHBOARD</a>
-            <a href="admin_notifications.php" class="nav-item">NOTIFICATIONS</a>
-            <a href="announcements.php" class="nav-item">ANNOUNCEMENTS</a>
-            <a href="user_management.php" class="nav-item">USER MANAGEMENT</a>
-            <a href="agent_management.php" class="nav-item">FIELD AGENTS</a>
-            <a href="invoices.php" class="nav-item">INVOICES</a>
-            <a href="transactions.php" class="nav-item">TRANSACTIONS</a>
-            <a href="complaints_admin.php" class="nav-item">COMPLAINTS</a>
-            <a href="reports.php" class="nav-item">REPORTS</a>
-            <a href="profile.php" class="nav-item">PROFILE</a>
-        </nav>
-        <div class="sidebar-footer">
-            <a href="logout.php" class="logout-btn-container">LOG OUT</a>
-        </div>
-    </div>
 
     <script>
         window.onload = () => { document.body.classList.add('fade-in'); };

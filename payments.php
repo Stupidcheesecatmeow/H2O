@@ -129,8 +129,8 @@ $payments = $conn->query("
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Payment Verification | H2O</title>
-    <link rel="stylesheet" href="payment.css">
+    <title>H.O.H Payment Verification</title>
+    <link rel="stylesheet" href="styles/payment.css">
 </head>
 <body>
 
@@ -139,7 +139,7 @@ $payments = $conn->query("
             <h1>Payment Verification</h1>
         </div>
 
-        <!-- FILTER PANEL -->
+        <!-- FILTER -->
         <div class="glass-panel" style="margin-bottom: 15px;">
             <div class="panel-title-bar" style="padding: 8px 20px;">FILTER BY BARANGAY</div>
             <div class="filter-panel-body">
@@ -164,7 +164,7 @@ $payments = $conn->query("
             </div>
         </div>
 
-        <!-- TABLE PANEL -->
+        <!-- TABLE -->
         <div class="glass-panel">
             <div class="panel-title-bar">Transaction Queue</div>
             <div class="table-area">
@@ -211,7 +211,7 @@ $payments = $conn->query("
         </div>
     </div>
 
-    <!-- SIDEBAR RIGHT -->
+    <!-- SIDEBAR -->
     <div class="sidebar-right">
         <img src="assets/logo_name.png" class="side-logo">
         <div class="agent-info" style="color: white; text-align: center; margin-bottom: 30px;">

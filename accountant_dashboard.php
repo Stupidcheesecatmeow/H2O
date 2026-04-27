@@ -99,8 +99,8 @@ while($m = $monthly_chart->fetch_assoc()){
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Accountant Dashboard | H2O</title>
-    <link rel="stylesheet" href="accountant_dashboard.css">
+    <title>H.O.H Accountant Dashboard</title>
+    <link rel="stylesheet" href="styles/accountant_dashboard.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body id="mainBody">
@@ -110,7 +110,7 @@ while($m = $monthly_chart->fetch_assoc()){
             <h1>ACCOUNTANT DASHBOARD</h1>
         </div>
 
-        <!-- STATS ROW 1 -->
+        <!-- STATS -->
         <div class="stats-grid">
             <div class="stat-card">
                 <span class="stat-label">Total Collection</span>
@@ -130,7 +130,7 @@ while($m = $monthly_chart->fetch_assoc()){
             </div>
         </div>
 
-        <!-- CHARTS SECTION -->
+        <!-- CHARTS -->
         <div class="flex-grid">
             <div class="glass-panel">
                 <div class="panel-title-bar">Daily Collection Chart</div>
@@ -146,7 +146,7 @@ while($m = $monthly_chart->fetch_assoc()){
             </div>
         </div>
 
-        <!-- TABLES SECTION -->
+        <!-- TABLES -->
         <div class="flex-grid">
             <div class="glass-panel">
                 <div class="panel-title-bar">Pending Verifications</div>
@@ -204,25 +204,25 @@ while($m = $monthly_chart->fetch_assoc()){
         </div>
     </div>
 
-    <!-- SIDEBAR RIGHT -->
-    <div class="sidebar-right">
-        <img src="assets/logo_name.png" class="side-logo">
-        <div class="agent-info" style="color: white; text-align: center; margin-bottom: 30px;">
-            <h3>ACCOUNTANT</h3>
-            <p style="font-size: 0.7rem; opacity: 0.6;">FINANCE DEPT</p>
+        <!-- SIDEBAR -->
+        <div class="sidebar-right">
+            <img src="assets/logo_name.png" class="side-logo">
+            <div class="agent-info" style="color: white; text-align: center; margin-bottom: 30px;">
+                <h3>ACCOUNTANT</h3>
+                <p style="font-size: 0.7rem; opacity: 0.6;">FINANCE DEPT</p>
+            </div>
+            <nav class="nav-menu" style="width: 100%;">
+                <a href="accountant_dashboard.php" class="nav-item active">DASHBOARD</a>
+                <a href="payments.php" class="nav-item">PAYMENTS</a>
+                <a href="receipts.php" class="nav-item">RECEIPTS</a>
+                <a href="reports_accountant.php" class="nav-item">REPORTS</a>
+                <a href="balance.php" class="nav-item">BALANCE TRACKER</a>
+                <a href="profile.php" class="nav-item">PROFILE</a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="logout.php" class="logout-btn-container">LOG OUT</a>
+            </div>
         </div>
-        <nav class="nav-menu" style="width: 100%;">
-            <a href="accountant_dashboard.php" class="nav-item active">DASHBOARD</a>
-            <a href="payments.php" class="nav-item">PAYMENTS</a>
-            <a href="receipts.php" class="nav-item">RECEIPTS</a>
-            <a href="reports_accountant.php" class="nav-item">REPORTS</a>
-            <a href="balance.php" class="nav-item">BALANCE TRACKER</a>
-            <a href="profile.php" class="nav-item">PROFILE</a>
-        </nav>
-        <div class="sidebar-footer">
-            <a href="logout.php" class="logout-btn-container">LOG OUT</a>
-        </div>
-    </div>
 
     <script>
         window.onload = () => { document.body.style.opacity = "1"; };

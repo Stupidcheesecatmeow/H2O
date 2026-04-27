@@ -66,8 +66,8 @@ $users = $conn->query("SELECT * FROM users");
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>User Management | H2O</title>
-    <link rel="stylesheet" href="user_management.css">
+    <title>H.O.H User Management</title>
+    <link rel="stylesheet" href="styles/user_management.css">
 </head>
 <body id="mainBody">
 
@@ -179,8 +179,8 @@ $users = $conn->query("SELECT * FROM users");
     <div class="sidebar-right">
         <img src="assets/logo_name.png" class="side-logo">
         <div class="agent-info" style="color: white; text-align: center; margin-bottom: 30px;">
-            <h3>ACCOUNTANT</h3>
-            <p style="font-size: 0.7rem; opacity: 0.6;">FINANCE DEPT</p>
+            <h3>ADMIN</h3>
+            <p style="font-size: 0.7rem; opacity: 0.6;">ADMIN DEPT</p>
         </div>
         <nav class="nav-menu">
             <a href="admin_dashboard.php" class="nav-item">DASHBOARD</a>

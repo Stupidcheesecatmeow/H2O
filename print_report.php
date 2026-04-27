@@ -71,8 +71,8 @@ $generated_date = date("F d, Y");
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Admin Report</title>
-    <link rel="stylesheet" href="report.css">
+    <title>H.O.H Admin Report</title>
+    <link rel="stylesheet" href="styles/report.css">
 </head>
 <body>
 
@@ -88,7 +88,7 @@ $generated_date = date("F d, Y");
             <div class="brand">
                 <img src="assets/logo_blk_name.png" alt="Logo">
                 <div>
-                    <h1>H2O</h1>
+                    <h1>H.O.H</h1>
                     <p>Hydro Operations Hub</p>
                     <p>Water Billing and Collection System</p>
                 </div>

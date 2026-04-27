@@ -96,18 +96,17 @@ $history = $conn->query("
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agent Dashboard | H2O</title>
-    <link rel="stylesheet" href="agent_dashboard.css">
+    <title>H.O.H Agent Dashboard</title>
+    <link rel="stylesheet" href="styles/agent_dashboard.css">
 </head>
 <body id="mainBody">
 
-    <!-- MAIN CONTENT AREA -->
     <div class="main-content">
         <div class="header-row">
             <h1>FIELD AGENT DASHBOARD</h1>
         </div>
 
-        <!-- STATS GRID -->
+        <!-- STATS -->
         <div class="stats-grid">
             <div class="stat-card">
                 <span class="stat-label">Assigned Barangay</span>
@@ -127,7 +126,7 @@ $history = $conn->query("
             </div>
         </div>
 
-        <!-- CUSTOMER LIST PANEL -->
+        <!-- CUSTOMER LIST -->
         <div class="glass-panel">
             <div class="panel-title-bar">Active Customers - <?php echo $assigned_barangay; ?></div>
             <div class="table-area">
@@ -190,24 +189,24 @@ $history = $conn->query("
         </div>
     </div>
 
-    <!-- SIDEBAR RIGHT -->
-    <div class="sidebar-right">
-        <img src="assets/logo_name.png" class="side-logo">
-        <div class="agent-info">
-            <h3>AGENT PORTAL</h3>
-            <p>FIELD AGENT</p>
-        </div>
-        
-        <nav class="nav-menu">
-            <a href="agent_dashboard.php" class="nav-item active">DASHBOARD</a>
-            <a href="meter_reading.php" class="nav-item">METER READING</a>
-            <a href="profile.php" class="nav-item">PROFILE</a>
-        </nav>
+        <!-- SIDEBAR -->
+        <div class="sidebar-right">
+            <img src="assets/logo_name.png" class="side-logo">
+            <div class="agent-info">
+                <h3>AGENT PORTAL</h3>
+                <p>FIELD AGENT</p>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="agent_dashboard.php" class="nav-item active">DASHBOARD</a>
+                <a href="meter_reading.php" class="nav-item">METER READING</a>
+                <a href="profile.php" class="nav-item">PROFILE</a>
+            </nav>
 
-        <div class="sidebar-footer">
-            <a href="logout.php" class="logout-btn-container">LOG OUT</a>
+            <div class="sidebar-footer">
+                <a href="logout.php" class="logout-btn-container">LOG OUT</a>
+            </div>
         </div>
-    </div>
 
     <script>
         window.onload = () => { document.body.style.opacity = "1"; };

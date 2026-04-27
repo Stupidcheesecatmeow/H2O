@@ -37,8 +37,8 @@ $others     = getNotifs($conn, "general");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Notifications | H2O</title>
-    <link rel="stylesheet" href="admin_notification.css">
+    <title>H.O.H Admin Notifications</title>
+    <link rel="stylesheet" href="styles/admin_notification.css">
 </head>
 <body id="mainBody">
 
@@ -62,7 +62,7 @@ $others     = getNotifs($conn, "general");
                 $userName = !empty($n['first_name']) ? strtoupper($n['first_name']." ".$n['last_name']) : "SYSTEM";
 
                 echo "<div class='$class'>";
-                    // EXIT / DISMISS BUTTON
+                    // EXIT / DISMISS
                     echo "<a href='?delete=".$n['id']."' class='dismiss-btn' title='Dismiss' onclick='event.stopPropagation(); return confirm(\"Dismiss this notification?\")'>&times;</a>";
                     
                     // CLICKABLE AREA FOR POP-IN
@@ -85,49 +85,48 @@ $others     = getNotifs($conn, "general");
         ?>
     </div>
 
-        <!-- SIDEBAR RIGHT (Matched Layout) -->
-    <div class="sidebar-right">
-        <img src="assets/logo_name.png" class="side-logo">
-        <div class="agent-info" style="color: white; text-align: center; margin-bottom: 30px;">
-            <h3>ACCOUNTANT</h3>
-            <p style="font-size: 0.7rem; opacity: 0.6;">FINANCE DEPT</p>
+        <!-- SIDEBAR -->
+        <div class="sidebar-right">
+            <img src="assets/logo_name.png" class="side-logo">
+            <div class="agent-info" style="color: white; text-align: center; margin-bottom: 30px;">
+                <h3>ADMIN</h3>
+                <p style="font-size: 0.7rem; opacity: 0.6;">ADMIN DEPT</p>
+            </div>
+            <nav class="nav-menu">
+                <a href="admin_dashboard.php" class="nav-item">DASHBOARD</a>
+                <a href="admin_notifications.php" class="nav-item active">NOTIFICATIONS</a>
+                <a href="announcements.php" class="nav-item">ANNOUNCEMENTS</a>
+                <a href="user_management.php" class="nav-item">USER MANAGEMENT</a>
+                <a href="agent_management.php" class="nav-item">FIELD AGENTS</a>
+                <a href="invoices.php" class="nav-item">INVOICES</a>
+                <a href="transactions.php" class="nav-item">TRANSACTIONS</a>
+                <a href="complaints_admin.php" class="nav-item">COMPLAINTS</a>
+                <a href="reports.php" class="nav-item">REPORTS</a>
+                <a href="profile.php" class="nav-item">PROFILE</a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="logout.php" class="logout-btn-container">LOG OUT</a>
+            </div>
         </div>
-        <nav class="nav-menu">
-            <a href="admin_dashboard.php" class="nav-item">DASHBOARD</a>
-            <a href="admin_notifications.php" class="nav-item active">NOTIFICATIONS</a>
-            <a href="announcements.php" class="nav-item">ANNOUNCEMENTS</a>
-            <a href="user_management.php" class="nav-item">USER MANAGEMENT</a>
-            <a href="agent_management.php" class="nav-item">FIELD AGENTS</a>
-            <a href="invoices.php" class="nav-item">INVOICES</a>
-            <a href="transactions.php" class="nav-item">TRANSACTIONS</a>
-            <a href="complaints_admin.php" class="nav-item">COMPLAINTS</a>
-            <a href="reports.php" class="nav-item">REPORTS</a>
-            <a href="profile.php" class="nav-item">PROFILE</a>
-        </nav>
-        <div class="sidebar-footer">
-            <a href="logout.php" class="logout-btn-container">LOG OUT</a>
-        </div>
-    </div>
 
-    <!-- NOTIFICATION POPUP MODAL -->
-    <div id="notifModal" class="modal-overlay">
-        <div class="modal-content glass-panel">
-            <button class="close-btn" onclick="closeNotif()">&times;</button>
-            <div class="modal-body">
-                <h2 id="modalTitle">Title</h2>
-                <div class="modal-meta">
-                    <span id="modalUser">User</span> • <span id="modalDate">Date</span>
-                </div>
-                <hr style="opacity:0.1; margin: 20px 0;">
-                <p id="modalMsg">Message content goes here...</p>
-                <div id="modalActionArea">
-                    <!-- Mark as Read link dynamically added here -->
+        <!-- MODAL -->
+        <div id="notifModal" class="modal-overlay">
+            <div class="modal-content glass-panel">
+                <button class="close-btn" onclick="closeNotif()">&times;</button>
+                <div class="modal-body">
+                    <h2 id="modalTitle">Title</h2>
+                    <div class="modal-meta">
+                        <span id="modalUser">User</span> • <span id="modalDate">Date</span>
+                    </div>
+                    <hr style="opacity:0.1; margin: 20px 0;">
+                    <p id="modalMsg">Message content goes here...</p>
+                    <div id="modalActionArea">
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <script>
+        <script>
         window.onload = () => { document.body.classList.add('fade-in'); };
 
         function openNotif(title, msg, user, date, id, isUnread) {
@@ -155,6 +154,6 @@ $others     = getNotifs($conn, "general");
             let modal = document.getElementById('notifModal');
             if (event.target == modal) { closeNotif(); }
         }
-    </script>
+        </script>
 </body>
 </html>

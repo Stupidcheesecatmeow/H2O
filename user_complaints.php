@@ -66,8 +66,8 @@ $complaints = $conn->query("
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Complaints</title>
-    <link rel="stylesheet" href="dashboard.css">
+    <title>H.O.H Complaints</title>
+    <link rel="stylesheet" href="styles/dashboard.css">
 </head>
 <body>
 

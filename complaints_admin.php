@@ -64,64 +64,95 @@ $complaints = $conn->query("
 ");
 ?>
 
-<link rel="stylesheet" href="dashboard.css">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>H.O.H Complaint Management</title>
+    <link rel="stylesheet" href="styles/complaints_admin.css">
+</head>
+<body id="mainBody">
 
-<div class="layout">
+    <div class="main-content">
+        <div class="header-row">
+            <h1>COMPLAINT MANAGEMENT</h1>
+        </div>
 
-    <div class="sidebar">
-        <h2>Admin</h2>
-        <ul>
-            <li><a href="admin_dashboard.php">Dashboard</a></li>
-            <li><a href="announcements.php">Announcements</a></li>
-            <li><a href="user_management.php">User Management</a></li>
-            <li><a href="agent_management.php">Field Agents</a></li>
-            <li><a href="invoices.php">Invoices</a></li>
-            <li><a href="transactions.php">Transactions</a></li>
-            <li><a href="complaints_admin.php">Complaints</a></li>
-            <li><a href="reports.php">Reports</a></li>
-            <li><a href="profile.php">Profile</a></li>
-            <li><a href="logout.php">Logout</a></li>
-        </ul>
+        <div class="glass-panel">
+            <div class="panel-title-bar">Customer Support Tickets</div>
+            <div class="table-area">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 15%;">Customer</th>
+                            <th style="width: 15%;">Case/Subject</th>
+                            <th style="width: 20%;">Message</th>
+                            <th style="width: 15%;">Current Reply</th>
+                            <th style="width: 10%;">Status</th>
+                            <th style="width: 25%;">Admin Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php while($c = $complaints->fetch_assoc()): ?>
+                        <tr>
+                            <td><strong><?php echo strtoupper($c['first_name']." ".$c['last_name']); ?></strong></td>
+                            <td><span class="case-tag"><?php echo $c['subject']; ?></span></td>
+                            <td><small style="opacity: 0.8;"><?php echo $c['message']; ?></small></td>
+                            <td><small style="color: var(--accent-blue);"><?php echo $c['reply'] ?: 'No reply yet'; ?></small></td>
+                            <td>
+                                <span class="status-pill <?php echo ($c['status'] == 'resolved') ? 'paid' : 'unpaid'; ?>">
+                                    <?php echo strtoupper(str_replace('_', ' ', $c['status'])); ?>
+                                </span>
+                            </td>
+                            <td>
+                                <form method="POST" class="reply-form">
+                                    <input type="hidden" name="complaint_id" value="<?php echo $c['id']; ?>">
+                                    <textarea name="reply" placeholder="Type resolution or update..." required></textarea>
+                                    
+                                    <div class="action-row">
+                                        <select name="status">
+                                            <option value="open" <?php if($c['status']=='open') echo 'selected'; ?>>Open</option>
+                                            <option value="in_progress" <?php if($c['status']=='in_progress') echo 'selected'; ?>>In Progress</option>
+                                            <option value="resolved" <?php if($c['status']=='resolved') echo 'selected'; ?>>Resolved</option>
+                                        </select>
+                                        <button name="reply_complaint" class="btn-reply">SUBMIT</button>
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                        <?php endwhile; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
-    <div class="main">
+        <!-- SIDEBAR -->
+        <div class="sidebar-right">
+            <img src="assets/logo_name.png" class="side-logo">
+            <div class="agent-info" style="color: white; text-align: center; margin-bottom: 30px;">
+                <h3>ADMIN</h3>
+                <p style="font-size: 0.7rem; opacity: 0.6;">ADMIN DEPT</p>
+            </div>
+            <nav class="nav-menu">
+                <a href="admin_dashboard.php" class="nav-item">DASHBOARD</a>
+                <a href="admin_notifications.php" class="nav-item">NOTIFICATIONS</a>
+                <a href="announcements.php" class="nav-item">ANNOUNCEMENTS</a>
+                <a href="user_management.php" class="nav-item">USER MANAGEMENT</a>
+                <a href="agent_management.php" class="nav-item">FIELD AGENTS</a>
+                <a href="invoices.php" class="nav-item">INVOICES</a>
+                <a href="transactions.php" class="nav-item">TRANSACTIONS</a>
+                <a href="complaints_admin.php" class="nav-item  active">COMPLAINTS</a>
+                <a href="reports.php" class="nav-item">REPORTS</a>
+                <a href="profile.php" class="nav-item">PROFILE</a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="logout.php" class="logout-btn-container">LOG OUT</a>
+            </div>
+        </div>
 
-        <h1>Complaint Panel</h1>
-
-        <table>
-            <tr>
-                <th>Customer</th>
-                <th>Case</th>
-                <th>Message</th>
-                <th>Reply</th>
-                <th>Status</th>
-                <th>Action</th>
-            </tr>
-
-            <?php while($c = $complaints->fetch_assoc()): ?>
-            <tr>
-                <td><?php echo $c['first_name']." ".$c['last_name']; ?></td>
-                <td><?php echo $c['subject']; ?></td>
-                <td><?php echo $c['message']; ?></td>
-                <td><?php echo $c['reply']; ?></td>
-                <td><?php echo $c['status']; ?></td>
-                <td>
-                    <form method="POST">
-                        <input type="hidden" name="complaint_id" value="<?php echo $c['id']; ?>">
-                        <textarea name="reply" placeholder="Reply" required></textarea>
-
-                        <select name="status">
-                            <option value="open">Open</option>
-                            <option value="in_progress">In Progress</option>
-                            <option value="resolved">Resolved</option>
-                        </select>
-
-                        <button name="reply_complaint">Reply</button>
-                    </form>
-                </td>
-            </tr>
-            <?php endwhile; ?>
-        </table>
-
-    </div>
-</div>
+        <script>
+            window.onload = () => { document.body.style.opacity = "1"; };
+        </script>
+</body>
+</html>

@@ -67,8 +67,8 @@ if (!$announcements) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notifications | H2O</title>
-    <link rel="stylesheet" href="user_design.css">
+    <title>H.O.H Notifications</title>
+    <link rel="stylesheet" href="styles/user_design.css">
 </head>
 <body id="mainBody">
 

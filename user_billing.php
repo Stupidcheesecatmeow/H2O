@@ -24,19 +24,19 @@ ORDER BY i.created_at DESC
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Billing | H2O</title>
+    <title>H.O.H My Billing</title>
     
-    <link rel="stylesheet" href="user_design.css">
+    <link rel="stylesheet" href="styles/user_design.css">
 </head>
 <body id="mainBody">
 
-    <!-- MAIN CONTENT AREA -->
+    <!-- MAIN CONTENT -->
     <div class="main-content">
         <div class="header-row">
             <h1>BILLING HISTORY</h1>
         </div>
 
-        <!-- GLASS TABLE PANEL -->
+        <!-- GLASS TABLE -->
         <div class="glass-panel">
             <div class="panel-title-bar">Invoice Records</div>
             
@@ -91,7 +91,7 @@ ORDER BY i.created_at DESC
         </div>
     </div>
 
-    <!-- SIDEBAR RIGHT -->
+    <!-- SIDEBAR -->
     <div class="sidebar-right">
         <img src="assets/logo_name.png" class="side-logo">
         <div class="agent-info">

@@ -59,8 +59,8 @@ $period_to = date("m/d/Y", strtotime($invoice['due_date']));
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Print Invoice</title>
-    <link rel="stylesheet" href="invoice.css">
+    <title>H.O.H Print Invoice</title>
+    <link rel="stylesheet" href="styles/invoice.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
@@ -79,7 +79,7 @@ $period_to = date("m/d/Y", strtotime($invoice['due_date']));
             <div class="brand">
                 <img src="assets/logo_blk_name.png" alt="Logo">
                 <div>
-                    <h1>H2O</h1>
+                    <h1>H.O.H</h1>
                     <p>Hydro Operations Hub</p>
                     <p>Water Billing and Collection System</p>
                 </div>

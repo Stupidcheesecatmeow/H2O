@@ -25,8 +25,8 @@ if(isset($_POST['check'])){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forgot Password | H2O</title>
-    <link rel="stylesheet" href="forgot.css">
+    <title>H.O.H Forgot Password</title>
+    <link rel="stylesheet" href="styles/forgot.css">
 </head>
 <body id="mainBody">
 
@@ -56,35 +56,35 @@ if(isset($_POST['check'])){
         </div>
     </div>
 
-<script>
-    // 1. Smooth Fade-in on load
-    window.addEventListener('DOMContentLoaded', () => {
-        document.body.classList.add('fade-in');
-    });
+    <script>
+        // 1. Smooth Fade-in
+        window.addEventListener('DOMContentLoaded', () => {
+            document.body.classList.add('fade-in');
+        });
 
-    // 2. Transition for "Back to Login"
-    document.getElementById('backToLogin').addEventListener('click', function(e) {
-        e.preventDefault(); 
-        const targetUrl = this.getAttribute('href');
-        document.body.classList.add('fade-out');
-        setTimeout(() => {
-            window.location.href = targetUrl;
-        }, 400); // Matches CSS transition time
-    });
+        // 2. Transition for "Back to Login"
+        document.getElementById('backToLogin').addEventListener('click', function(e) {
+            e.preventDefault(); 
+            const targetUrl = this.getAttribute('href');
+            document.body.classList.add('fade-out');
+            setTimeout(() => {
+                window.location.href = targetUrl;
+            }, 400); // Matches CSS transition time
+        });
 
-    // 3. Transition for "Continue" button
-    document.getElementById('forgotForm').addEventListener('submit', function() {
-        const btn = document.getElementById('forgotBtn');
-        
-        // Add a loading state to the button
-        btn.innerHTML = "Verifying...";
-        btn.style.opacity = "0.7";
-        btn.style.pointerEvents = "none";
+        // 3. Transition for "Continue" button
+        document.getElementById('forgotForm').addEventListener('submit', function() {
+            const btn = document.getElementById('forgotBtn');
+            
+            // Add a loading state to the button
+            btn.innerHTML = "Verifying...";
+            btn.style.opacity = "0.7";
+            btn.style.pointerEvents = "none";
 
-        // Trigger the visual fade out while the server processes
-        document.body.classList.add('fade-out');
-    });
-</script>
+            // Trigger the visual fade out while the server processes
+            document.body.classList.add('fade-out');
+        });
+    </script>
 
 </body>
 </html>

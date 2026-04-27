@@ -65,8 +65,8 @@ if(isset($_POST['register'])){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>H2O - Sign Up</title>
-    <link rel="stylesheet" href="regis.css">
+    <title>H.O.H Sign Up</title>
+    <link rel="stylesheet" href="styles/regis.css">
 </head>
 <body class="body_regis">
 <div class="container_regis">
