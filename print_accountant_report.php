@@ -81,12 +81,12 @@ $generated_date = date("F d, Y");
 <div class="report">
 
     <div class="watermark">
-        <img src="assets/spongy.png" alt="Watermark">
+        <img src="assets/logo_blk_name.png" alt="Watermark">
     </div>
 
     <div class="report-header">
         <div class="brand">
-            <img src="assets/spongy.png" alt="Logo">
+            <img src="assets/logo_blk_name.png" alt="Logo">
             <div>
                 <h1>H2O</h1>
                 <p>Hydro Operations Hub</p>

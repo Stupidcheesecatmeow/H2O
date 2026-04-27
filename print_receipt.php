@@ -81,12 +81,12 @@ $period_to = date("m/d/Y", strtotime($r['due_date']));
 <div class="invoice">
 
     <div class="watermark">
-        <img src="assets/spongy.png" alt="Watermark">
+        <img src="assets/logo_blk_name.png" alt="Watermark">
     </div>
 
     <div class="header">
         <div class="brand">
-            <img src="assets/spongy.png" alt="Logo">
+            <img src="assets/logo_blk_name.png" alt="Logo">
             <div>
                 <h1>H2O</h1>
                 <p>Hydro Operations Hub</p>
