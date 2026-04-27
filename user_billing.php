@@ -25,7 +25,7 @@ ORDER BY i.created_at DESC
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Billing | H2O</title>
-    <!-- Linking to your shared CSS file -->
+    
     <link rel="stylesheet" href="user_design.css">
 </head>
 <body id="mainBody">
@@ -66,7 +66,7 @@ ORDER BY i.created_at DESC
                                 </td>
                                 <td style="font-weight: 800; color: #2ecc71;">₱<?php echo number_format($b['amount'], 2); ?></td>
                                 <td>
-                                    <!-- Using status-pill class from your CSS -->
+                                    
                                     <span class="status-pill <?php echo $status_class; ?>">
                                         <?php echo strtoupper($b['status']); ?>
                                     </span>

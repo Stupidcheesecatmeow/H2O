@@ -104,7 +104,7 @@ $receipts = $conn->query("
                             <td style="font-size: 0.75rem; opacity: 0.7;"><?php echo date('M d, Y', strtotime($r['issued_at'])); ?></td>
                             <td style="text-align: right;">
                                 <a href="print_receipt.php?id=<?php echo $r['id']; ?>" target="_blank">
-                                    <button class="receipt-btn">PRINT RECEIPT</button>
+                                    <button class="print-btn">PRINT RECEIPT</button>
                                 </a>
                             </td>
                         </tr>
