@@ -79,119 +79,126 @@ while($row = $usage_query->fetch_assoc()){
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="dashboard.css">
+    <meta charset="UTF-8">
+    <title>Admin Dashboard | H2O</title>
+    <link rel="stylesheet" href="admin_dashboard.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body>
+<body id="mainBody">
 
-    <div class="layout">
-
-        <div class="sidebar">
-            <h2>Admin</h2>
-            <ul>
-                <li><a href="admin_dashboard.php">Dashboard</a></li>
-                <li><a href="admin_notifications.php">Notifications</a></li>
-                <li><a href="announcements.php">Announcements</a></li>
-                <li><a href="user_management.php">User Management</a></li>
-                <li><a href="agent_management.php">Field Agents</a></li>
-                <li><a href="invoices.php">Invoices</a></li>
-                <li><a href="transactions.php">Transactions</a></li>
-                <li><a href="complaints_admin.php">Complaints</a></li>
-                <li><a href="reports.php">Reports</a></li>
-                <li><a href="profile.php">Profile</a></li>
-                <li><a href="logout.php">Logout</a></li>
-            </ul>
+    <div class="main-content">
+        <div class="header-row">
+            <h1>ADMIN DASHBOARD</h1>
         </div>
 
-        <div class="main">
+        <!-- STATS ROW 1 -->
+        <div class="stats-grid">
+            <div class="stat-card"><span class="stat-label">Total Users</span><span class="stat-value"><?php echo $total_users; ?></span></div>
+            <div class="stat-card"><span class="stat-label">Field Agents</span><span class="stat-value"><?php echo $total_agents; ?></span></div>
+            <div class="stat-card"><span class="stat-label">Total Collection</span><span class="stat-value" style="color:var(--success);">₱<?php echo number_format($total_collection,2); ?></span></div>
+            <div class="stat-card"><span class="stat-label">Paid Bills</span><span class="stat-value"><?php echo $paid; ?></span></div>
+            <div class="stat-card"><span class="stat-label">Pending</span><span class="stat-value" style="color:var(--warning);"><?php echo $pending; ?></span></div>
+        </div>
 
-            <h1>Admin Dashboard</h1>
-
-            <div class="cards">
-                <div class="card">Total Users<br><strong><?php echo $total_users; ?></strong></div>
-                <div class="card">Field Agents<br><strong><?php echo $total_agents; ?></strong></div>
-                <div class="card">Total Collection<br><strong>₱<?php echo number_format($total_collection,2); ?></strong></div>
-                <div class="card">Paid Bills<br><strong><?php echo $paid; ?></strong></div>
-                <div class="card">Pending Bills<br><strong><?php echo $pending; ?></strong></div>
+        <!-- STATS ROW 2 (With Links) -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-label">Complaints</span>
+                <span class="stat-value"><?php echo $new_complaints; ?></span>
+                <a href="complaints_admin.php" class="stat-link">View Details →</a>
             </div>
-
-            <div class="cards">
-                <div class="card">
-                    Open Complaints<br>
-                    <strong><?php echo $new_complaints; ?></strong><br>
-                    <a href="complaints_admin.php">View complaints</a>
-                </div>
-
-                <div class="card">
-                    Pending Payment Verification<br>
-                    <strong><?php echo $pending_payments; ?></strong><br>
-                    <a href="transactions.php">View transactions</a>
-                </div>
-
-                <div class="card">
-                    Overdue Bills<br>
-                    <strong><?php echo $overdue; ?></strong><br>
-                    <a href="reports.php">View report</a>
-                </div>
-
-                <div class="card">
-                    Notifications<br>
-                    <strong><?php echo $profile_update_count; ?></strong><br>
-                    <a href="admin_notifications.php">View updates</a>
-                </div>
-
+            <div class="stat-card">
+                <span class="stat-label">Pending Verify</span>
+                <span class="stat-value"><?php echo $pending_payments; ?></span>
+                <a href="transactions.php" class="stat-link">Verifications →</a>
             </div>
-
-            <div class="tables">
-                <div class="table-box">
-                    <h2>Monthly Collection</h2>
-                    <canvas id="collectionChart"></canvas>
-                </div>
-
-                <div class="table-box">
-                    <h2>Water Usage Trend</h2>
-                    <canvas id="usageChart"></canvas>
-                </div>
+            <div class="stat-card">
+                <span class="stat-label">Overdue Bills</span>
+                <span class="stat-value" style="color:var(--danger);"><?php echo $overdue; ?></span>
+                <a href="reports.php" class="stat-link">View Reports →</a>
             </div>
-
-            <div class="tables">
-
-                <div class="table-box">
-                    <h2>Recent Announcements</h2>
-
-                    <?php if($announcements->num_rows > 0): ?>
-                        <?php while($a = $announcements->fetch_assoc()): ?>
-                            <div style="border-bottom:1px solid #ddd; padding:10px;">
-                                <strong><?php echo $a['title']; ?></strong><br>
-                                <small><?php echo $a['announcement_date']; ?></small>
-                                <p><?php echo $a['message']; ?></p>
-                            </div>
-                        <?php endwhile; ?>
-                    <?php else: ?>
-                        <p>No announcements yet.</p>
-                    <?php endif; ?>
-
-                </div>
-
+            <div class="stat-card">
+                <span class="stat-label">Notifications</span>
+                <span class="stat-value"><?php echo $profile_update_count; ?></span>
+                <a href="admin_notifications.php" class="stat-link">View Updates →</a>
             </div>
+        </div>
 
+        <!-- CHARTS SECTION -->
+        <div class="flex-grid">
+            <div class="glass-panel">
+                <div class="panel-title-bar">Monthly Collection Graph</div>
+                <div class="content-area"><canvas id="collectionChart" height="200"></canvas></div>
+            </div>
+            <div class="glass-panel">
+                <div class="panel-title-bar">Water Usage Trend</div>
+                <div class="content-area"><canvas id="usageChart" height="200"></canvas></div>
+            </div>
+        </div>
+
+        <!-- ANNOUNCEMENTS -->
+        <div class="glass-panel">
+            <div class="panel-title-bar">Recent System Announcements</div>
+            <div class="content-area" style="padding: 0 20px;">
+                <?php if($announcements->num_rows > 0): ?>
+                    <?php while($a = $announcements->fetch_assoc()): ?>
+                        <div class="announcement-row">
+                            <strong><?php echo $a['title']; ?></strong> • <small><?php echo date('M d, Y', strtotime($a['announcement_date'])); ?></small>
+                            <p><?php echo $a['message']; ?></p>
+                        </div>
+                    <?php endwhile; ?>
+                <?php else: ?>
+                    <p style="padding: 20px; opacity: 0.5; text-align: center;">No announcements published.</p>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+
+    <!-- SIDEBAR RIGHT -->
+    <div class="sidebar-right">
+        <img src="assets/logo_name.png" class="side-logo">
+        <div class="agent-info" style="color: white; text-align: center; margin-bottom: 30px;">
+            <h3>ACCOUNTANT</h3>
+            <p style="font-size: 0.7rem; opacity: 0.6;">FINANCE DEPT</p>
+        </div>
+        <nav class="nav-menu">
+            <a href="admin_dashboard.php" class="nav-item active">DASHBOARD</a>
+            <a href="admin_notifications.php" class="nav-item">NOTIFICATIONS</a>
+            <a href="announcements.php" class="nav-item">ANNOUNCEMENTS</a>
+            <a href="user_management.php" class="nav-item">USER MANAGEMENT</a>
+            <a href="agent_management.php" class="nav-item">FIELD AGENTS</a>
+            <a href="invoices.php" class="nav-item">INVOICES</a>
+            <a href="transactions.php" class="nav-item">TRANSACTIONS</a>
+            <a href="complaints_admin.php" class="nav-item">COMPLAINTS</a>
+            <a href="reports.php" class="nav-item">REPORTS</a>
+            <a href="profile.php" class="nav-item">PROFILE</a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="logout.php" class="logout-btn-container">LOG OUT</a>
         </div>
     </div>
 
     <script>
+        window.onload = () => { document.body.classList.add('fade-in'); };
+
+        // Chart styling for dark theme
+        Chart.defaults.color = '#bdc3c7';
+        Chart.defaults.borderColor = 'rgba(255,255,255,0.05)';
+
         new Chart(document.getElementById("collectionChart"), {
             type: "bar",
             data: {
                 labels: <?php echo json_encode($collection_labels); ?>,
                 datasets: [{
-                    label: "Collection",
+                    label: "₱ Collection",
                     data: <?php echo json_encode($collection_data); ?>,
-                    borderWidth: 1
+                    backgroundColor: '#3498db',
+                    borderRadius: 5
                 }]
-            }
+            },
+            options: { responsive: true, maintainAspectRatio: false }
         });
 
         new Chart(document.getElementById("usageChart"), {
@@ -199,13 +206,28 @@ while($row = $usage_query->fetch_assoc()){
             data: {
                 labels: <?php echo json_encode($usage_labels); ?>,
                 datasets: [{
-                    label: "Usage",
+                    label: "m³ Usage",
                     data: <?php echo json_encode($usage_data); ?>,
-                    borderWidth: 2
+                    borderColor: '#2ecc71',
+                    backgroundColor: 'rgba(46, 204, 113, 0.1)',
+                    fill: true,
+                    tension: 0.4
                 }]
-            }
+            },
+            options: { responsive: true, maintainAspectRatio: false }
+        });
+
+        // Fast link transitions
+        document.querySelectorAll('.nav-item, .logout-btn').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const target = this.getAttribute('href');
+                if (target && target !== '#') {
+                    e.preventDefault();
+                    document.body.classList.add('fade-out-fast');
+                    setTimeout(() => { window.location.href = target; }, 200);
+                }
+            });
         });
     </script>
-
 </body>
 </html>
