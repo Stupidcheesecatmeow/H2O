@@ -96,7 +96,7 @@ if (isset($_POST['update_profile'])) {
             first_name=?, last_name=?, email=?, contact_no=? 
             WHERE id=?");
 
-        $stmt->bind_param("sssssi", $fname, $lname, $email, $contact, $user_id);
+        $stmt->bind_param("ssssi", $fname, $lname, $email, $contact, $user_id);
     }
 
     $stmt->execute();
@@ -198,10 +198,10 @@ $avatar = !empty($user['avatar']) ? $user['avatar'] : "default.png";
 <?php else: ?>
 <ul>
     <li><a href="user_dashboard.php">Dashboard</a></li>
-    <li><a href="billing.php">Billing</a></li>
-    <li><a href="payment.php">Payment</a></li>
-    <li><a href="history.php">History</a></li>
-    <li><a href="complaints.php">Complaints</a></li>
+    <li><a href="user_billing.php">Billing</a></li>
+    <li><a href="user_payments.php">Payment</a></li>
+    <li><a href="user_history.php">History</a></li>
+    <li><a href="user_complaints.php">Complaints</a></li>
     <li><a href="profile.php">Profile</a></li>
     <li><a href="logout.php">Logout</a></li>
 </ul>
@@ -315,6 +315,8 @@ $avatar = !empty($user['avatar']) ? $user['avatar'] : "default.png";
 
     <?php else: ?>
 
+        <input type="text" name="first_name" placeholder="First Name" value="<?php echo $user['first_name']; ?>" required>
+        <input type="text" name="last_name" placeholder="Last Name" value="<?php echo $user['last_name']; ?>" required>
         <input type="email" name="email" placeholder="Email" value="<?php echo $user['email']; ?>" required>
         <input type="text" name="contact_no" placeholder="Contact No." value="<?php echo $user['contact_no']; ?>" required>
 
