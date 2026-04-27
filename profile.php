@@ -233,6 +233,17 @@ $avatar = !empty($user['avatar']) ? $user['avatar'] : "default.png";
                 </div>
             </div>
 
+            <div class="form-row">
+                <div class="input-group">
+                    <label>BARANGAY:</label>
+                    <input type="text" name="barangay" value="<?php echo $user['barangay']; ?>" required>
+                </div>
+                <div class="input-group">
+                    <label>STREET:</label>
+                    <input type="text" name="street" value="<?php echo $user['street']; ?>" required>
+                </div>
+            </div>
+
             <!-- Row 2: Email & Contact -->
             <div class="form-row">
                 <div class="input-group">
