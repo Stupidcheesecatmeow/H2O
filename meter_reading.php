@@ -2,21 +2,14 @@
 session_start();
 include "db.php";
 
-<<<<<<< HEAD
-if ($_SESSION['role'] != "agent") {
-=======
 if (!isset($_SESSION['role']) || $_SESSION['role'] != "agent") {
->>>>>>> be3ddca4134d56b51216987ef9432112f9f42a32
     header("Location: index.php");
     exit();
 }
 
 $agent_id = $_SESSION['user_id'];
 
-<<<<<<< HEAD
-=======
 /* GET ASSIGNED BARANGAY */
->>>>>>> be3ddca4134d56b51216987ef9432112f9f42a32
 $assignment = $conn->query("
     SELECT area 
     FROM agent_assignments 
@@ -25,10 +18,6 @@ $assignment = $conn->query("
 
 $assigned_barangay = $assignment['area'] ?? "";
 
-<<<<<<< HEAD
-$customers = $conn->query("
-    SELECT id, first_name, last_name, barangay, street, meter_number 
-=======
 /* SAVE READING */
 if(isset($_POST['save'])){
     $user_id = $_POST['user_id'];
@@ -83,17 +72,10 @@ if(isset($_POST['save'])){
 /* CUSTOMERS ONLY FROM ASSIGNED BARANGAY */
 $customers = $conn->query("
     SELECT id, user_code, first_name, last_name, barangay, street, meter_number
->>>>>>> be3ddca4134d56b51216987ef9432112f9f42a32
     FROM users 
     WHERE role='user' 
     AND status='active'
     AND barangay='$assigned_barangay'
-<<<<<<< HEAD
-");
-?>
-
-<link rel="stylesheet" href="dashboard.css">
-=======
     ORDER BY street ASC, meter_number ASC
 ");
 
@@ -115,7 +97,6 @@ $history = $conn->query("
     <link rel="stylesheet" href="dashboard.css">
 </head>
 <body>
->>>>>>> be3ddca4134d56b51216987ef9432112f9f42a32
 
     <div class="layout">
 

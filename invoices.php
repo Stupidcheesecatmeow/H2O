@@ -67,14 +67,6 @@ $rate = 0;
     );
 
     if ($insert->execute()) {
-<<<<<<< HEAD
-        echo "<script>alert('Billing invoice released'); window.location='invoices.php';</script>";
-        exit();
-    } else {
-        echo "<script>alert('Failed to release invoice'); window.location='invoices.php';</script>";
-        exit();
-    }
-=======
 
     $notif = $conn->prepare("INSERT INTO notifications 
     (user_id, role_target, title, message, type, status, link)
@@ -90,7 +82,6 @@ $rate = 0;
     echo "<script>alert('Failed to release invoice'); window.location='invoices.php';</script>";
     exit();
 }
->>>>>>> be3ddca4134d56b51216987ef9432112f9f42a32
 }
 
 /* UNRELEASED READINGS */

@@ -70,18 +70,11 @@ LIMIT 3
 <h2><?php echo $user['first_name']; ?></h2>
 <ul>
     <li><a href="user_dashboard.php">Dashboard</a></li>
-<<<<<<< HEAD
-    <li><a href="billing.php">Billing</a></li>
-    <li><a href="payment.php">Payment</a></li>
-    <li><a href="history.php">History</a></li>
-    <li><a href="complaints.php">Complaints</a></li>
-=======
     <li><a href="user_notifications.php">Notifications</a></li>
     <li><a href="user_billing.php">Billing</a></li>
     <li><a href="user_payments.php">Payment</a></li>
     <li><a href="user_history.php">History</a></li>
     <li><a href="user_complaints.php">Complaints</a></li>
->>>>>>> be3ddca4134d56b51216987ef9432112f9f42a32
     <li><a href="profile.php">Profile</a></li>
     <li><a href="logout.php">Logout</a></li>
 </ul>
