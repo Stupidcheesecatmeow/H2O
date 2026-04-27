@@ -18,6 +18,8 @@
         <div class="left">
             <img src="assets/logo_name.png" alt="logo" class="logo">
 
+            <div class="forgot-box"><img src="assets/peek-water.png" class="peek-water" alt="water mascot"></div>
+
             <form action="login.php" method="POST">
 
                 <label for="email">Email</label>

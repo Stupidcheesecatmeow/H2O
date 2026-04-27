@@ -306,3 +306,20 @@ button#lgnBtn:disabled {
     }
 }
 
+.peek-water{
+    position: absolute;
+    width: 120px;
+    right: -35px;
+    top: 40px;
+    animation: peekTop 2.5s ease-in-out infinite;
+}
+
+@keyframes peekTop{
+    0%, 100%{
+        transform: translateY(0);
+    }
+    50%{
+        transform: translateY(12px);
+    }
+}
+
