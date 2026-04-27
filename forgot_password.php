@@ -35,7 +35,7 @@ if(isset($_POST['check'])){
 
         <div class="left">
             <img src="assets/logo_name.png" class="logo">
-
+            <div class="forgot-box"><img src="assets/peek-water.png" class="peek-water" alt="water mascot"></div>
             <form method="POST">
                 <h2>Forgot Password</h2>
                 <p class="subtitle">Please verify your account details to proceed.</p>

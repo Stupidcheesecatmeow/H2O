@@ -127,3 +127,20 @@ button#forgotBtn:hover {
 @media (max-width: 600px) {
     .left { flex: 0 0 95%; padding: 30px 20px; }
 }
+
+.peek-water{
+    position: absolute;
+    width: 120px;
+    right: -35px;
+    top: 40px;
+    animation: peekTop 2.5s ease-in-out infinite;
+}
+
+@keyframes peekTop{
+    0%, 100%{
+        transform: translateY(0);
+    }
+    50%{
+        transform: translateY(12px);
+    }
+}
