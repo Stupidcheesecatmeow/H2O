@@ -87,11 +87,16 @@ if (isset($_POST['update_profile'])) {
         $stmt->bind_param("ssssssi", $fname, $lname, $email, $contact, $barangay, $street, $user_id);
 
     } else {
+        $fname = $_POST['first_name'];
+        $lname = $_POST['last_name'];
         $email = $_POST['email'];
         $contact = $_POST['contact_no'];
 
-        $stmt = $conn->prepare("UPDATE users SET email=?, contact_no=? WHERE id=?");
-        $stmt->bind_param("ssi", $email, $contact, $user_id);
+        $stmt = $conn->prepare("UPDATE users SET 
+            first_name=?, last_name=?, email=?, contact_no=? 
+            WHERE id=?");
+
+        $stmt->bind_param("sssssi", $fname, $lname, $email, $contact, $user_id);
     }
 
     $stmt->execute();
