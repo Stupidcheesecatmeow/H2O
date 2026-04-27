@@ -158,57 +158,6 @@ $avatar = !empty($user['avatar']) ? $user['avatar'] : "default.png";
 
 <div class="layout">
 
-<div class="sidebar">
-<h2><?php echo ucfirst($role); ?></h2>
-
-<?php if($role == "admin"): ?>
-<ul>
-    <li><a href="admin_dashboard.php">Dashboard</a></li>
-    <li><a href="announcements.php">Announcements</a></li>
-    <li><a href="user_management.php">User Management</a></li>
-    <li><a href="agent_management.php">Field Agents</a></li>
-    <li><a href="invoices.php">Invoices</a></li>
-    <li><a href="transactions.php">Transactions</a></li>
-    <li><a href="complaints_admin.php">Complaints</a></li>
-    <li><a href="reports.php">Reports</a></li>
-    <li><a href="profile.php">Profile</a></li>
-    <li><a href="logout.php">Logout</a></li>
-</ul>
-
-<?php elseif($role == "accountant"): ?>
-<ul>
-    <li><a href="accountant_dashboard.php">Dashboard</a></li>
-    <li><a href="payments.php">Payments</a></li>
-    <li><a href="receipts.php">Receipts</a></li>
-    <li><a href="reports_accountant.php">Reports</a></li>
-    <li><a href="balance.php">Balance Tracker</a></li>
-    <li><a href="profile.php">Profile</a></li>
-    <li><a href="logout.php">Logout</a></li>
-</ul>
-
-<?php elseif($role == "agent"): ?>
-<ul>
-    <li><a href="agent_dashboard.php">Dashboard</a></li>
-    <li><a href="customers.php">Customers</a></li>
-    <li><a href="meter_reading.php">Meter Reading</a></li>
-    <li><a href="profile.php">Profile</a></li>
-    <li><a href="logout.php">Logout</a></li>
-</ul>
-
-<?php else: ?>
-<ul>
-    <li><a href="user_dashboard.php">Dashboard</a></li>
-    <li><a href="user_billing.php">Billing</a></li>
-    <li><a href="user_payments.php">Payment</a></li>
-    <li><a href="user_history.php">History</a></li>
-    <li><a href="user_complaints.php">Complaints</a></li>
-    <li><a href="profile.php">Profile</a></li>
-    <li><a href="logout.php">Logout</a></li>
-</ul>
-<?php endif; ?>
-
-</div>
-
 <div class="main">
 
 <h1>Profile Settings</h1>
