@@ -96,128 +96,141 @@ while($m = $monthly_chart->fetch_assoc()){
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Accountant Dashboard</title>
-    <link rel="stylesheet" href="dashboard.css">
+    <meta charset="UTF-8">
+    <title>Accountant Dashboard | H2O</title>
+    <link rel="stylesheet" href="accountant_dashboard.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body>
+<body id="mainBody">
 
-    <div class="layout">
-
-        <div class="sidebar">
-            <h2>Accountant</h2>
-            <ul>
-                <li><a href="accountant_dashboard.php">Dashboard</a></li>
-                <li><a href="payments.php">Payments</a></li>
-                <li><a href="receipts.php">Receipts</a></li>
-                <li><a href="reports_accountant.php">Reports</a></li>
-                <li><a href="balance.php">Balance Tracker</a></li>
-                <li><a href="profile.php">Profile</a></li>
-                <li><a href="logout.php">Logout</a></li>
-            </ul>
+    <div class="main-content">
+        <div class="header-row">
+            <h1>ACCOUNTANT DASHBOARD</h1>
         </div>
 
-        <div class="main">
-
-            <h1>Accountant Dashboard</h1>
-
-            <div class="cards">
-                <div class="card">Total Collection<br><strong>₱<?php echo number_format($total_collection, 2); ?></strong></div>
-                <div class="card">Payments Received<br><strong><?php echo $payments_received; ?></strong></div>
-                <div class="card">Pending Verification<br><strong><?php echo $pending_verification; ?></strong></div>
-                <div class="card">Overdue Accounts<br><strong><?php echo $overdue_accounts; ?></strong></div>
+        <!-- STATS ROW 1 -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-label">Total Collection</span>
+                <span class="stat-value" style="color: var(--success);">₱<?php echo number_format($total_collection, 2); ?></span>
             </div>
-
-            <div class="cards">
-                <div class="card">
-                    Verified Payments<br>
-                    <strong><?php echo $verified_payments; ?></strong>
-                </div>
-
-                <div class="card">
-                    Rejected Payments<br>
-                    <strong><?php echo $rejected_payments; ?></strong>
-                </div>
+            <div class="stat-card">
+                <span class="stat-label">Payments Received</span>
+                <span class="stat-value"><?php echo $payments_received; ?></span>
             </div>
+            <div class="stat-card">
+                <span class="stat-label">Pending Verification</span>
+                <span class="stat-value" style="color: var(--warning);"><?php echo $pending_verification; ?></span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Overdue Accounts</span>
+                <span class="stat-value" style="color: var(--danger);"><?php echo $overdue_accounts; ?></span>
+            </div>
+        </div>
 
-            <div class="tables">
-                <div class="table-box">
-                    <h2>Daily Collection Chart</h2>
-                    <canvas id="dailyChart"></canvas>
-                </div>
-
-                <div class="table-box">
-                    <h2>Monthly Collection Chart</h2>
-                    <canvas id="monthlyChart"></canvas>
+        <!-- CHARTS SECTION -->
+        <div class="flex-grid">
+            <div class="glass-panel">
+                <div class="panel-title-bar">Daily Collection Chart</div>
+                <div class="content-area">
+                    <canvas id="dailyChart" style="max-height: 250px;"></canvas>
                 </div>
             </div>
+            <div class="glass-panel">
+                <div class="panel-title-bar">Monthly Collection Chart</div>
+                <div class="content-area">
+                    <canvas id="monthlyChart" style="max-height: 250px;"></canvas>
+                </div>
+            </div>
+        </div>
 
-            <div class="tables">
-
-                <div class="table-box">
-                    <h2>Pending Payment Notifications</h2>
-
+        <!-- TABLES SECTION -->
+        <div class="flex-grid">
+            <div class="glass-panel">
+                <div class="panel-title-bar">Pending Verifications</div>
+                <div class="content-area">
                     <?php if($pending_list->num_rows > 0): ?>
-                    <table>
-                        <tr>
-                            <th>Transaction</th>
-                            <th>Customer</th>
-                            <th>Invoice</th>
-                            <th>Amount</th>
-                            <th>Date</th>
-                        </tr>
-
-                        <?php while($p = $pending_list->fetch_assoc()): ?>
-                        <tr>
-                            <td><?php echo $p['transaction_no']; ?></td>
-                            <td><?php echo $p['first_name']." ".$p['last_name']; ?></td>
-                            <td><?php echo $p['invoice_no']; ?></td>
-                            <td>₱<?php echo number_format($p['amount'], 2); ?></td>
-                            <td><?php echo $p['paid_at']; ?></td>
-                        </tr>
-                        <?php endwhile; ?>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Transaction</th>
+                                <th>Customer</th>
+                                <th>Amount</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php while($p = $pending_list->fetch_assoc()): ?>
+                            <tr>
+                                <td><small><?php echo $p['transaction_no']; ?></small></td>
+                                <td><strong><?php echo $p['first_name']; ?></strong></td>
+                                <td style="color: var(--success);">₱<?php echo number_format($p['amount'], 2); ?></td>
+                                <td style="font-size: 0.7rem; opacity: 0.7;"><?php echo date('M d', strtotime($p['paid_at'])); ?></td>
+                            </tr>
+                            <?php endwhile; ?>
+                        </tbody>
                     </table>
                     <?php else: ?>
-                    <p>No pending payment verification.</p>
+                        <p style="opacity: 0.5; text-align: center;">No pending verifications.</p>
                     <?php endif; ?>
-
                 </div>
-
-                <div class="table-box">
-                    <h2>Recent Payments</h2>
-
-                    <table>
-                        <tr>
-                            <th>Transaction ID</th>
-                            <th>Customer</th>
-                            <th>Invoice No.</th>
-                            <th>Amount</th>
-                            <th>Status</th>
-                            <th>Date</th>
-                        </tr>
-
-                        <?php while($p = $recent_payments->fetch_assoc()): ?>
-                        <tr>
-                            <td><?php echo $p['transaction_no']; ?></td>
-                            <td><?php echo $p['first_name']." ".$p['last_name']; ?></td>
-                            <td><?php echo $p['invoice_no']; ?></td>
-                            <td>₱<?php echo number_format($p['amount'], 2); ?></td>
-                            <td><?php echo $p['status']; ?></td>
-                            <td><?php echo $p['paid_at']; ?></td>
-                        </tr>
-                        <?php endwhile; ?>
-                    </table>
-
-                </div>
-
             </div>
 
+            <div class="glass-panel">
+                <div class="panel-title-bar">Recent Activity</div>
+                <div class="content-area">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Customer</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php while($p = $recent_payments->fetch_assoc()): ?>
+                            <tr>
+                                <td><?php echo $p['first_name']." ".$p['last_name']; ?></td>
+                                <td>₱<?php echo number_format($p['amount'], 2); ?></td>
+                                <td><span style="font-size:0.7rem; font-weight:bold; color: <?php echo ($p['status'] == 'verified') ? 'var(--success)' : 'var(--warning)'; ?>;"><?php echo strtoupper($p['status']); ?></span></td>
+                            </tr>
+                            <?php endwhile; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SIDEBAR RIGHT -->
+    <div class="sidebar-right">
+        <img src="assets/logo_name.png" class="side-logo">
+        <div class="agent-info" style="color: white; text-align: center; margin-bottom: 30px;">
+            <h3>ACCOUNTANT</h3>
+            <p style="font-size: 0.7rem; opacity: 0.6;">FINANCE DEPT</p>
+        </div>
+        <nav class="nav-menu" style="width: 100%;">
+            <a href="accountant_dashboard.php" class="nav-item active">DASHBOARD</a>
+            <a href="payments.php" class="nav-item">PAYMENTS</a>
+            <a href="receipts.php" class="nav-item">RECEIPTS</a>
+            <a href="reports_accountant.php" class="nav-item">REPORTS</a>
+            <a href="balance.php" class="nav-item">BALANCE TRACKER</a>
+            <a href="profile.php" class="nav-item">PROFILE</a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="logout.php" class="logout-btn-container">LOG OUT</a>
         </div>
     </div>
 
     <script>
+        window.onload = () => { document.body.style.opacity = "1"; };
+
+        // Chart.js defaults for dark theme
+        Chart.defaults.color = '#bdc3c7';
+        Chart.defaults.borderColor = 'rgba(255,255,255,0.1)';
+
         new Chart(document.getElementById("dailyChart"), {
             type: "bar",
             data: {
@@ -225,9 +238,11 @@ while($m = $monthly_chart->fetch_assoc()){
                 datasets: [{
                     label: "Daily Collection",
                     data: <?php echo json_encode($daily_data); ?>,
-                    borderWidth: 1
+                    backgroundColor: '#3498db',
+                    borderRadius: 5
                 }]
-            }
+            },
+            options: { responsive: true, maintainAspectRatio: false }
         });
 
         new Chart(document.getElementById("monthlyChart"), {
@@ -237,11 +252,14 @@ while($m = $monthly_chart->fetch_assoc()){
                 datasets: [{
                     label: "Monthly Collection",
                     data: <?php echo json_encode($monthly_data); ?>,
-                    borderWidth: 2
+                    borderColor: '#2ecc71',
+                    backgroundColor: 'rgba(46, 204, 113, 0.1)',
+                    fill: true,
+                    tension: 0.4
                 }]
-            }
+            },
+            options: { responsive: true, maintainAspectRatio: false }
         });
     </script>
-
 </body>
 </html>

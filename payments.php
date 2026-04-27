@@ -126,159 +126,131 @@ $payments = $conn->query("
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Payments</title>
-    <link rel="stylesheet" href="dashboard.css">
-    <link rel="stylesheet" href="payments.css">
+    <meta charset="UTF-8">
+    <title>Payment Verification | H2O</title>
+    <link rel="stylesheet" href="payment.css">
 </head>
 <body>
 
-    <div class="layout">
-
-        <div class="sidebar">
-            <h2>Accountant</h2>
-            <ul>
-                <li><a href="accountant_dashboard.php">Dashboard</a></li>
-                <li><a href="payments.php">Payments</a></li>
-                <li><a href="receipts.php">Receipts</a></li>
-                <li><a href="reports_accountant.php">Reports</a></li>
-                <li><a href="balance.php">Balance Tracker</a></li>
-                <li><a href="profile.php">Profile</a></li>
-                <li><a href="logout.php">Logout</a></li>
-            </ul>
+    <div class="main-content">
+        <div class="header-row">
+            <h1>Payment Verification</h1>
         </div>
 
-        <div class="main">
-
-            <h1>Payment Verification</h1>
-
-            <div class="payment-filter">
-                <form method="GET">
+        <!-- FILTER PANEL -->
+        <div class="glass-panel" style="margin-bottom: 15px;">
+            <div class="panel-title-bar" style="padding: 8px 20px;">FILTER BY BARANGAY</div>
+            <div class="filter-panel-body">
+                <form method="GET" style="display: flex; gap: 10px; align-items: center;">
                     <select name="barangay">
                         <option value="">All Barangays</option>
-
                         <?php while($b = $barangays->fetch_assoc()): ?>
-                            <option value="<?php echo $b['barangay']; ?>"
-                                <?php if($barangay_filter == $b['barangay']) echo "selected"; ?>>
-                                <?php echo $b['barangay']; ?>
+                            <option value="<?= $b['barangay'] ?>" <?= ($barangay_filter == $b['barangay']) ? "selected" : "" ?>>
+                                <?= $b['barangay'] ?>
                             </option>
                         <?php endwhile; ?>
                     </select>
-
-                    <button type="submit" class="btn-verify">Filter</button>
-                    <a href="payments.php">
-                        <button type="button" class="btn-disabled">Reset</button>
+                    
+                    <button type="submit" class="btn-action btn-verify btn-filter">FILTER</button>
+                    
+                    <a href="payments.php" style="text-decoration:none;">
+                        <button type="button" class="btn-action btn-filter" style="background:rgba(255,255,255,0.1); color:white;">
+                            RESET
+                        </button>
                     </a>
                 </form>
             </div>
+        </div>
 
-            <table class="payment-table">
-                <tr>
-                    <th>Transaction ID</th>
-                    <th>User ID</th>
-                    <th>Name</th>
-                    <th>Barangay</th>
-                    <th>Invoice No.</th>
-                    <th>Amount</th>
-                    <th>MOP</th>
-                    <th>Reference No.</th>
-                    <th>Proof</th>
-                    <th>Status</th>
-                    <th>Date</th>
-                    <th>Invoice</th>
-                    <th>Action</th>
-                </tr>
-
-                <?php while($p = $payments->fetch_assoc()): ?>
-                <tr>
-                    <td><?php echo $p['transaction_no']; ?></td>
-                    <td><?php echo $p['user_id_display']; ?></td>
-                    <td><?php echo $p['first_name']." ".$p['last_name']; ?></td>
-                    <td><?php echo $p['barangay']; ?></td>
-                    <td><?php echo $p['invoice_no']; ?></td>
-                    <td>₱<?php echo number_format($p['amount'], 2); ?></td>
-                    <td><?php echo $p['payment_method']; ?></td>
-                    <td><?php echo $p['reference_no']; ?></td>
-
-                    <td>
-                        <?php 
-                        if($p['payment_method'] == "Cash"){
-                            echo "Cash Payment";
-                        }
-                        else{
-                            if(!empty($p['proof_image'])){
-                        ?>
-                                <img 
-                                    src="payment_proofs/<?php echo $p['proof_image']; ?>" 
-                                    class="proof-img"
-                                    onclick="showProof('payment_proofs/<?php echo $p['proof_image']; ?>')"
-                                >
-                        <?php
-                            } else {
-                                echo "<span style='color:red;'>No proof uploaded</span>";
-                            }
-                        }
-                        ?>
-                    </td>
-
-                    <td class="<?php 
-                        if($p['status'] == 'pending') echo 'status-pending';
-                        elseif($p['status'] == 'verified') echo 'status-verified';
-                        elseif($p['status'] == 'rejected') echo 'status-rejected';
-                    ?>">
-                        <?php echo $p['status']; ?>
-                    </td>
-
-                    <td><?php echo $p['paid_at']; ?></td>
-
-                    <td>
-                        <a href="print_invoice.php?id=<?php echo $p['invoice_id']; ?>" target="_blank">
-                            <button type="button" class="btn-verify">Print Invoice</button>
-                        </a>
-                    </td>
-
-                    <td>
-                        <?php if($p['status'] == "pending"): ?>
-
-                            <?php if($p['payment_method'] != "Cash" && empty($p['proof_image'])): ?>
-                                <button type="button" class="btn-disabled" disabled>No Proof</button>
-                            <?php else: ?>
-                                <a href="?verify=<?php echo $p['id']; ?>&barangay=<?php echo urlencode($barangay_filter); ?>" 
-                                onclick="return confirm('Verify this payment? Make sure proof was checked.')">
-                                    <button type="button" class="btn-verify">Verify</button>
-                                </a>
-                            <?php endif; ?>
-
-                            <a href="?reject=<?php echo $p['id']; ?>&barangay=<?php echo urlencode($barangay_filter); ?>" 
-                            onclick="return confirm('Reject this payment?')">
-                                <button type="button" class="btn-reject">Reject</button>
-                            </a>
-
-                        <?php else: ?>
-                            Done
-                        <?php endif; ?>
-                    </td>
-                </tr>
-                <?php endwhile; ?>
-            </table>
+        <!-- TABLE PANEL -->
+        <div class="glass-panel">
+            <div class="panel-title-bar">Transaction Queue</div>
+            <div class="table-area">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Transaction</th>
+                            <th>Customer</th>
+                            <th>Amount</th>
+                            <th>MOP</th>
+                            <th>Proof</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php while($p = $payments->fetch_assoc()): ?>
+                        <tr>
+                            <td><small><?= $p['transaction_no'] ?></small></td>
+                            <td><strong><?= strtoupper($p['first_name'] . " " . $p['last_name']) ?></strong><br><small><?= $p['barangay'] ?></small></td>
+                            <td style="color: var(--success); font-weight: 800;">₱<?= number_format($p['amount'], 2) ?></td>
+                            <td><?= $p['payment_method'] ?></td>
+                            <td>
+                                <?php if($p['payment_method'] != "Cash" && !empty($p['proof_image'])): ?>
+                                    <img src="payment_proofs/<?= $p['proof_image'] ?>" style="width:35px; height:35px; border-radius:4px; cursor:pointer; border:1px solid var(--accent-blue);" onclick="window.open(this.src)">
+                                <?php else: ?>
+                                    <span style="opacity:0.4">N/A</span>
+                                <?php endif; ?>
+                            </td>
+                            <td><span class="status-<?= $p['status'] ?>"><?= strtoupper($p['status']) ?></span></td>
+                            <td>
+                                <?php if($p['status'] == "pending"): ?>
+                                    <a href="?verify=<?= $p['id'] ?>" onclick="return confirm('Verify?')"><button class="btn-action btn-verify">VERIFY</button></a>
+                                    <a href="?reject=<?= $p['id'] ?>" onclick="return confirm('Reject?')"><button class="btn-action btn-reject">REJECT</button></a>
+                                <?php else: ?>
+                                    <span style="opacity:0.5; font-size:0.7rem;">PROCESSED</span>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                        <?php endwhile; ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
-    <div id="proofModal" class="proof-modal">
-        <img id="proofImg">
+    <!-- SIDEBAR RIGHT -->
+    <div class="sidebar-right">
+        <img src="assets/logo_name.png" class="side-logo">
+        <div class="agent-info" style="color: white; text-align: center; margin-bottom: 30px;">
+            <h3>ACCOUNTANT</h3>
+            <p style="font-size: 0.7rem; opacity: 0.6;">FINANCE DEPT</p>
+        </div>
+        <nav class="nav-menu" style="width: 100%;">
+            <a href="accountant_dashboard.php" class="nav-item">DASHBOARD</a>
+            <a href="payments.php" class="nav-item active">PAYMENTS</a>
+            <a href="receipts.php" class="nav-item">RECEIPTS</a>
+            <a href="reports_accountant.php" class="nav-item">REPORTS</a>
+            <a href="balance.php" class="nav-item">BALANCE TRACKER</a>
+            <a href="profile.php" class="nav-item">PROFILE</a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="logout.php" class="logout-btn-container">LOG OUT</a>
+        </div>
     </div>
 
     <script>
-        function showProof(src){
-            document.getElementById("proofModal").style.display = "flex";
-            document.getElementById("proofImg").src = src;
-        }
+        // Fade in on load
+        window.addEventListener('DOMContentLoaded', () => {
+            document.body.classList.add('fade-in');
+        });
 
-        document.getElementById("proofModal").onclick = function(){
-            this.style.display = "none";
-        }
+        // Fade out on link click
+        document.querySelectorAll('.nav-item, .logout-btn-container').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const target = this.getAttribute('href');
+                if (target && target !== '#') {
+                    e.preventDefault();
+                    document.body.classList.add('fade-out');
+                    setTimeout(() => { window.location.href = target; }, 200);
+                }
+            });
+        });
     </script>
+
+
 
 </body>
 </html>

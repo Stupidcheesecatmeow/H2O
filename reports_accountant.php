@@ -84,122 +84,148 @@ while($s = $status_chart->fetch_assoc()){
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Accountant Reports</title>
+    <meta charset="UTF-8">
+    <title>Financial Reports | H2O</title>
     <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="report_accountant.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body>
+<body id="mainBody">
 
-    <div class="layout">
-
-        <div class="sidebar">
-            <h2>Accountant</h2>
-            <ul>
-                <li><a href="accountant_dashboard.php">Dashboard</a></li>
-                <li><a href="payments.php">Payments</a></li>
-                <li><a href="receipts.php">Receipts</a></li>
-                <li><a href="reports_accountant.php">Reports</a></li>
-                <li><a href="balance.php">Balance Tracker</a></li>
-                <li><a href="profile.php">Profile</a></li>
-                <li><a href="logout.php">Logout</a></li>
-            </ul>
+    <div class="main-content">
+        <div class="header-row" style="display: flex; justify-content: space-between; align-items: center;">
+            <h1>FINANCIAL REPORTS</h1>
+            <a href="print_accountant_report.php" target="_blank" class="export-btn">
+                EXPORT PDF REPORT
+            </a>
         </div>
 
-        <div class="main">
-
-            <h1>Reports and Financial History</h1>
-
-            <a href="print_accountant_report.php" target="_blank">
-                <button type="button">Export Report</button>
-            </a>
-
-            <div class="tables">
-                <div class="table-box">
-                    <h3>Daily Collection Chart</h3>
+        <!-- CHARTS SECTION -->
+        <div class="flex-grid">
+            <div class="glass-panel">
+                <div class="panel-title-bar">Daily Collection Graph</div>
+                <div class="content-area">
                     <canvas id="dailyChart"></canvas>
                 </div>
-
-                <div class="table-box">
-                    <h3>Monthly Collection Chart</h3>
+            </div>
+            <div class="glass-panel">
+                <div class="panel-title-bar">Monthly Revenue Trend</div>
+                <div class="content-area">
                     <canvas id="monthlyChart"></canvas>
                 </div>
             </div>
+        </div>
 
-            <div class="table-box">
-                <h3>Payment Status Overview</h3>
+        <div class="glass-panel">
+            <div class="panel-title-bar">Payment Status Overview</div>
+            <div class="content-area" style="max-height: 300px;">
                 <canvas id="statusChart"></canvas>
             </div>
+        </div>
 
-            <div class="tables">
-
-                <div class="table-box">
-                    <h3>Daily Collection</h3>
-                    <table>
-                        <tr>
-                            <th>Date</th>
-                            <th>Total Collection</th>
-                        </tr>
-
-                        <?php while($d = $daily_collection->fetch_assoc()): ?>
-                        <tr>
-                            <td><?php echo $d['day']; ?></td>
-                            <td>₱<?php echo number_format($d['total'], 2); ?></td>
-                        </tr>
-                        <?php endwhile; ?>
+        <!-- COLLECTION SUMMARY TABLES -->
+        <div class="flex-grid">
+            <div class="glass-panel">
+                <div class="panel-title-bar">Daily Collection Log</div>
+                <div class="table-area">
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>Date</th><th>Total</th></tr>
+                        </thead>
+                        <tbody>
+                            <?php while($d = $daily_collection->fetch_assoc()): ?>
+                            <tr>
+                                <td><?php echo date('M d, Y', strtotime($d['day'])); ?></td>
+                                <td style="color: var(--success); font-weight: bold;">₱<?php echo number_format($d['total'], 2); ?></td>
+                            </tr>
+                            <?php endwhile; ?>
+                        </tbody>
                     </table>
                 </div>
-
-                <div class="table-box">
-                    <h3>Monthly Collection</h3>
-                    <table>
-                        <tr>
-                            <th>Month</th>
-                            <th>Total Collection</th>
-                        </tr>
-
-                        <?php while($m = $monthly_collection->fetch_assoc()): ?>
-                        <tr>
-                            <td><?php echo $m['month']; ?></td>
-                            <td>₱<?php echo number_format($m['total'], 2); ?></td>
-                        </tr>
-                        <?php endwhile; ?>
-                    </table>
-                </div>
-
             </div>
 
-            <h3>Payment History Per Customer</h3>
+            <div class="glass-panel">
+                <div class="panel-title-bar">Monthly Revenue Summary</div>
+                <div class="table-area">
+                    <table class="data-table">
+                        <thead>
+                            <tr><th>Month</th><th>Total</th></tr>
+                        </thead>
+                        <tbody>
+                            <?php while($m = $monthly_collection->fetch_assoc()): ?>
+                            <tr>
+                                <td><?php echo $m['month']; ?></td>
+                                <td style="color: var(--accent-blue); font-weight: bold;">₱<?php echo number_format($m['total'], 2); ?></td>
+                            </tr>
+                            <?php endwhile; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
-            <table>
-                <tr>
-                    <th>Customer</th>
-                    <th>Invoice No.</th>
-                    <th>Amount</th>
-                    <th>MOP</th>
-                    <th>Reference</th>
-                    <th>Status</th>
-                    <th>Date</th>
-                </tr>
+        <!-- FULL HISTORY TABLE -->
+        <div class="glass-panel">
+            <div class="panel-title-bar">Detailed Customer Payment History</div>
+            <div class="table-area">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Customer</th>
+                            <th>Invoice</th>
+                            <th>Amount</th>
+                            <th>Method</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php while($h = $payment_history->fetch_assoc()): ?>
+                        <tr>
+                            <td><strong><?php echo strtoupper($h['first_name']." ".$h['last_name']); ?></strong></td>
+                            <td><small><?php echo $h['invoice_no']; ?></small></td>
+                            <td>₱<?php echo number_format($h['amount'], 2); ?></td>
+                            <td><?php echo $h['payment_method']; ?></td>
+                            <td><span class="status-pill <?php echo ($h['status']=='verified') ? 'paid' : 'unpaid'; ?>"><?php echo $h['status']; ?></span></td>
+                            <td><small><?php echo date('M d, Y', strtotime($h['paid_at'])); ?></small></td>
+                        </tr>
+                        <?php endwhile; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
-                <?php while($h = $payment_history->fetch_assoc()): ?>
-                <tr>
-                    <td><?php echo $h['first_name']." ".$h['last_name']; ?></td>
-                    <td><?php echo $h['invoice_no']; ?></td>
-                    <td>₱<?php echo number_format($h['amount'], 2); ?></td>
-                    <td><?php echo $h['payment_method']; ?></td>
-                    <td><?php echo $h['reference_no']; ?></td>
-                    <td><?php echo $h['status']; ?></td>
-                    <td><?php echo $h['paid_at']; ?></td>
-                </tr>
-                <?php endwhile; ?>
-            </table>
-
+    <!-- SIDEBAR RIGHT -->
+    <div class="sidebar-right">
+        <img src="assets/logo_name.png" class="side-logo">
+        <div class="agent-info" style="color: white; text-align: center; margin-bottom: 30px;">
+            <h3>ACCOUNTANT</h3>
+            <p style="font-size: 0.7rem; opacity: 0.6;">FINANCE DEPT</p>
+        </div>
+        <nav class="nav-menu" style="width: 100%;">
+            <a href="accountant_dashboard.php" class="nav-item">DASHBOARD</a>
+            <a href="payments.php" class="nav-item">PAYMENTS</a>
+            <a href="receipts.php" class="nav-item">RECEIPTS</a>
+            <a href="reports_accountant.php" class="nav-item active">REPORTS</a>
+            <a href="balance.php" class="nav-item">BALANCE TRACKER</a>
+            <a href="profile.php" class="nav-item">PROFILE</a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="logout.php" class="logout-btn-container">LOG OUT</a>
         </div>
     </div>
 
     <script>
+        window.onload = () => { document.body.style.opacity = "1"; };
+
+        Chart.defaults.color = '#bdc3c7';
+        Chart.defaults.borderColor = 'rgba(255,255,255,0.1)';
+
+        const commonOptions = { responsive: true, maintainAspectRatio: false };
+
         new Chart(document.getElementById("dailyChart"), {
             type: "bar",
             data: {
@@ -207,9 +233,11 @@ while($s = $status_chart->fetch_assoc()){
                 datasets: [{
                     label: "Daily Collection",
                     data: <?php echo json_encode($daily_data); ?>,
-                    borderWidth: 1
+                    backgroundColor: '#3498db',
+                    borderRadius: 5
                 }]
-            }
+            },
+            options: commonOptions
         });
 
         new Chart(document.getElementById("monthlyChart"), {
@@ -219,9 +247,13 @@ while($s = $status_chart->fetch_assoc()){
                 datasets: [{
                     label: "Monthly Collection",
                     data: <?php echo json_encode($monthly_data); ?>,
-                    borderWidth: 2
+                    borderColor: '#2ecc71',
+                    backgroundColor: 'rgba(46, 204, 113, 0.1)',
+                    fill: true,
+                    tension: 0.4
                 }]
-            }
+            },
+            options: commonOptions
         });
 
         new Chart(document.getElementById("statusChart"), {
@@ -229,13 +261,14 @@ while($s = $status_chart->fetch_assoc()){
             data: {
                 labels: <?php echo json_encode($status_labels); ?>,
                 datasets: [{
-                    label: "Payment Status",
+                    label: "Transaction Status Count",
                     data: <?php echo json_encode($status_data); ?>,
-                    borderWidth: 1
+                    backgroundColor: ['#2ecc71', '#f1c40f', '#e74c3c'],
+                    borderRadius: 5
                 }]
-            }
+            },
+            options: commonOptions
         });
     </script>
-
 </body>
 </html>
