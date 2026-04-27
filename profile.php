@@ -148,225 +148,203 @@ $avatar = !empty($user['avatar']) ? $user['avatar'] : "default.png";
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Profile Settings</title>
-    <link rel="stylesheet" href="dashboard.css">
-    <link rel="stylesheet" href="profile.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Settings | H2O</title>
+    <link rel="stylesheet" href="user_design.css">
 </head>
-<body>
+<body id="mainBody">
 
-    <div class="layout">
-
-        <div class="sidebar">
-            <h2><?php echo ucfirst($role); ?></h2>
-
-            <?php if($role == "admin"): ?>
-            <ul>
-                <li><a href="admin_dashboard.php">Dashboard</a></li>
-                <li><a href="announcements.php">Announcements</a></li>
-                <li><a href="user_management.php">User Management</a></li>
-                <li><a href="agent_management.php">Field Agents</a></li>
-                <li><a href="invoices.php">Invoices</a></li>
-                <li><a href="transactions.php">Transactions</a></li>
-                <li><a href="complaints_admin.php">Complaints</a></li>
-                <li><a href="reports.php">Reports</a></li>
-                <li><a href="profile.php">Profile</a></li>
-                <li><a href="logout.php">Logout</a></li>
-            </ul>
-
-            <?php elseif($role == "accountant"): ?>
-            <ul>
-                <li><a href="accountant_dashboard.php">Dashboard</a></li>
-                <li><a href="payments.php">Payments</a></li>
-                <li><a href="receipts.php">Receipts</a></li>
-                <li><a href="reports_accountant.php">Reports</a></li>
-                <li><a href="balance.php">Balance Tracker</a></li>
-                <li><a href="profile.php">Profile</a></li>
-                <li><a href="logout.php">Logout</a></li>
-            </ul>
-
-            <?php elseif($role == "agent"): ?>
-            <ul>
-                <li><a href="agent_dashboard.php">Dashboard</a></li>
-                <li><a href="customers.php">Customers</a></li>
-                <li><a href="meter_reading.php">Meter Reading</a></li>
-                <li><a href="profile.php">Profile</a></li>
-                <li><a href="logout.php">Logout</a></li>
-            </ul>
-
-            <?php else: ?>
-            <ul>
-                <li><a href="user_dashboard.php">Dashboard</a></li>
-                <li><a href="user_notifications.php">Notifications</a></li>
-                <li><a href="user_billing.php">Billing</a></li>
-                <li><a href="user_payments.php">Payment</a></li>
-                <li><a href="user_history.php">History</a></li>
-                <li><a href="user_complaints.php">Complaints</a></li>
-                <li><a href="profile.php">Profile</a></li>
-                <li><a href="logout.php">Logout</a></li>
-            </ul>
-            <?php endif; ?>
-
+    <div class="main-content">
+        <div class="header-row">
+            <h1><?php echo ($role == 'agent') ? 'AGENT DASHBOARD' : 'USER DASHBOARD'; ?></h1>
         </div>
 
-        <div class="main">
-
-            <h1>Profile Settings</h1>
-
-            <div class="profile-card">
-
-                <img src="uploads/<?php echo $avatar; ?>" class="avatar" alt="Avatar">
-
-                <h2><?php echo $user['first_name']." ".$user['last_name']; ?></h2>
-                <p><?php echo $user['email']; ?></p>
-
-                <p>
-                    <strong><?php echo ($role == "user") ? "User ID" : "Employee ID"; ?>:</strong>
-                    <?php echo $display_id; ?>
-                </p>
-
-                <span class="status"><?php echo $user['status']; ?></span>
-
-                <div class="profile-actions">
-                    <button type="button" onclick="toggleForm('avatarForm')">Change Avatar</button>
-                    <button type="button" onclick="toggleForm('editForm')">Edit Profile</button>
-                    <button type="button" onclick="toggleForm('passwordForm')">Change Password</button>
+        <!-- SHARED PROFILE CONTAINER (Matches your image) -->
+        <div class="profile-container-box">
+            
+            <!-- TOP SECTION: Avatar & Name -->
+            <div class="profile-header-section">
+                <div class="profile-flex">
+                    <img src="uploads/<?php echo $avatar; ?>" class="avatar-large" alt="Avatar">
+                    <div class="profile-text">
+                        <h2 class="user-name-title"><?php echo strtoupper($user['first_name'] . " " . $user['last_name']); ?></h2>
+                        <p class="user-role-label"><?php echo strtoupper($role); ?></p>
+                        
+                        <div class="profile-actions-row">
+                            <button type="button" onclick="toggleForm('avatarForm')">Change Avatar</button>
+                            <button type="button" onclick="toggleForm('editForm')">Edit Profile</button>
+                            <button type="button" onclick="toggleForm('passwordForm')">Security</button>
+                        </div>
+                    </div>
                 </div>
-
             </div>
 
-            <div class="card hidden-form" id="avatarForm">
-                <h3>Change Avatar</h3>
+            <!-- THE HEADER BAR (From your image) -->
+            <div class="account-info-bar">ACCOUNT INFORMATION</div>
 
-                <form method="POST" enctype="multipart/form-data">
-
-                    <img id="previewAvatar" src="uploads/<?php echo $avatar; ?>" class="avatar-preview" alt="Preview">
-
-                    <input type="file" name="avatar" id="avatarInput" accept="image/*" required>
-
-                    <button type="submit" name="upload_avatar">Upload Avatar</button>
-
-                </form>
-            </div>
-
-            <div class="card">
-                <h3>Account Information</h3>
-
+            <!-- BOTTOM SECTION: Content area -->
+            <div class="account-details-content">
                 <div class="info-grid">
-
-                    <p>
-                        <strong><?php echo ($role == "user") ? "User ID" : "Employee ID"; ?>:</strong><br>
-                        <?php echo $display_id; ?>
-                    </p>
-
-                    <p>
-                        <strong>Full Name:</strong><br>
-                        <?php echo $user['first_name']." ".$user['last_name']; ?>
-                    </p>
-
-                    <p>
-                        <strong>Email:</strong><br>
-                        <?php echo $user['email']; ?>
-                    </p>
-
-                    <p>
-                        <strong>Contact:</strong><br>
-                        <?php echo $user['contact_no']; ?>
-                    </p>
-
+                    <p><strong><?php echo ($role == "user") ? "User ID" : "Employee ID"; ?></strong><br><?php echo $display_id; ?></p>
+                    <p><strong>Full Name</strong><br><?php echo $user['first_name']." ".$user['last_name']; ?></p>
+                    <p><strong>Email Address</strong><br><?php echo $user['email']; ?></p>
+                    <p><strong>Contact No.</strong><br><?php echo $user['contact_no']; ?></p>
                     <?php if($role == "user"): ?>
-                        <p>
-                            <strong>Address:</strong><br>
-                            <?php echo $user['barangay']." / ".$user['street']; ?>
-                        </p>
-
-                        <p>
-                            <strong>Meter Number:</strong><br>
-                            <?php echo $user['meter_number']; ?>
-                        </p>
-                    <?php else: ?>
-                        <p>
-                            <strong>Role:</strong><br>
-                            <?php echo $user['role']; ?>
-                        </p>
+                        <p><strong>Address</strong><br><?php echo $user['barangay']." / ".$user['street']; ?></p>
+                        <p><strong>Meter Number</strong><br><?php echo $user['meter_number']; ?></p>
                     <?php endif; ?>
+                    <p><strong>Status</strong><br><span style="color: #2ecc71; font-weight:bold;"><?php echo strtoupper($user['status']); ?></span></p>
+                </div>
+            </div>
+        </div>
 
-                    <p>
-                        <strong>Status:</strong><br>
-                        <?php echo $user['status']; ?>
-                    </p>
+        <!-- TOGGLEABLE FORMS (Stacked below) -->
+        <!-- AVATAR FORM -->
+        <div id="avatarForm" class="glass-panel hidden-form">
+            <div class="panel-title-bar">Update Avatar</div>
+            <div class="table-area" style="padding: 30px;">
+                <form method="POST" enctype="multipart/form-data">
+                    <p style="font-size: 0.75rem; color: #bdc3c7; margin-bottom: 10px; font-weight: bold; text-transform: uppercase;">Choose Image File</p>
+                    <input type="file" name="avatar" accept="image/*" required 
+                           style="margin-bottom:20px; background: #f8f9fa; color: #333; padding: 12px; border-radius: 8px; width: 100%; border: 1px solid #ccc;">
+                    <button type="submit" name="upload_avatar" class="print-btn" style="width:100%; padding: 15px; font-weight: 800;">UPLOAD PHOTO</button>
+                </form>
+            </div>
+        </div>
 
+        <!-- EDIT PROFILE FORM -->
+<div id="editForm" class="glass-panel hidden-form">
+    <div class="panel-title-bar">Edit Profile Details</div>
+    <div class="table-area" style="padding: 40px;">
+        <form method="POST" class="inline-form-grid">
+            
+            <!-- Row 1: First Name & Last Name -->
+            <div class="form-row">
+                <div class="input-group">
+                    <label>FIRST NAME:</label>
+                    <input type="text" name="first_name" value="<?php echo $user['first_name']; ?>" required>
+                </div>
+                <div class="input-group">
+                    <label>LAST NAME:</label>
+                    <input type="text" name="last_name" value="<?php echo $user['last_name']; ?>" required>
                 </div>
             </div>
 
-            <div class="card hidden-form" id="editForm">
-                <h3>Edit Profile</h3>
-
-                <form method="POST">
-
-                    <?php if($role == "user"): ?>
-
-                        <input type="text" name="first_name" placeholder="First Name" value="<?php echo $user['first_name']; ?>" required>
-                        <input type="text" name="last_name" placeholder="Last Name" value="<?php echo $user['last_name']; ?>" required>
-                        <input type="email" name="email" placeholder="Email" value="<?php echo $user['email']; ?>" required>
-                        <input type="text" name="contact_no" placeholder="Contact No." value="<?php echo $user['contact_no']; ?>" required>
-                        <input type="text" name="barangay" placeholder="Barangay" value="<?php echo $user['barangay']; ?>" required>
-                        <input type="text" name="street" placeholder="Street" value="<?php echo $user['street']; ?>" required>
-
-                    <?php else: ?>
-
-                        <input type="text" name="first_name" placeholder="First Name" value="<?php echo $user['first_name']; ?>" required>
-                        <input type="text" name="last_name" placeholder="Last Name" value="<?php echo $user['last_name']; ?>" required>
-                        <input type="email" name="email" placeholder="Email" value="<?php echo $user['email']; ?>" required>
-                        <input type="text" name="contact_no" placeholder="Contact No." value="<?php echo $user['contact_no']; ?>" required>
-
-                    <?php endif; ?>
-
-                    <button type="submit" name="update_profile">Save Changes</button>
-                </form>
+            <!-- Row 2: Email & Contact -->
+            <div class="form-row">
+                <div class="input-group">
+                    <label>EMAIL:</label>
+                    <input type="email" name="email" value="<?php echo $user['email']; ?>" required>
+                </div>
+                <div class="input-group">
+                    <label>CONTACT:</label>
+                    <input type="text" name="contact_no" value="<?php echo $user['contact_no']; ?>" required>
+                </div>
             </div>
 
-            <div class="card hidden-form" id="passwordForm">
-                <h3>Change Password</h3>
+            <button type="submit" name="update_profile" class="save-btn">SAVE CHANGES</button>
+            
+        </form>
+    </div>
+</div>
 
-                <form method="POST">
-                    <input type="password" name="current" placeholder="Current Password" required>
-                    <input type="password" name="new" placeholder="New Password" required>
-                    <input type="password" name="confirm" placeholder="Confirm Password" required>
 
-                    <button type="submit" name="update_password">Update Password</button>
-                </form>
+
+        <!-- SECURITY FORM -->
+<div id="passwordForm" class="glass-panel hidden-form">
+    <div class="panel-title-bar">Security Settings</div>
+    <div class="table-area" style="padding: 40px;">
+        <form method="POST" class="inline-form-grid">
+            
+            <!-- Row 1: Current Password -->
+            <div class="form-row">
+                <div class="input-group">
+                    <label>CURRENT PASSWORD:</label>
+                    <input type="password" name="current" placeholder="Enter Current Password" required>
+                </div>
             </div>
 
+            <!-- Row 2: New Password & Confirm (Side by Side) -->
+            <div class="form-row">
+                <div class="input-group">
+                    <label>NEW PASSWORD:</label>
+                    <input type="password" name="new" placeholder="Enter New Password" required>
+                </div>
+                <div class="input-group">
+                    <label>CONFIRM:</label>
+                    <input type="password" name="confirm" placeholder="Confirm New Password" required>
+                </div>
+            </div>
+
+            <button type="submit" name="update_password" class="save-btn">UPDATE PASSWORD</button>
+            
+        </form>
+    </div>
+</div>
+
+    </div>
+
+    <!-- SIDEBAR RIGHT -->
+    <div class="sidebar-right">
+        <img src="assets/logo_name.png" class="side-logo">
+        <div class="agent-info">
+            <h3><?php echo strtoupper($user['first_name']); ?></h3>
+            <p><?php echo strtoupper($role); ?></p>
+        </div>
+        <nav class="nav-menu">
+            <?php if($role == "user"): ?>
+                <a href="user_dashboard.php" class="nav-item">DASHBOARD</a>
+                <a href="user_notifications.php" class="nav-item">NOTIFICATIONS</a>
+                <a href="user_billing.php" class="nav-item">BILLING</a>
+                <a href="user_payments.php" class="nav-item">PAYMENT</a>
+                <a href="user_history.php" class="nav-item">HISTORY</a>
+            <?php elseif($role == "agent"): ?>
+                <a href="agent_dashboard.php" class="nav-item">DASHBOARD</a>
+                <a href="meter_reading.php" class="nav-item">READINGS</a>
+            <?php endif; ?>
+            <a href="profile.php" class="nav-item active">PROFILE</a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="logout.php" class="logout-btn-container">LOG OUT</a>
         </div>
     </div>
 
     <script>
-        function toggleForm(id){
-            const form = document.getElementById(id);
+        // Trigger Page Fade In
+        window.onload = () => { document.body.style.opacity = "1"; };
 
-            if(form.style.display === "block"){
-                form.style.display = "none";
-            }else{
-                form.style.display = "block";
-            }
+        // Toggle Form Display
+        function toggleForm(formId) {
+            // Hide all forms first
+            document.querySelectorAll('.hidden-form').forEach(f => f.style.display = 'none');
+            
+            // Show the selected one
+            const target = document.getElementById(formId);
+            target.style.display = 'block';
+            
+            // Smooth scroll to the form
+            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
-        document.getElementById("avatarInput")?.addEventListener("change", function(e){
-            const file = e.target.files[0];
+        function toggleForm(id) {
+    // 1. Hide all toggleable forms
+    document.querySelectorAll('.hidden-form').forEach(f => f.style.display = 'none');
+    
+    // 2. Hide the main account info details to save space
+    const infoContent = document.querySelector('.account-details-content');
+    infoContent.style.display = 'none';
 
-            if(file){
-                const reader = new FileReader();
+    // 3. Show the selected form
+    const target = document.getElementById(id);
+    target.style.display = 'block';
+    
+    // 4. Smoothly scroll to the form
+    target.scrollIntoView({ behavior: 'smooth' });
+}
 
-                reader.onload = function(e){
-                    document.getElementById("previewAvatar").src = e.target.result;
-                }
-
-                reader.readAsDataURL(file);
-            }
-        });
     </script>
-
 </body>
 </html>
