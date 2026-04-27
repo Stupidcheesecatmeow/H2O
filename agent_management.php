@@ -98,126 +98,154 @@ $agents = $conn->query("
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Field Agent Management</title>
-    <link rel="stylesheet" href="dashboard.css">
+    <meta charset="UTF-8">
+    <title>Field Agent Management | H2O</title>
+    <link rel="stylesheet" href="agent_management.css">
 </head>
-<body>
+<body id="mainBody">
 
-    <div class="layout">
-
-        <div class="sidebar">
-            <h2>Admin</h2>
-            <ul>
-                <li><a href="admin_dashboard.php">Dashboard</a></li>
-                <li><a href="announcements.php">Announcements</a></li>
-                <li><a href="user_management.php">User Management</a></li>
-                <li><a href="agent_management.php">Field Agents</a></li>
-                <li><a href="invoices.php">Invoices</a></li>
-                <li><a href="transactions.php">Transactions</a></li>
-                <li><a href="complaints_admin.php">Complaints</a></li>
-                <li><a href="reports.php">Reports</a></li>
-                <li><a href="profile.php">Profile</a></li>
-                <li><a href="logout.php">Logout</a></li>
-            </ul>
+    <div class="main-content">
+        <div class="header-row">
+            <h1>FIELD AGENT MANAGEMENT</h1>
         </div>
 
-        <div class="main">
-
-            <h1>Field Agent Management</h1>
-
-            <div class="cards">
-                <div class="card">
-                    Total Field Agents<br>
-                    <strong>
-                        <?php echo $conn->query("SELECT COUNT(*) AS total FROM users WHERE role='agent'")->fetch_assoc()['total']; ?>
-                    </strong>
-                </div>
-
-                <div class="card">
-                    Active Agents<br>
-                    <strong>
-                        <?php echo $conn->query("SELECT COUNT(*) AS total FROM users WHERE role='agent' AND status='active'")->fetch_assoc()['total']; ?>
-                    </strong>
-                </div>
-
-                <div class="card">
-                    Assigned Areas<br>
-                    <strong>
-                        <?php echo $conn->query("SELECT COUNT(*) AS total FROM agent_assignments")->fetch_assoc()['total']; ?>
-                    </strong>
-                </div>
+        <!-- STATS CARDS -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-label">Total Field Agents</span>
+                <span class="stat-value">
+                    <?php echo $conn->query("SELECT COUNT(*) AS total FROM users WHERE role='agent'")->fetch_assoc()['total']; ?>
+                </span>
             </div>
+            <div class="stat-card">
+                <span class="stat-label">Active Agents</span>
+                <span class="stat-value" style="color: var(--success);">
+                    <?php echo $conn->query("SELECT COUNT(*) AS total FROM users WHERE role='agent' AND status='active'")->fetch_assoc()['total']; ?>
+                </span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Assigned Areas</span>
+                <span class="stat-value" style="color: var(--accent-blue);">
+                    <?php echo $conn->query("SELECT COUNT(*) AS total FROM agent_assignments")->fetch_assoc()['total']; ?>
+                </span>
+            </div>
+        </div>
 
-            <div class="table-box">
-                <h3>Assign / Update Area</h3>
+        <!-- ASSIGNMENT FORM PANEL -->
+        <div class="glass-panel">
+            <div class="panel-title-bar">Assign / Update Field Area</div>
+            <div class="content-area">
+                <form method="POST" class="assignment-form-grid">
+                    <div class="form-group">
+                        <label>Select Field Agent</label>
+                        <select name="agent_id" required>
+                            <option value="">-- Choose Agent --</option>
+                            <?php while($a = $agent_options->fetch_assoc()): ?>
+                                <option value="<?php echo $a['id']; ?>">
+                                    <?php echo ($a['user_code'] ?? $a['id'])." - ".$a['first_name']." ".$a['last_name']; ?>
+                                </option>
+                            <?php endwhile; ?>
+                        </select>
+                    </div>
 
-                <form method="POST">
-                    <select name="agent_id" required>
-                        <option value="">Select Field Agent</option>
+                    <div class="form-group">
+                        <label>Assigned Barangay</label>
+                        <select name="area" required>
+                            <option value="">-- Select Barangay --</option>
+                            <?php foreach($barangays as $b): ?>
+                                <option value="<?php echo $b; ?>"><?php echo $b; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
 
-                        <?php while($a = $agent_options->fetch_assoc()): ?>
-                            <option value="<?php echo $a['id']; ?>">
-                                <?php echo ($a['user_code'] ?? $a['id'])." - ".$a['first_name']." ".$a['last_name']; ?>
-                            </option>
-                        <?php endwhile; ?>
-                    </select>
-
-                    <select name="area" required>
-                        <option value="">Select Assigned Barangay</option>
-
-                        <?php foreach($barangays as $b): ?>
-                            <option value="<?php echo $b; ?>">
-                                <?php echo $b; ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
-
-                    <button type="submit" name="assign_area">Save Assignment</button>
+                    <button type="submit" name="assign_area" class="save-btn">SAVE ASSIGNMENT</button>
                 </form>
             </div>
+        </div>
 
-            <h3>Field Agent List</h3>
-
-            <table>
-                <tr>
-                    <th>Agent ID</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Contact</th>
-                    <th>Assigned Area</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-
-                <?php while($row = $agents->fetch_assoc()): ?>
-                <tr>
-                    <td><?php echo $row['user_code'] ?? $row['agent_id']; ?></td>
-                    <td><?php echo $row['first_name']." ".$row['last_name']; ?></td>
-                    <td><?php echo $row['email']; ?></td>
-                    <td><?php echo $row['contact_no']; ?></td>
-                    <td><?php echo $row['area'] ?? "Not assigned"; ?></td>  
-                    <td><?php echo $row['status']; ?></td>
-                    <td>
-                        <a href="?toggle_status=<?php echo $row['agent_id']; ?>">
-                            <button type="button">
-                                <?php echo ($row['status'] == 'active') ? 'Deactivate' : 'Activate'; ?>
-                            </button>
-                        </a>
-
-                        <?php if($row['assignment_id']): ?>
-                            <a href="?delete_assignment=<?php echo $row['assignment_id']; ?>" onclick="return confirm('Delete this assignment?')">
-                                <button type="button">Delete Assignment</button>
-                            </a>
-                        <?php endif; ?>
-                    </td>
-                </tr>
-                <?php endwhile; ?>
-            </table>
-
+        <!-- AGENT LIST PANEL -->
+        <div class="glass-panel">
+            <div class="panel-title-bar">Active Field Personnel</div>
+            <div class="table-area">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Agent ID</th>
+                            <th>Full Name</th>
+                            <th>Contact</th>
+                            <th>Assigned Area</th>
+                            <th>Status</th>
+                            <th style="text-align:center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php while($row = $agents->fetch_assoc()): 
+                            $statusClass = ($row['status'] == 'active') ? 'paid' : 'unpaid';
+                        ?>
+                        <tr>
+                            <td><span class="id-badge"><?php echo $row['user_code'] ?? $row['agent_id']; ?></span></td>
+                            <td><strong><?php echo strtoupper($row['first_name']." ".$row['last_name']); ?></strong><br><small style="opacity:0.6"><?php echo $row['email']; ?></small></td>
+                            <td><?php echo $row['contact_no']; ?></td>
+                            <td><span style="color: var(--accent-blue); font-weight:bold;"><?php echo $row['area'] ?? "NOT ASSIGNED"; ?></span></td>
+                            <td><span class="status-pill <?php echo $statusClass; ?>"><?php echo strtoupper($row['status']); ?></span></td>
+                            <td style="text-align:center">
+                                <a href="?toggle_status=<?php echo $row['agent_id']; ?>">
+                                    <button class="action-btn"><?php echo ($row['status'] == 'active') ? 'Deactivate' : 'Activate'; ?></button>
+                                </a>
+                                <?php if($row['assignment_id']): ?>
+                                    <a href="?delete_assignment=<?php echo $row['assignment_id']; ?>" onclick="return confirm('Delete this assignment?')">
+                                        <button class="action-btn delete-btn">Unassign</button>
+                                    </a>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                        <?php endwhile; ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
+    <!-- SIDEBAR RIGHT -->
+    <div class="sidebar-right">
+        <img src="assets/logo_name.png" class="side-logo">
+        <div class="agent-info" style="color: white; text-align: center; margin-bottom: 30px;">
+            <h3>ACCOUNTANT</h3>
+            <p style="font-size: 0.7rem; opacity: 0.6;">FINANCE DEPT</p>
+        </div>
+        <nav class="nav-menu">
+            <a href="admin_dashboard.php" class="nav-item">DASHBOARD</a>
+            <a href="admin_notifications.php" class="nav-item">NOTIFICATIONS</a>
+            <a href="announcements.php" class="nav-item">ANNOUNCEMENTS</a>
+            <a href="user_management.php" class="nav-item">USER MANAGEMENT</a>
+            <a href="agent_management.php" class="nav-item active">FIELD AGENTS</a>
+            <a href="invoices.php" class="nav-item">INVOICES</a>
+            <a href="transactions.php" class="nav-item">TRANSACTIONS</a>
+            <a href="complaints_admin.php" class="nav-item">COMPLAINTS</a>
+            <a href="reports.php" class="nav-item">REPORTS</a>
+            <a href="profile.php" class="nav-item">PROFILE</a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="logout.php" class="logout-btn-container">LOG OUT</a>
+        </div>
+    </div>
+
+    <script>
+        window.onload = () => { document.body.style.opacity = "1"; };
+        
+        // Quick Fade transitions
+        document.querySelectorAll('.nav-item, .logout-btn-container').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const target = this.getAttribute('href');
+                if (target && target !== '#') {
+                    e.preventDefault();
+                    document.body.style.opacity = "0";
+                    setTimeout(() => { window.location.href = target; }, 200);
+                }
+            });
+        });
+    </script>
 </body>
 </html>

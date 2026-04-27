@@ -116,101 +116,130 @@ $invoices = $conn->query("
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Invoices</title>
-    <link rel="stylesheet" href="dashboard.css">
+    <meta charset="UTF-8">
+    <title>Invoices | Admin Portal</title>
+    <link rel="stylesheet" href="invoices.css">
 </head>
-<body>
+<body id="mainBody">
 
-    <div class="layout">
-
-        <div class="sidebar">
-            <h2>Admin</h2>
-            <ul>
-                <li><a href="admin_dashboard.php">Dashboard</a></li>
-                <li><a href="announcements.php">Announcements</a></li>
-                <li><a href="user_management.php">User Management</a></li>
-                <li><a href="agent_management.php">Field Agents</a></li>
-                <li><a href="invoices.php">Invoices</a></li>
-                <li><a href="transactions.php">Transactions</a></li>
-                <li><a href="complaints_admin.php">Complaints</a></li>
-                <li><a href="reports.php">Reports</a></li>
-                <li><a href="profile.php">Profile</a></li>
-                <li><a href="logout.php">Logout</a></li>
-            </ul>
+    <div class="main-content">
+        <div class="header-row">
+            <h1>BILLING INVOICE ISSUANCE</h1>
         </div>
 
-        <div class="main">
+        <!-- PENDING READINGS SECTION -->
+        <h2>Pending Meter Readings</h2>
+        <div class="glass-panel">
+            <div class="panel-title-bar">Awaiting Invoice Release</div>
+            <div class="table-area">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Customer</th>
+                            <th>Address</th>
+                            <th>Meter No.</th>
+                            <th>Prev</th>
+                            <th>Curr</th>
+                            <th>Cons.</th>
+                            <th>Reading Date</th>
+                            <th style="text-align:center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php while($r = $readings->fetch_assoc()): ?>
+                        <tr>
+                            <td><strong><?php echo strtoupper($r['first_name']." ".$r['last_name']); ?></strong></td>
+                            <td><small><?php echo $r['barangay']." / ".$r['street']; ?></small></td>
+                            <td><span style="font-family:monospace;"><?php echo $r['meter_number']; ?></span></td>
+                            <td><?php echo $r['previous_reading']; ?></td>
+                            <td><?php echo $r['current_reading']; ?></td>
+                            <td style="color: var(--accent-blue); font-weight:bold;"><?php echo $r['consumption']; ?> m³</td>
+                            <td><small><?php echo date('M d, Y', strtotime($r['reading_date'])); ?></small></td>
+                            <td style="text-align:center">
+                                <a href="?release_invoice=<?php echo $r['id']; ?>" onclick="return confirm('Release billing invoice?')">
+                                    <button class="btn-action btn-release">Release</button>
+                                </a>
+                            </td>
+                        </tr>
+                        <?php endwhile; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-            <h1>Billing Invoice Issuance</h1>
-
-            <h2>Pending Meter Readings</h2>
-
-            <table>
-                <tr>
-                    <th>Customer</th>
-                    <th>Address</th>
-                    <th>Meter No.</th>
-                    <th>Previous</th>
-                    <th>Current</th>
-                    <th>Consumption</th>
-                    <th>Reading Date</th>
-                    <th>Action</th>
-                </tr>
-
-                <?php while($r = $readings->fetch_assoc()): ?>
-                <tr>
-                    <td><?php echo $r['first_name']." ".$r['last_name']; ?></td>
-                    <td><?php echo $r['barangay']." / ".$r['street']; ?></td>
-                    <td><?php echo $r['meter_number']; ?></td>
-                    <td><?php echo $r['previous_reading']; ?></td>
-                    <td><?php echo $r['current_reading']; ?></td>
-                    <td><?php echo $r['consumption']; ?> m³</td>
-                    <td><?php echo $r['reading_date']; ?></td>
-                    <td>
-                        <a href="?release_invoice=<?php echo $r['id']; ?>" onclick="return confirm('Release billing invoice?')">
-                            <button type="button">Release Invoice</button>
-                        </a>
-                    </td>
-                </tr>
-                <?php endwhile; ?>
-            </table>
-
-            <h2>Released Invoices</h2>
-
-            <table>
-                <tr>
-                    <th>Invoice No.</th>
-                    <th>Customer</th>
-                    <th>Meter No.</th>
-                    <th>Consumption</th>
-                    <th>Amount</th>
-                    <th>Due Date</th>
-                    <th>Status</th>
-                    <th>Print</th>
-                </tr>
-
-                <?php while($i = $invoices->fetch_assoc()): ?>
-                <tr>
-                    <td><?php echo $i['invoice_no']; ?></td>
-                    <td><?php echo $i['first_name']." ".$i['last_name']; ?></td>
-                    <td><?php echo $i['meter_number']; ?></td>
-                    <td><?php echo $i['consumption']; ?> m³</td>
-                    <td>₱<?php echo number_format($i['amount'], 2); ?></td>
-                    <td><?php echo $i['due_date']; ?></td>
-                    <td><?php echo strtoupper($i['status']); ?></td>
-                    <td>
-                        <a href="print_invoice.php?id=<?php echo $i['id']; ?>" target="_blank">
-                            <button type="button">Print</button>
-                        </a>
-                    </td>
-                </tr>
-                <?php endwhile; ?>
-            </table>
-
+        <!-- RELEASED INVOICES SECTION -->
+        <h2>Released Invoices</h2>
+        <div class="glass-panel">
+            <div class="panel-title-bar">Billing History Records</div>
+            <div class="table-area">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Invoice No.</th>
+                            <th>Customer</th>
+                            <th>Meter No.</th>
+                            <th>Consumption</th>
+                            <th>Amount</th>
+                            <th>Due Date</th>
+                            <th>Status</th>
+                            <th style="text-align:center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php while($i = $invoices->fetch_assoc()): ?>
+                        <tr>
+                            <td><strong><?php echo $i['invoice_no']; ?></strong></td>
+                            <td><?php echo $i['first_name']." ".$i['last_name']; ?></td>
+                            <td><small><?php echo $i['meter_number']; ?></small></td>
+                            <td><?php echo $i['consumption']; ?> m³</td>
+                            <td style="color:var(--success); font-weight:800;">₱<?php echo number_format($i['amount'], 2); ?></td>
+                            <td><small><?php echo date('M d, Y', strtotime($i['due_date'])); ?></small></td>
+                            <td>
+                                <span style="font-size:0.7rem; font-weight:bold; color: <?php echo ($i['status'] == 'paid') ? 'var(--success)' : 'var(--danger)'; ?>;">
+                                    <?php echo strtoupper($i['status']); ?>
+                                </span>
+                            </td>
+                            <td style="text-align:center">
+                                <a href="print_invoice.php?id=<?php echo $i['id']; ?>" target="_blank">
+                                    <button class="btn-action btn-print">Print</button>
+                                </a>
+                            </td>
+                        </tr>
+                        <?php endwhile; ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
+    <!-- SIDEBAR RIGHT -->
+    <div class="sidebar-right">
+        <img src="assets/logo_name.png" class="side-logo">
+        <div class="agent-info" style="color: white; text-align: center; margin-bottom: 30px;">
+            <h3>ACCOUNTANT</h3>
+            <p style="font-size: 0.7rem; opacity: 0.6;">FINANCE DEPT</p>
+        </div>
+        <nav class="nav-menu">
+            <a href="admin_dashboard.php" class="nav-item">DASHBOARD</a>
+            <a href="admin_notifications.php" class="nav-item">NOTIFICATIONS</a>
+            <a href="announcements.php" class="nav-item">ANNOUNCEMENTS</a>
+            <a href="user_management.php" class="nav-item">USER MANAGEMENT</a>
+            <a href="agent_management.php" class="nav-item">FIELD AGENTS</a>
+            <a href="invoices.php" class="nav-item  active">INVOICES</a>
+            <a href="transactions.php" class="nav-item">TRANSACTIONS</a>
+            <a href="complaints_admin.php" class="nav-item">COMPLAINTS</a>
+            <a href="reports.php" class="nav-item">REPORTS</a>
+            <a href="profile.php" class="nav-item">PROFILE</a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="logout.php" class="logout-btn-container">LOG OUT</a>
+        </div>
+    </div>
+
+    <script>
+        window.onload = () => { document.body.classList.add('fade-in'); };
+    </script>
 </body>
 </html>
