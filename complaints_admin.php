@@ -14,11 +14,24 @@ if (isset($_POST['reply_complaint'])) {
     $status = $_POST['status'];
 
     /* KUHANIN USER NG COMPLAINT */
-    $c = $conn->query("
-        SELECT user_id, complaint_type 
+    $result = $conn->query("
+        SELECT 
+            user_id,
+            COALESCE(subject) AS complaint_title
         FROM complaints 
         WHERE id='$complaint_id'
-    ")->fetch_assoc();
+    ");
+
+    if (!$result) {
+        die("SQL Error: " . $conn->error);
+    }
+
+    if ($result->num_rows == 0) {
+        echo "<script>alert('Complaint not found'); window.location='complaints_admin.php';</script>";
+        exit();
+    }
+
+    $c = $result->fetch_assoc();
 
     /* UPDATE COMPLAINT */
     $stmt = $conn->prepare("UPDATE complaints 
@@ -30,9 +43,7 @@ if (isset($_POST['reply_complaint'])) {
 
     /* NOTIFY USER */
     $title = "Complaint Update";
-
-    $message = "Your complaint '{$c['complaint_type']}' has been reviewed. 
-    Status: $status. Click to view reply.";
+    $message = "Your complaint '{$c['complaint_title']}' has been reviewed. Status: $status. Click to view reply.";
 
     $notif = $conn->prepare("INSERT INTO notifications
     (user_id, role_target, title, message, type, status, link)

@@ -101,8 +101,8 @@ if ($role == "user") {
     $notif_msg = $fname . " " . $lname . " updated profile information.";
 
     $notif = $conn->prepare("INSERT INTO notifications 
-    (user_id, role_target, title, message, status)
-    VALUES (?, 'admin', ?, ?, 'unread')");
+    (user_id, role_target, title, message, type, status)
+    VALUES (?, 'admin', ?, ?, 'profile', 'unread')");
 
     $notif->bind_param("iss", $user_id, $notif_title, $notif_msg);
     $notif->execute();

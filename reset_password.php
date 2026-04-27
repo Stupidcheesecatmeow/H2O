@@ -7,63 +7,62 @@ if(!isset($_SESSION['reset_email'])){
     exit();
 }
 
-$email = $_SESSION['reset_email'];
-
 if(isset($_POST['reset'])){
+    $new_pass = $_POST['password'];
+    $conf_pass = $_POST['confirm_password'];
+    $email = $_SESSION['reset_email'];
 
-    $new = $_POST['new'];
-    $confirm = $_POST['confirm'];
-
-    if($new != $confirm){
-        echo "<script>alert('Password mismatch');</script>";
+    if($new_pass === $conf_pass){
+        $update = $conn->query("UPDATE users SET password='$new_pass' WHERE email='$email'");
+        
+        if($update){
+            unset($_SESSION['reset_email']);
+            echo "<script>alert('Password updated successfully!'); window.location.href='index.php';</script>";
+        }
     } else {
-
-        $conn->query("UPDATE users SET password='$new' WHERE email='$email'");
-
-        unset($_SESSION['reset_email']);
-
-        echo "<script>
-        alert('Password updated');
-        window.location='index.php';
-        </script>";
+        echo "<script>alert('Passwords do not match.');</script>";
     }
 }
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reset Password</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="forgot.css">
 </head>
 <body>
 
 <div class="container">
+    <div class="left">
+        <img src="assets/logo_name.png" class="logo">
 
-<div class="left">
-<img src="assets/spongy.png" class="logo">
+        <form method="POST">
+            <h2>Create New Password</h2>
+            <p class="subtitle">Enter your new password below.</p>
 
-<form method="POST">
+            <label>New Password</label>
+            <input type="password" name="password" placeholder="Minimum 8 characters" required>
 
-<h2>Reset Password</h2>
+            <label>Confirm Password</label>
+            <input type="password" name="confirm_password" placeholder="Repeat new password" required>
 
-<p><?php echo $email; ?></p>
+            <button name="reset" id="forgotBtn">Update Password</button>
 
-<input type="password" name="new" placeholder="New Password" required>
-<input type="password" name="confirm" placeholder="Confirm Password" required>
-
-<button name="reset">Reset Password</button>
-
-</form>
+            <div class="back-link">
+                <a href="forgot_password.php">Back</a>
+            </div>
+        </form>
+    </div>
 </div>
 
-<div class="right">
-<div class="overlay">
-<h2>Almost done</h2>
-</div>
-</div>
-
-</div>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        document.body.style.opacity = "1";
+    });
+</script>
 
 </body>
 </html>
