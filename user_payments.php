@@ -82,90 +82,117 @@ LIMIT 1
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Payment</title>
-    <link rel="stylesheet" href="dashboard.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make Payment | H2O</title>
+    <link rel="stylesheet" href="user_design.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
-<body>
+<body id="mainBody">
 
-    <div class="layout">
-
-        <div class="sidebar">
-            <h2><?php echo $user['first_name']; ?></h2>
-            <ul>
-                <li><a href="user_dashboard.php">Dashboard</a></li>
-                <li><a href="user_notifications.php">Notifications</a></li>
-                <li><a href="user_billing.php">Billing</a></li>
-                <li><a href="user_payments.php">Payment</a></li>
-                <li><a href="user_history.php">History</a></li>
-                <li><a href="user_complaints.php">Complaints</a></li>
-                <li><a href="profile.php">Profile</a></li>
-                <li><a href="logout.php">Logout</a></li>
-            </ul>
+    <!-- MAIN CONTENT AREA -->
+    <div class="main-content">
+        <div class="header-row">
+            <h1>BILL PAYMENT</h1>
         </div>
 
-        <div class="main">
-
-            <h1>Payment</h1>
-
+        <div class="glass-panel" style="padding: 25px;">
+            <div class="panel-title-bar" style="margin: -25px -25px 25px -25px;">Submit Transaction</div>
+            
             <form method="POST" enctype="multipart/form-data" onsubmit="return validatePaymentProof()">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                    
+                    <!-- Form Controls -->
+                    <div class="form-section">
+                        <label class="stat-label">Select Outstanding Bill</label>
+                        <select name="invoice_id" id="invoiceSelect" required>
+                            <option value="">-- Choose Bill --</option>
+                            <?php while($b = $bills->fetch_assoc()): ?>
+                            <option value="<?php echo $b['id']; ?>" data-amount="<?php echo $b['amount']; ?>" data-invoice="<?php echo $b['invoice_no']; ?>">
+                                <?php echo $b['invoice_no']; ?> - ₱<?php echo number_format($b['amount'],2); ?>
+                            </option>
+                            <?php endwhile; ?>
+                        </select>
 
-                <select name="invoice_id" id="invoiceSelect" required>
-                    <option value="">Select Bill</option>
+                        <label class="stat-label" style="margin-top: 15px;">Total Amount</label>
+                        <input type="number" step="0.01" name="amount" id="amountInput" placeholder="0.00" required readonly>
 
-                    <?php while($b = $bills->fetch_assoc()): ?>
-                    <option 
-                        value="<?php echo $b['id']; ?>" 
-                        data-amount="<?php echo $b['amount']; ?>"
-                        data-invoice="<?php echo $b['invoice_no']; ?>">
-                        <?php echo $b['invoice_no']; ?> - ₱<?php echo number_format($b['amount'],2); ?>
-                    </option>
-                    <?php endwhile; ?>
+                        <label class="stat-label" style="margin-top: 15px;">Payment Method</label>
+                        <select name="payment_method" id="mopSelect" required>
+                            <option value="">-- Choose Mode of Payment --</option>
+                            <option value="Cash">Cash (At Office)</option>
+                            <option value="GCash">GCash</option>
+                            <option value="Maya">Maya</option>
+                            <option value="Bank Transfer">Bank Transfer</option>
+                        </select>
+                    </div>
 
-                </select>
+                    <!-- Dynamic Details (QR/Instructions) -->
+                    <div class="details-section">
+                        <div id="paymentDetails">
+                            <div class="card" style="text-align: center; padding: 40px; opacity: 0.5; border: 1px dashed rgba(255,255,255,0.2);">
+                                Please select a bill and payment method to proceed.
+                            </div>
+                        </div>
 
-                <input type="number" step="0.01" name="amount" id="amountInput" placeholder="Amount" required readonly>
-
-                <select name="payment_method" id="mopSelect" required>
-                    <option value="">Select MOP</option>
-                    <option value="Cash">Cash</option>
-                    <option value="GCash">GCash</option>
-                    <option value="Maya">Maya</option>
-                    <option value="Bank Transfer">Bank Transfer</option>
-                </select>
-
-                <div id="paymentDetails"></div>
-
-                <div id="proofBox" style="display:none;">
-                    <label>Upload Payment Proof</label>
-                    <input type="file" name="proof_image" id="proofImage" accept="image/*">
+                        <div id="proofBox" style="display:none; margin-top: 20px;">
+                            <label class="stat-label">Upload Transaction Proof (Screenshot)</label>
+                            <input type="file" name="proof_image" id="proofImage" accept="image/*">
+                        </div>
+                    </div>
                 </div>
 
-                <button name="pay">Submit Payment</button>
-
+                <button type="submit" name="pay" class="pay-submit-btn">SUBMIT PAYMENT</button>
             </form>
+        </div>
 
-            <h2>Latest Payment</h2>
+        <!-- LATEST TRANSACTION STATUS -->
+        <div class="glass-panel">
+            <div class="panel-title-bar">Latest Transaction Activity</div>
+            <div class="table-area" style="padding: 20px;">
+                <?php if($latest): ?>
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); text-align: center;">
+                        <div><span class="stat-label">Reference</span><br><strong><?php echo $latest['transaction_no']; ?></strong></div>
+                        <div><span class="stat-label">Amount</span><br><strong>₱<?php echo number_format($latest['amount'],2); ?></strong></div>
+                        <div><span class="stat-label">Method</span><br><strong><?php echo $latest['payment_method']; ?></strong></div>
+                        <div><span class="stat-label">Status</span><br>
+                            <span class="status-pill <?php echo ($latest['status'] == 'pending') ? 'unpaid' : 'paid'; ?>">
+                                <?php echo strtoupper($latest['status']); ?>
+                            </span>
+                        </div>
+                    </div>
+                <?php else: ?>
+                    <p style="text-align: center; opacity: 0.5;">No recent payment activity found.</p>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
 
-            <?php if($latest): ?>
-            <p>
-            Transaction: <?php echo $latest['transaction_no']; ?><br>
-            Amount: ₱<?php echo number_format($latest['amount'],2); ?><br>
-            MOP: <?php echo $latest['payment_method']; ?><br>
-            QR Token: <?php echo $latest['qr_token'] ?? "N/A"; ?><br>
-            QR Expires: <?php echo $latest['qr_expires_at'] ?? "N/A"; ?><br>
-            Status: <?php echo $latest['status']; ?>
-            </p>
-            <?php else: ?>
-            <p>No payments yet</p>
-            <?php endif; ?>
-
+    <!-- SIDEBAR RIGHT -->
+    <div class="sidebar-right">
+        <img src="assets/logo_name.png" class="side-logo">
+        <div class="agent-info">
+            <h3><?php echo strtoupper($user['first_name'] . " " . $user['last_name']); ?></h3>
+            <p>CONSUMER ACCOUNT</p>
+        </div>
+        <nav class="nav-menu">
+            <a href="user_dashboard.php" class="nav-item">DASHBOARD</a>
+            <a href="user_notifications.php" class="nav-item">NOTIFICATIONS</a>
+            <a href="user_billing.php" class="nav-item">BILLING</a>
+            <a href="user_payments.php" class="nav-item active">PAYMENT</a>
+            <a href="user_history.php" class="nav-item">HISTORY</a>
+            <a href="profile.php" class="nav-item">PROFILE</a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="logout.php" class="logout-btn-container">LOG OUT</a>
         </div>
     </div>
 
     <script>
+        window.onload = () => { document.body.style.opacity = "1"; };
+
         const select = document.getElementById("invoiceSelect");
         const amount = document.getElementById("amountInput");
         const mop = document.getElementById("mopSelect");
@@ -187,130 +214,74 @@ LIMIT 1
         function renderPaymentBox(){
             const val = mop.value;
             const selected = select.options[select.selectedIndex];
+            clearInterval(countdownInterval);
 
             if(val === ""){
                 proofBox.style.display = "none";
-                proofImage.required = false;
-                proofImage.value = "";
-                box.innerHTML = "";
+                box.innerHTML = `<div class="card" style="text-align: center; padding: 40px; opacity: 0.5; border: 1px dashed rgba(255,255,255,0.2);">Please select a bill and payment method to proceed.</div>`;
                 return;
             }
 
             if(val === "Cash"){
                 proofBox.style.display = "none";
                 proofImage.required = false;
-                proofImage.value = "";
-
                 box.innerHTML = `
                     <div class="card">
-                        <h3>Cash Payment</h3>
-                        <p>Please proceed to the H2O Office to complete your payment.</p>
-                        <p><strong>Office Hours:</strong> 8:00 AM - 5:00 PM</p>
-                    </div>
-                `;
+                        <h3 style="color: var(--accent-blue); margin-top:0;">Cash Payment Instructions</h3>
+                        <p>Please visit the H2O Main Office to settle this bill. Bring your Invoice Number for faster processing.</p>
+                        <p><strong>Office Hours:</strong> 8:00 AM - 5:00 PM (Mon-Fri)</p>
+                    </div>`;
                 return;
             }
 
             if(select.value === ""){
-                box.innerHTML = `
-                    <div class="card">
-                        <p>Please select a bill first before generating QR.</p>
-                    </div>
-                `;
+                box.innerHTML = `<div class="card"><p>Please select a specific bill above to generate your unique ${val} QR code.</p></div>`;
                 return;
             }
 
+            // Electronic Payment Generation
             proofBox.style.display = "block";
             proofImage.required = true;
-
             const invoiceNo = selected.getAttribute("data-invoice");
             const amountVal = amount.value;
-            const tempToken = "QR-" + Date.now() + "-" + Math.floor(Math.random() * 9999);
-
+            const tempToken = "QR-" + Date.now();
             qrExpireTime = new Date().getTime() + (15 * 60 * 1000);
 
             box.innerHTML = `
-                <div class="card">
-                    <h3>${val} Payment QR</h3>
-                    <div id="qrcode"></div>
-                    <p><strong>Invoice:</strong> ${invoiceNo}</p>
-                    <p><strong>Amount:</strong> ₱${amountVal}</p>
-                    <p><strong>Temp QR Token:</strong> ${tempToken}</p>
-                    <p><strong>Expires in:</strong> <span id="qrTimer">15:00</span></p>
-                    <p>Scan the QR, then upload your payment screenshot proof.</p>
-                </div>
-            `;
+                <div class="card" style="text-align: center;">
+                    <h3 style="color: var(--accent-blue); margin-top:0;">${val} Scan-to-Pay</h3>
+                    <div id="qrcode" style="display:inline-block; padding:10px; background:white; border-radius:8px; margin:10px 0;"></div>
+                    <p style="font-size:0.8rem;">Invoice: <strong>${invoiceNo}</strong> | Amount: <strong>₱${amountVal}</strong></p>
+                    <p style="font-size:0.7rem; color: #e74c3c; font-weight:bold;">QR Expires in: <span id="qrTimer">15:00</span></p>
+                </div>`;
 
-            const qrData = `
-            H2O PAYMENT
-            Customer: <?php echo $user['first_name']." ".$user['last_name']; ?>
-            Invoice: ${invoiceNo}
-            Amount: ${amountVal}
-            MOP: ${val}
-            Token: ${tempToken}
-            Expires: 15 minutes
-            `;
-
-            new QRCode(document.getElementById("qrcode"), {
-                text: qrData,
-                width: 180,
-                height: 180
-            });
-
+            new QRCode(document.getElementById("qrcode"), { text: tempToken, width: 150, height: 150 });
             startCountdown();
         }
 
         function startCountdown(){
-            clearInterval(countdownInterval);
-
             countdownInterval = setInterval(() => {
                 const now = new Date().getTime();
                 const distance = qrExpireTime - now;
-
                 if(distance <= 0){
                     clearInterval(countdownInterval);
                     document.getElementById("qrTimer").innerHTML = "Expired";
-                    document.querySelector("button[name='pay']").disabled = true;
-                    alert("QR expired. Please reselect payment method to generate a new QR.");
+                    box.innerHTML = `<div class="card" style="text-align:center; color:#e74c3c;">QR has expired. Please refresh the payment method.</div>`;
                     return;
                 }
-
-                const minutes = Math.floor(distance / 1000 / 60);
-                const seconds = Math.floor((distance / 1000) % 60);
-
-                document.getElementById("qrTimer").innerHTML =
-                    String(minutes).padStart(2, '0') + ":" + String(seconds).padStart(2, '0');
-
-                document.querySelector("button[name='pay']").disabled = false;
+                const m = Math.floor(distance / 60000);
+                const s = Math.floor((distance % 60000) / 1000);
+                document.getElementById("qrTimer").innerHTML = `${m}:${s < 10 ? '0' : ''}${s}`;
             }, 1000);
         }
 
         function validatePaymentProof(){
-            if(select.value === ""){
-                alert("Please select a bill.");
+            if(mop.value !== "Cash" && !proofImage.value){
+                alert("Please upload the payment transaction screenshot before submitting.");
                 return false;
             }
-
-            if(mop.value === ""){
-                alert("Please select mode of payment.");
-                return false;
-            }
-
-            if(mop.value !== "Cash"){
-                if(qrExpireTime && new Date().getTime() > qrExpireTime){
-                    alert("QR expired. Please generate a new QR.");
-                    return false;
-                }
-
-                if(proofImage.files.length === 0){
-                    alert("Please upload payment proof.");
-                    return false;
-                }
-            }
-
             return true;
         }
     </script>
-
 </body>
 </html>

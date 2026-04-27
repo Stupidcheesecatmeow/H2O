@@ -19,52 +19,105 @@ ORDER BY i.created_at DESC
 ");
 ?>
 
-<link rel="stylesheet" href="dashboard.css">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Billing | H2O</title>
+    <!-- Linking to your shared CSS file -->
+    <link rel="stylesheet" href="user_design.css">
+</head>
+<body id="mainBody">
 
-<div class="layout">
+    <!-- MAIN CONTENT AREA -->
+    <div class="main-content">
+        <div class="header-row">
+            <h1>BILLING HISTORY</h1>
+        </div>
 
-    <div class="sidebar">
-        <h2><?php echo $user['first_name']; ?></h2>
-        <ul>
-            <li><a href="user_dashboard.php">Dashboard</a></li>
-            <li><a href="user_notifications.php">Notifications</a></li>
-            <li><a href="user_billing.php">Billing</a></li>
-            <li><a href="user_payments.php">Payment</a></li>
-            <li><a href="user_history.php">History</a></li>
-            <li><a href="user_complaints.php">Complaints</a></li>
-            <li><a href="profile.php">Profile</a></li>
-            <li><a href="logout.php">Logout</a></li>
-        </ul>
+        <!-- GLASS TABLE PANEL -->
+        <div class="glass-panel">
+            <div class="panel-title-bar">Invoice Records</div>
+            
+            <div class="table-area">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Invoice No</th>
+                            <th>Reading (m³)</th>
+                            <th>Amount Due</th>
+                            <th>Status</th>
+                            <th style="text-align: center;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if($bills && $bills->num_rows > 0): ?>
+                            <?php while($b = $bills->fetch_assoc()): 
+                                // Determine the pill color based on status
+                                $status_class = (strtolower($b['status']) == 'paid') ? 'paid' : 'unpaid';
+                            ?>
+                            <tr>
+                                <td><strong><?php echo $b['invoice_no']; ?></strong></td>
+                                <td>
+                                    <span style="opacity: 0.6;"><?php echo $b['previous_reading'] ?? '0'; ?></span> 
+                                    <span style="color: var(--accent-blue);">→</span> 
+                                    <strong><?php echo $b['current_reading'] ?? '0'; ?></strong>
+                                </td>
+                                <td style="font-weight: 800; color: #2ecc71;">₱<?php echo number_format($b['amount'], 2); ?></td>
+                                <td>
+                                    <!-- Using status-pill class from your CSS -->
+                                    <span class="status-pill <?php echo $status_class; ?>">
+                                        <?php echo strtoupper($b['status']); ?>
+                                    </span>
+                                </td>
+                                <td style="text-align: center;">
+                                    <a href="print_invoice.php?id=<?php echo $b['id']; ?>" target="_blank">
+                                        <button class="print-btn">PRINT</button>
+                                    </a>
+                                </td>
+                            </tr>
+                            <?php endwhile; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="5" style="text-align: center; padding: 40px; opacity: 0.5;">
+                                    No billing records found.
+                                </td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
-    <div class="main">
+    <!-- SIDEBAR RIGHT -->
+    <div class="sidebar-right">
+        <img src="assets/logo_name.png" class="side-logo">
+        <div class="agent-info">
+            <h3><?php echo strtoupper($user['first_name'] . " " . $user['last_name']); ?></h3>
+            <p>CONSUMER ACCOUNT</p>
+        </div>
+        
+        <nav class="nav-menu">
+            <a href="user_dashboard.php" class="nav-item">DASHBOARD</a>
+            <a href="user_notifications.php" class="nav-item">NOTIFICATIONS</a>
+            <a href="user_billing.php" class="nav-item active">BILLING</a>
+            <a href="user_payments.php" class="nav-item">PAYMENTS</a>
+            <a href="user_history.php" class="nav-item">HISTORY</a>
+            <a href="profile.php" class="nav-item">PROFILE</a>
+        </nav>
 
-        <h1>Billing</h1>
-
-        <table>
-            <tr>
-                <th>Invoice</th>
-                <th>Reading</th>
-                <th>Amount</th>
-                <th>Status</th>
-                <th>Print</th>
-            </tr>
-
-            <?php while($b = $bills->fetch_assoc()): ?>
-            <tr>
-            <td><?php echo $b['invoice_no']; ?></td>
-            <td><?php echo $b['previous_reading']." → ".$b['current_reading']; ?></td>
-            <td>₱<?php echo number_format($b['amount'],2); ?></td>
-            <td><?php echo $b['status']; ?></td>
-            <td>
-            <a href="print_invoice.php?id=<?php echo $b['id']; ?>" target="_blank">
-            <button>Print</button>
-            </a>
-            </td>
-            </tr>
-            <?php endwhile; ?>
-
-        </table>
-
+        <div class="sidebar-footer">
+            <a href="logout.php" class="logout-btn-container">LOG OUT</a>
+        </div>
     </div>
-</div>
+
+    <script>
+        // Trigger fade-in transition on load
+        window.onload = () => {
+            document.body.style.opacity = "1";
+        };
+    </script>
+</body>
+</html>

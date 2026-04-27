@@ -63,107 +63,113 @@ if (!$announcements) {
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>User Notifications</title>
-    <link rel="stylesheet" href="dashboard.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications | H2O</title>
+    <link rel="stylesheet" href="user_design.css">
 </head>
-<body>
+<body id="mainBody">
 
-    <div class="layout">
-
-        <div class="sidebar">
-            <h2><?php echo $user['first_name']; ?></h2>
-            <ul>
-                <li><a href="user_dashboard.php">Dashboard</a></li>
-                <li><a href="user_notifications.php">Notifications</a></li>
-                <li><a href="user_billing.php">Billing</a></li>
-                <li><a href="user_payments.php">Payment</a></li>
-                <li><a href="user_history.php">History</a></li>
-                <li><a href="user_complaints.php">Complaints</a></li>
-                <li><a href="profile.php">Profile</a></li>
-                <li><a href="logout.php">Logout</a></li>
-            </ul>
+    <div class="main-content">
+        <div class="header-row">
+            <h1>NOTIFICATIONS & ANNOUNCEMENTS</h1>
         </div>
 
-        <div class="main">
-
-            <h1>Notifications</h1>
-
-            <h2>System Updates</h2>
-
-            <?php if($system_notifications->num_rows > 0): ?>
-            <table>
-                <tr>
-                    <th>Type</th>
-                    <th>Title</th>
-                    <th>Message</th>
-                    <th>Status</th>
-                    <th>Date</th>
-                    <th>Action</th>
-                </tr>
-
-                <?php while($n = $system_notifications->fetch_assoc()): ?>
-                <tr style="<?php echo ($n['status']=='unread') ? 'background:#eef8fc;' : ''; ?>">
-                    <td>
-                        <?php
-                        if($n['type'] == "payment"){
-                            echo "Payment";
-                        } elseif($n['type'] == "bill"){
-                            echo "Bill";
-                        } elseif($n['type'] == "complaint"){
-                            echo "Complaint";
-                        } else {
-                            echo "Notice";
-                        }
+        <!-- SYSTEM NOTIFICATIONS -->
+        <h2>System Updates</h2>
+        <div class="glass-panel">
+            <div class="table-area">
+                <?php if($system_notifications->num_rows > 0): ?>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Title</th>
+                            <th>Message</th>
+                            <th>Date</th>
+                            <th style="text-align:right">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php while($n = $system_notifications->fetch_assoc()): 
+                            $isUnread = ($n['status'] == 'unread');
                         ?>
-                    </td>
-                    <td><?php echo $n['title']; ?></td>
-                    <td><?php echo $n['message']; ?></td>
-                    <td><?php echo strtoupper($n['status']); ?></td>
-                    <td><?php echo $n['created_at']; ?></td>
-                    <td>
-                        <a href="?read=<?php echo $n['id']; ?>">
-                            <button type="button">
-                                <?php echo ($n['status'] == "unread") ? "Open / Mark Read" : "Open"; ?>
-                            </button>
-                        </a>
-                    </td>
-                </tr>
-                <?php endwhile; ?>
-            </table>
-            <?php else: ?>
-            <p>No system notifications yet.</p>
-            <?php endif; ?>
+                        <tr class="<?php echo $isUnread ? 'unread-row' : ''; ?>">
+                            <td><span class="type-badge"><?php echo strtoupper($n['type']); ?></span></td>
+                            <td><strong><?php echo $n['title']; ?></strong></td>
+                            <td style="font-size: 0.8rem; opacity: 0.9;"><?php echo $n['message']; ?></td>
+                            <td style="font-size: 0.75rem; opacity: 0.6;"><?php echo date('M d, g:i A', strtotime($n['created_at'])); ?></td>
+                            <td style="text-align:right">
+                                <a href="?read=<?php echo $n['id']; ?>">
+                                    <button class="open-btn">
+                                        <?php echo $isUnread ? "MARK AS READ" : "VIEW"; ?>
+                                    </button>
+                                </a>
+                            </td>
+                        </tr>
+                        <?php endwhile; ?>
+                    </tbody>
+                </table>
+                <?php else: ?>
+                    <p style="padding: 20px; opacity: 0.5; text-align: center;">No system notifications yet.</p>
+                <?php endif; ?>
+            </div>
+        </div>
 
-            <h2>Announcements</h2>
-
-            <?php if($announcements->num_rows > 0): ?>
-            <table>
-                <tr>
-                    <th>Title</th>
-                    <th>Message</th>
-                    <th>Barangay</th>
-                    <th>Date</th>
-                </tr>
-
-                <?php while($a = $announcements->fetch_assoc()): ?>
-                <tr>
-                    <td><?php echo $a['title']; ?></td>
-                    <td><?php echo $a['message']; ?></td>
-                    <td>
-                        <?php echo ($a['target_type'] == "everyone") ? "All Barangays" : $a['barangay']; ?>
-                    </td>
-                    <td><?php echo $a['announcement_date']; ?></td>
-                </tr>
-                <?php endwhile; ?>
-            </table>
-            <?php else: ?>
-            <p>No announcements yet.</p>
-            <?php endif; ?>
-
+        <!-- ANNOUNCEMENTS -->
+        <h2>Announcements</h2>
+        <div class="glass-panel">
+            <div class="table-area">
+                <?php if($announcements->num_rows > 0): ?>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Message</th>
+                            <th>Target</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php while($a = $announcements->fetch_assoc()): ?>
+                        <tr>
+                            <td><strong><?php echo $a['title']; ?></strong></td>
+                            <td style="font-size: 0.8rem; opacity: 0.9;"><?php echo $a['message']; ?></td>
+                            <td><span class="type-badge"><?php echo ($a['target_type'] == "everyone") ? "ALL" : $a['barangay']; ?></span></td>
+                            <td style="font-size: 0.75rem; opacity: 0.6;"><?php echo date('M d, Y', strtotime($a['announcement_date'])); ?></td>
+                        </tr>
+                        <?php endwhile; ?>
+                    </tbody>
+                </table>
+                <?php else: ?>
+                    <p style="padding: 20px; opacity: 0.5; text-align: center;">No announcements yet.</p>
+                <?php endif; ?>
+            </div>
         </div>
     </div>
 
+    <!-- SIDEBAR RIGHT -->
+    <div class="sidebar-right">
+        <img src="assets/logo_name.png" class="side-logo">
+        <div class="agent-info">
+            <h3><?php echo strtoupper($user['first_name'] . " " . $user['last_name']); ?></h3>
+            <p>CONSUMER ACCOUNT</p>
+        </div>
+        <nav class="nav-menu">
+            <a href="user_dashboard.php" class="nav-item">DASHBOARD</a>
+            <a href="user_notifications.php" class="nav-item active">NOTIFICATIONS</a>
+            <a href="user_billing.php" class="nav-item">BILLING</a>
+            <a href="user_payments.php" class="nav-item">PAYMENTS</a>
+            <a href="user_history.php" class="nav-item">HISTORY</a>
+            <a href="profile.php" class="nav-item">PROFILE</a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="logout.php" class="logout-btn-container">LOG OUT</a>
+        </div>
+    </div>
+
+    <script>window.onload = () => { document.body.style.opacity = "1"; };</script>
 </body>
 </html>

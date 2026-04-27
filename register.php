@@ -64,94 +64,88 @@ if(isset($_POST['register'])){
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Register</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>H2O - Sign Up</title>
+    <link rel="stylesheet" href="regis.css">
 </head>
-<body>
+<body class="body_regis">
+<div class="container_regis">
+    <div class="left_regis">
+    <img src="assets/logo_name.png" alt="logo" class="logo_regis">
+    <h3 class="form-title">Registration Form</h3>
 
-    <div class="container">
-
-        <div class="left">
-            <img src="assets/spongy.png" alt="logo" class="logo">
-
-            <form method="POST" class="register-form">
-
-                <div class="form-row">
-                    <div class="field">
-                        <label>First Name</label>
-                        <input type="text" name="first_name" required>
-                    </div>
-
-                    <div class="field">
-                        <label>Last Name</label>
-                        <input type="text" name="last_name" required>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="field">
-                        <label>Email</label>
-                        <input type="email" name="email" required>
-                    </div>
-
-                    <div class="field">
-                        <label>Contact No.</label>
-                        <input type="text" name="contact_no" required>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="field">
-                        <label>Barangay</label>
-                        <select name="barangay" required>
-                            <option value="">Select Barangay</option>
-
-                            <?php foreach($barangays as $b): ?>
-                                <option value="<?php echo $b; ?>">
-                                    <?php echo $b; ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-
-                    <div class="field">
-                        <label>Street</label>
-                        <input type="text" name="street" required>
-                    </div>
-                </div>
-
-                <div class="field">
-                    <label>Meter Number</label>
-                    <input type="text" name="meter_number" required>
-                </div>
-
-                <div class="form-row">
-                    <div class="field">
-                        <label>Password</label>
-                        <input type="password" name="password" required>
-                    </div>
-
-                    <div class="field">
-                        <label>Verify Password</label>
-                        <input type="password" name="verify_password" required>
-                    </div>
-                </div>
-
-                <div class="form-actions">
-                    <button type="submit" name="register">Register</button>
-                    <a href="index.php" class="btn-secondary">Back to Login</a>
-                </div>
-
-            </form>
+    <form action="register.php" method="POST">
+        <div class="form-group">
+            <label>First Name</label>
+            <input type="text" name="first_name" required>
+        </div>
+        <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" name="last_name" required>
+        </div>
+        <div class="form-group">
+            <label>Contact Number</label>
+            <input type="text" name="contact" required>
+        </div>
+        <div class="form-group">
+            <label>Meter Number</label>
+            <input type="text" name="meter_no" required>
         </div>
 
-        <div class="right">
-            <div class="overlay">
-                <h2>Steady Flow, <br>Easy Go</h2>
-            </div>
+        <div class="form-group">
+            <label>Barangay</label>
+            <select name="barangay" required>
+                <option value="">Select Barangay</option>
+                <?php foreach($barangays as $b): ?>
+                    <option value="<?php echo htmlspecialchars($b); ?>">
+                        <?php echo htmlspecialchars($b); ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
         </div>
 
+        <div class="form-group">
+            <label>Street</label>
+            <input type="text" name="street" required>
+        </div>
+        <div class="form-group full-width">
+            <label>Email</label>
+            <input type="email" name="email" placeholder="Enter your email" required>
+        </div>
+        <div class="form-group full-width">
+            <label>Password</label>
+            <input type="password" name="password" placeholder="Enter your password" required>
+        </div>
+        <div class="form-group full-width">
+            <label>Confirm Password</label>
+            <input type="password" name="confirm_password" placeholder="Enter your password again" required>
+        </div>
+
+        <div class="login-links_regis">
+            <p>Already have an account? <a href="index.php">Sign In</a></p>
+        </div>
+        <button type="submit" id="registerBtn">Register</button>
+    </form>
     </div>
+</div>
 
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const links = document.querySelectorAll("a");
+        const body = document.querySelector("body");
+
+        links.forEach(link => {
+            link.addEventListener("click", e => {
+                if (link.hostname === window.location.hostname && link.getAttribute('href') !== '#') {
+                    e.preventDefault();
+                    let target = link.href;
+                    body.style.opacity = "0";
+                    body.style.transition = "opacity 0.25s ease";
+                    setTimeout(() => { window.location.href = target; }, 250); 
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>
