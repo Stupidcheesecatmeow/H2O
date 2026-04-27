@@ -70,100 +70,100 @@ if (!$announcements) {
 </head>
 <body>
 
-<div class="layout">
+    <div class="layout">
 
-<div class="sidebar">
-<h2><?php echo $user['first_name']; ?></h2>
-<ul>
-    <li><a href="user_dashboard.php">Dashboard</a></li>
-    <li><a href="user_notifications.php">Notifications</a></li>
-    <li><a href="user_billing.php">Billing</a></li>
-    <li><a href="user_payments.php">Payment</a></li>
-    <li><a href="user_history.php">History</a></li>
-    <li><a href="user_complaints.php">Complaints</a></li>
-    <li><a href="profile.php">Profile</a></li>
-    <li><a href="logout.php">Logout</a></li>
-</ul>
-</div>
+        <div class="sidebar">
+            <h2><?php echo $user['first_name']; ?></h2>
+            <ul>
+                <li><a href="user_dashboard.php">Dashboard</a></li>
+                <li><a href="user_notifications.php">Notifications</a></li>
+                <li><a href="user_billing.php">Billing</a></li>
+                <li><a href="user_payments.php">Payment</a></li>
+                <li><a href="user_history.php">History</a></li>
+                <li><a href="user_complaints.php">Complaints</a></li>
+                <li><a href="profile.php">Profile</a></li>
+                <li><a href="logout.php">Logout</a></li>
+            </ul>
+        </div>
 
-<div class="main">
+        <div class="main">
 
-<h1>Notifications</h1>
+            <h1>Notifications</h1>
 
-<h2>System Updates</h2>
+            <h2>System Updates</h2>
 
-<?php if($system_notifications->num_rows > 0): ?>
-<table>
-<tr>
-    <th>Type</th>
-    <th>Title</th>
-    <th>Message</th>
-    <th>Status</th>
-    <th>Date</th>
-    <th>Action</th>
-</tr>
+            <?php if($system_notifications->num_rows > 0): ?>
+            <table>
+                <tr>
+                    <th>Type</th>
+                    <th>Title</th>
+                    <th>Message</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>Action</th>
+                </tr>
 
-<?php while($n = $system_notifications->fetch_assoc()): ?>
-<tr style="<?php echo ($n['status']=='unread') ? 'background:#eef8fc;' : ''; ?>">
-    <td>
-        <?php
-        if($n['type'] == "payment"){
-            echo "Payment";
-        } elseif($n['type'] == "bill"){
-            echo "Bill";
-        } elseif($n['type'] == "complaint"){
-            echo "Complaint";
-        } else {
-            echo "Notice";
-        }
-        ?>
-    </td>
-    <td><?php echo $n['title']; ?></td>
-    <td><?php echo $n['message']; ?></td>
-    <td><?php echo strtoupper($n['status']); ?></td>
-    <td><?php echo $n['created_at']; ?></td>
-    <td>
-        <a href="?read=<?php echo $n['id']; ?>">
-            <button type="button">
-                <?php echo ($n['status'] == "unread") ? "Open / Mark Read" : "Open"; ?>
-            </button>
-        </a>
-    </td>
-</tr>
-<?php endwhile; ?>
-</table>
-<?php else: ?>
-<p>No system notifications yet.</p>
-<?php endif; ?>
+                <?php while($n = $system_notifications->fetch_assoc()): ?>
+                <tr style="<?php echo ($n['status']=='unread') ? 'background:#eef8fc;' : ''; ?>">
+                    <td>
+                        <?php
+                        if($n['type'] == "payment"){
+                            echo "Payment";
+                        } elseif($n['type'] == "bill"){
+                            echo "Bill";
+                        } elseif($n['type'] == "complaint"){
+                            echo "Complaint";
+                        } else {
+                            echo "Notice";
+                        }
+                        ?>
+                    </td>
+                    <td><?php echo $n['title']; ?></td>
+                    <td><?php echo $n['message']; ?></td>
+                    <td><?php echo strtoupper($n['status']); ?></td>
+                    <td><?php echo $n['created_at']; ?></td>
+                    <td>
+                        <a href="?read=<?php echo $n['id']; ?>">
+                            <button type="button">
+                                <?php echo ($n['status'] == "unread") ? "Open / Mark Read" : "Open"; ?>
+                            </button>
+                        </a>
+                    </td>
+                </tr>
+                <?php endwhile; ?>
+            </table>
+            <?php else: ?>
+            <p>No system notifications yet.</p>
+            <?php endif; ?>
 
-<h2>Announcements</h2>
+            <h2>Announcements</h2>
 
-<?php if($announcements->num_rows > 0): ?>
-<table>
-<tr>
-    <th>Title</th>
-    <th>Message</th>
-    <th>Barangay</th>
-    <th>Date</th>
-</tr>
+            <?php if($announcements->num_rows > 0): ?>
+            <table>
+                <tr>
+                    <th>Title</th>
+                    <th>Message</th>
+                    <th>Barangay</th>
+                    <th>Date</th>
+                </tr>
 
-<?php while($a = $announcements->fetch_assoc()): ?>
-<tr>
-    <td><?php echo $a['title']; ?></td>
-    <td><?php echo $a['message']; ?></td>
-    <td>
-        <?php echo ($a['target_type'] == "everyone") ? "All Barangays" : $a['barangay']; ?>
-    </td>
-    <td><?php echo $a['announcement_date']; ?></td>
-</tr>
-<?php endwhile; ?>
-</table>
-<?php else: ?>
-<p>No announcements yet.</p>
-<?php endif; ?>
+                <?php while($a = $announcements->fetch_assoc()): ?>
+                <tr>
+                    <td><?php echo $a['title']; ?></td>
+                    <td><?php echo $a['message']; ?></td>
+                    <td>
+                        <?php echo ($a['target_type'] == "everyone") ? "All Barangays" : $a['barangay']; ?>
+                    </td>
+                    <td><?php echo $a['announcement_date']; ?></td>
+                </tr>
+                <?php endwhile; ?>
+            </table>
+            <?php else: ?>
+            <p>No announcements yet.</p>
+            <?php endif; ?>
 
-</div>
-</div>
+        </div>
+    </div>
 
 </body>
 </html>

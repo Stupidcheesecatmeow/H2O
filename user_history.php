@@ -36,78 +36,78 @@ $receipts = $conn->query("
 </head>
 <body>
 
-<div class="layout">
+    <div class="layout">
 
-<div class="sidebar">
-<h2><?php echo $user['first_name']; ?></h2>
-<ul>
-    <li><a href="user_dashboard.php">Dashboard</a></li>
-    <li><a href="user_notifications.php">Notifications</a></li>
-    <li><a href="user_billing.php">Billing</a></li>
-    <li><a href="user_payments.php">Payment</a></li>
-    <li><a href="user_history.php">History</a></li>
-    <li><a href="user_complaints.php">Complaints</a></li>
-    <li><a href="profile.php">Profile</a></li>
-    <li><a href="logout.php">Logout</a></li>
-</ul>
-</div>
+        <div class="sidebar">
+            <h2><?php echo $user['first_name']; ?></h2>
+            <ul>
+                <li><a href="user_dashboard.php">Dashboard</a></li>
+                <li><a href="user_notifications.php">Notifications</a></li>
+                <li><a href="user_billing.php">Billing</a></li>
+                <li><a href="user_payments.php">Payment</a></li>
+                <li><a href="user_history.php">History</a></li>
+                <li><a href="user_complaints.php">Complaints</a></li>
+                <li><a href="profile.php">Profile</a></li>
+                <li><a href="logout.php">Logout</a></li>
+            </ul>
+        </div>
 
-<div class="main">
+        <div class="main">
 
-<h1>Payment History</h1>
+            <h1>Payment History</h1>
 
-<table>
-<tr>
-    <th>Date</th>
-    <th>Invoice No.</th>
-    <th>Amount Paid</th>
-    <th>MOP</th>
-    <th>Reading</th>
-    <th>Status</th>
-</tr>
+            <table>
+                <tr>
+                    <th>Date</th>
+                    <th>Invoice No.</th>
+                    <th>Amount Paid</th>
+                    <th>MOP</th>
+                    <th>Reading</th>
+                    <th>Status</th>
+                </tr>
 
-<?php while($ph = $payment_history->fetch_assoc()): ?>
-<tr>
-    <td><?php echo $ph['paid_at']; ?></td>
-    <td><?php echo $ph['invoice_no']; ?></td>
-    <td>₱<?php echo number_format($ph['amount'], 2); ?></td>
-    <td><?php echo $ph['payment_method']; ?></td>
-    <td><?php echo $ph['consumption']; ?></td>
-    <td><?php echo $ph['status']; ?></td>
-</tr>
-<?php endwhile; ?>
-</table>
+                <?php while($ph = $payment_history->fetch_assoc()): ?>
+                <tr>
+                    <td><?php echo $ph['paid_at']; ?></td>
+                    <td><?php echo $ph['invoice_no']; ?></td>
+                    <td>₱<?php echo number_format($ph['amount'], 2); ?></td>
+                    <td><?php echo $ph['payment_method']; ?></td>
+                    <td><?php echo $ph['consumption']; ?></td>
+                    <td><?php echo $ph['status']; ?></td>
+                </tr>
+                <?php endwhile; ?>
+            </table>
 
-<h1>Receipts</h1>
+            <h1>Receipts</h1>
 
-<table>
-<tr>
-    <th>Receipt No.</th>
-    <th>Invoice No.</th>
-    <th>Amount</th>
-    <th>MOP</th>
-    <th>Date Issued</th>
-    <th>Print</th>
-</tr>
+            <table>
+                <tr>
+                    <th>Receipt No.</th>
+                    <th>Invoice No.</th>
+                    <th>Amount</th>
+                    <th>MOP</th>
+                    <th>Date Issued</th>
+                    <th>Print</th>
+                </tr>
 
-<?php while($r = $receipts->fetch_assoc()): ?>
-<tr>
-    <td><?php echo $r['receipt_no']; ?></td>
-    <td><?php echo $r['invoice_no']; ?></td>
-    <td>₱<?php echo number_format($r['amount'], 2); ?></td>
-    <td><?php echo $r['payment_method']; ?></td>
-    <td><?php echo $r['issued_at']; ?></td>
-    <td>
-        <a href="print_receipt.php?id=<?php echo $r['id']; ?>" target="_blank">
-            <button type="button">Print Receipt</button>
-        </a>
-    </td>
-</tr>
-<?php endwhile; ?>
-</table>
+                <?php while($r = $receipts->fetch_assoc()): ?>
+                <tr>
+                    <td><?php echo $r['receipt_no']; ?></td>
+                    <td><?php echo $r['invoice_no']; ?></td>
+                    <td>₱<?php echo number_format($r['amount'], 2); ?></td>
+                    <td><?php echo $r['payment_method']; ?></td>
+                    <td><?php echo $r['issued_at']; ?></td>
+                    <td>
+                        <a href="print_receipt.php?id=<?php echo $r['id']; ?>" target="_blank">
+                            <button type="button">Print Receipt</button>
+                        </a>
+                    </td>
+                </tr>
+                <?php endwhile; ?>
+            </table>
 
-</div>
-</div>
+        </div>
+    </div>
 
 </body>
 </html>

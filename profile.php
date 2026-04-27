@@ -156,165 +156,165 @@ $avatar = !empty($user['avatar']) ? $user['avatar'] : "default.png";
 </head>
 <body>
 
-<div class="layout">
+    <div class="layout">
 
-<div class="main">
+        <div class="main">
 
-<h1>Profile Settings</h1>
+            <h1>Profile Settings</h1>
 
-<div class="profile-card">
+            <div class="profile-card">
 
-    <img src="uploads/<?php echo $avatar; ?>" class="avatar" alt="Avatar">
+                <img src="uploads/<?php echo $avatar; ?>" class="avatar" alt="Avatar">
 
-    <h2><?php echo $user['first_name']." ".$user['last_name']; ?></h2>
-    <p><?php echo $user['email']; ?></p>
+                <h2><?php echo $user['first_name']." ".$user['last_name']; ?></h2>
+                <p><?php echo $user['email']; ?></p>
 
-    <p>
-        <strong><?php echo ($role == "user") ? "User ID" : "Employee ID"; ?>:</strong>
-        <?php echo $display_id; ?>
-    </p>
+                <p>
+                    <strong><?php echo ($role == "user") ? "User ID" : "Employee ID"; ?>:</strong>
+                    <?php echo $display_id; ?>
+                </p>
 
-    <span class="status"><?php echo $user['status']; ?></span>
+                <span class="status"><?php echo $user['status']; ?></span>
 
-    <div class="profile-actions">
-        <button type="button" onclick="toggleForm('avatarForm')">Change Avatar</button>
-        <button type="button" onclick="toggleForm('editForm')">Edit Profile</button>
-        <button type="button" onclick="toggleForm('passwordForm')">Change Password</button>
+                <div class="profile-actions">
+                    <button type="button" onclick="toggleForm('avatarForm')">Change Avatar</button>
+                    <button type="button" onclick="toggleForm('editForm')">Edit Profile</button>
+                    <button type="button" onclick="toggleForm('passwordForm')">Change Password</button>
+                </div>
+
+            </div>
+
+            <div class="card hidden-form" id="avatarForm">
+                <h3>Change Avatar</h3>
+
+                <form method="POST" enctype="multipart/form-data">
+
+                    <img id="previewAvatar" src="uploads/<?php echo $avatar; ?>" class="avatar-preview" alt="Preview">
+
+                    <input type="file" name="avatar" id="avatarInput" accept="image/*" required>
+
+                    <button type="submit" name="upload_avatar">Upload Avatar</button>
+
+                </form>
+            </div>
+
+            <div class="card">
+                <h3>Account Information</h3>
+
+                <div class="info-grid">
+
+                    <p>
+                        <strong><?php echo ($role == "user") ? "User ID" : "Employee ID"; ?>:</strong><br>
+                        <?php echo $display_id; ?>
+                    </p>
+
+                    <p>
+                        <strong>Full Name:</strong><br>
+                        <?php echo $user['first_name']." ".$user['last_name']; ?>
+                    </p>
+
+                    <p>
+                        <strong>Email:</strong><br>
+                        <?php echo $user['email']; ?>
+                    </p>
+
+                    <p>
+                        <strong>Contact:</strong><br>
+                        <?php echo $user['contact_no']; ?>
+                    </p>
+
+                    <?php if($role == "user"): ?>
+                        <p>
+                            <strong>Address:</strong><br>
+                            <?php echo $user['barangay']." / ".$user['street']; ?>
+                        </p>
+
+                        <p>
+                            <strong>Meter Number:</strong><br>
+                            <?php echo $user['meter_number']; ?>
+                        </p>
+                    <?php else: ?>
+                        <p>
+                            <strong>Role:</strong><br>
+                            <?php echo $user['role']; ?>
+                        </p>
+                    <?php endif; ?>
+
+                    <p>
+                        <strong>Status:</strong><br>
+                        <?php echo $user['status']; ?>
+                    </p>
+
+                </div>
+            </div>
+
+            <div class="card hidden-form" id="editForm">
+                <h3>Edit Profile</h3>
+
+                <form method="POST">
+
+                    <?php if($role == "user"): ?>
+
+                        <input type="text" name="first_name" placeholder="First Name" value="<?php echo $user['first_name']; ?>" required>
+                        <input type="text" name="last_name" placeholder="Last Name" value="<?php echo $user['last_name']; ?>" required>
+                        <input type="email" name="email" placeholder="Email" value="<?php echo $user['email']; ?>" required>
+                        <input type="text" name="contact_no" placeholder="Contact No." value="<?php echo $user['contact_no']; ?>" required>
+                        <input type="text" name="barangay" placeholder="Barangay" value="<?php echo $user['barangay']; ?>" required>
+                        <input type="text" name="street" placeholder="Street" value="<?php echo $user['street']; ?>" required>
+
+                    <?php else: ?>
+
+                        <input type="text" name="first_name" placeholder="First Name" value="<?php echo $user['first_name']; ?>" required>
+                        <input type="text" name="last_name" placeholder="Last Name" value="<?php echo $user['last_name']; ?>" required>
+                        <input type="email" name="email" placeholder="Email" value="<?php echo $user['email']; ?>" required>
+                        <input type="text" name="contact_no" placeholder="Contact No." value="<?php echo $user['contact_no']; ?>" required>
+
+                    <?php endif; ?>
+
+                    <button type="submit" name="update_profile">Save Changes</button>
+                </form>
+            </div>
+
+            <div class="card hidden-form" id="passwordForm">
+                <h3>Change Password</h3>
+
+                <form method="POST">
+                    <input type="password" name="current" placeholder="Current Password" required>
+                    <input type="password" name="new" placeholder="New Password" required>
+                    <input type="password" name="confirm" placeholder="Confirm Password" required>
+
+                    <button type="submit" name="update_password">Update Password</button>
+                </form>
+            </div>
+
+        </div>
     </div>
 
-</div>
+    <script>
+        function toggleForm(id){
+            const form = document.getElementById(id);
 
-<div class="card hidden-form" id="avatarForm">
-<h3>Change Avatar</h3>
-
-<form method="POST" enctype="multipart/form-data">
-
-    <img id="previewAvatar" src="uploads/<?php echo $avatar; ?>" class="avatar-preview" alt="Preview">
-
-    <input type="file" name="avatar" id="avatarInput" accept="image/*" required>
-
-    <button type="submit" name="upload_avatar">Upload Avatar</button>
-
-</form>
-</div>
-
-<div class="card">
-<h3>Account Information</h3>
-
-<div class="info-grid">
-
-    <p>
-        <strong><?php echo ($role == "user") ? "User ID" : "Employee ID"; ?>:</strong><br>
-        <?php echo $display_id; ?>
-    </p>
-
-    <p>
-        <strong>Full Name:</strong><br>
-        <?php echo $user['first_name']." ".$user['last_name']; ?>
-    </p>
-
-    <p>
-        <strong>Email:</strong><br>
-        <?php echo $user['email']; ?>
-    </p>
-
-    <p>
-        <strong>Contact:</strong><br>
-        <?php echo $user['contact_no']; ?>
-    </p>
-
-    <?php if($role == "user"): ?>
-        <p>
-            <strong>Address:</strong><br>
-            <?php echo $user['barangay']." / ".$user['street']; ?>
-        </p>
-
-        <p>
-            <strong>Meter Number:</strong><br>
-            <?php echo $user['meter_number']; ?>
-        </p>
-    <?php else: ?>
-        <p>
-            <strong>Role:</strong><br>
-            <?php echo $user['role']; ?>
-        </p>
-    <?php endif; ?>
-
-    <p>
-        <strong>Status:</strong><br>
-        <?php echo $user['status']; ?>
-    </p>
-
-</div>
-</div>
-
-<div class="card hidden-form" id="editForm">
-<h3>Edit Profile</h3>
-
-<form method="POST">
-
-    <?php if($role == "user"): ?>
-
-        <input type="text" name="first_name" placeholder="First Name" value="<?php echo $user['first_name']; ?>" required>
-        <input type="text" name="last_name" placeholder="Last Name" value="<?php echo $user['last_name']; ?>" required>
-        <input type="email" name="email" placeholder="Email" value="<?php echo $user['email']; ?>" required>
-        <input type="text" name="contact_no" placeholder="Contact No." value="<?php echo $user['contact_no']; ?>" required>
-        <input type="text" name="barangay" placeholder="Barangay" value="<?php echo $user['barangay']; ?>" required>
-        <input type="text" name="street" placeholder="Street" value="<?php echo $user['street']; ?>" required>
-
-    <?php else: ?>
-
-        <input type="text" name="first_name" placeholder="First Name" value="<?php echo $user['first_name']; ?>" required>
-        <input type="text" name="last_name" placeholder="Last Name" value="<?php echo $user['last_name']; ?>" required>
-        <input type="email" name="email" placeholder="Email" value="<?php echo $user['email']; ?>" required>
-        <input type="text" name="contact_no" placeholder="Contact No." value="<?php echo $user['contact_no']; ?>" required>
-
-    <?php endif; ?>
-
-    <button type="submit" name="update_profile">Save Changes</button>
-</form>
-</div>
-
-<div class="card hidden-form" id="passwordForm">
-<h3>Change Password</h3>
-
-<form method="POST">
-    <input type="password" name="current" placeholder="Current Password" required>
-    <input type="password" name="new" placeholder="New Password" required>
-    <input type="password" name="confirm" placeholder="Confirm Password" required>
-
-    <button type="submit" name="update_password">Update Password</button>
-</form>
-</div>
-
-</div>
-</div>
-
-<script>
-function toggleForm(id){
-    const form = document.getElementById(id);
-
-    if(form.style.display === "block"){
-        form.style.display = "none";
-    }else{
-        form.style.display = "block";
-    }
-}
-
-document.getElementById("avatarInput")?.addEventListener("change", function(e){
-    const file = e.target.files[0];
-
-    if(file){
-        const reader = new FileReader();
-
-        reader.onload = function(e){
-            document.getElementById("previewAvatar").src = e.target.result;
+            if(form.style.display === "block"){
+                form.style.display = "none";
+            }else{
+                form.style.display = "block";
+            }
         }
 
-        reader.readAsDataURL(file);
-    }
-});
-</script>
+        document.getElementById("avatarInput")?.addEventListener("change", function(e){
+            const file = e.target.files[0];
+
+            if(file){
+                const reader = new FileReader();
+
+                reader.onload = function(e){
+                    document.getElementById("previewAvatar").src = e.target.result;
+                }
+
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
 
 </body>
 </html>

@@ -71,70 +71,70 @@ $complaints = $conn->query("
 </head>
 <body>
 
-<div class="layout">
+    <div class="layout">
 
-<div class="sidebar">
-<h2><?php echo $user['first_name']; ?></h2>
-<ul>
-    <li><a href="user_dashboard.php">Dashboard</a></li>
-    <li><a href="user_notifications.php">Notifications</a></li>
-    <li><a href="user_billing.php">Billing</a></li>
-    <li><a href="user_payments.php">Payment</a></li>
-    <li><a href="user_history.php">History</a></li>
-    <li><a href="user_complaints.php">Complaints</a></li>
-    <li><a href="profile.php">Profile</a></li>
-    <li><a href="logout.php">Logout</a></li>
-</ul>
-</div>
+        <div class="sidebar">
+            <h2><?php echo $user['first_name']; ?></h2>
+            <ul>
+                <li><a href="user_dashboard.php">Dashboard</a></li>
+                <li><a href="user_notifications.php">Notifications</a></li>
+                <li><a href="user_billing.php">Billing</a></li>
+                <li><a href="user_payments.php">Payment</a></li>
+                <li><a href="user_history.php">History</a></li>
+                <li><a href="user_complaints.php">Complaints</a></li>
+                <li><a href="profile.php">Profile</a></li>
+                <li><a href="logout.php">Logout</a></li>
+            </ul>
+        </div>
 
-<div class="main">
+        <div class="main">
 
-<h1>Complaints</h1>
+            <h1>Complaints</h1>
 
-<div class="table-box">
-<form method="POST" action="user_complaints.php">
+            <div class="table-box">
+                <form method="POST" action="user_complaints.php">
 
-    <label>Complaint Type</label>
-    <select name="complaint_type" required>
-        <option value="">Select type</option>
-        <option value="Billing Concern">Billing Concern</option>
-        <option value="Water Interruption">Water Interruption</option>
-        <option value="Meter Problem">Meter Problem</option>
-        <option value="Payment Concern">Payment Concern</option>
-        <option value="Others">Others</option>
-    </select>
+                    <label>Complaint Type</label>
+                    <select name="complaint_type" required>
+                        <option value="">Select type</option>
+                        <option value="Billing Concern">Billing Concern</option>
+                        <option value="Water Interruption">Water Interruption</option>
+                        <option value="Meter Problem">Meter Problem</option>
+                        <option value="Payment Concern">Payment Concern</option>
+                        <option value="Others">Others</option>
+                    </select>
 
-    <label>Description</label>
-    <textarea name="description" placeholder="Describe your concern..." required></textarea>
+                    <label>Description</label>
+                    <textarea name="description" placeholder="Describe your concern..." required></textarea>
 
-    <button type="submit" name="submit_complaint">Submit Complaint</button>
+                    <button type="submit" name="submit_complaint">Submit Complaint</button>
 
-</form>
-</div>
+                </form>
+            </div>
 
-<h2>Your Complaints</h2>
+            <h2>Your Complaints</h2>
 
-<table>
-<tr>
-    <th>Type</th>
-    <th>Description</th>
-    <th>Reply</th>
-    <th>Status</th>
-</tr>
+            <table>
+                <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Reply</th>
+                    <th>Status</th>
+                </tr>
 
-<?php while($c = $complaints->fetch_assoc()): ?>
-<tr>
-    <td><?php echo $c['complaint_type'] ?? $c['subject'] ?></td>
-    <td><?php echo $c['description'] ?? $c['message'] ?></td>
-    <td><?php echo $c['reply'] ?? "No reply yet"; ?></td>
-    <td><?php echo $c['status'] ?? "open"; ?></td>
-</tr>
-<?php endwhile; ?>
+                <?php while($c = $complaints->fetch_assoc()): ?>
+                <tr>
+                    <td><?php echo $c['complaint_type'] ?? $c['subject'] ?></td>
+                    <td><?php echo $c['description'] ?? $c['message'] ?></td>
+                    <td><?php echo $c['reply'] ?? "No reply yet"; ?></td>
+                    <td><?php echo $c['status'] ?? "open"; ?></td>
+                </tr>
+                <?php endwhile; ?>
 
-</table>
+            </table>
 
-</div>
-</div>
+        </div>
+    </div>
 
 </body>
 </html>
