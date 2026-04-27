@@ -198,7 +198,7 @@ $avatar = !empty($user['avatar']) ? $user['avatar'] : "default.png";
             <?php else: ?>
             <ul>
                 <li><a href="user_dashboard.php">Dashboard</a></li>
-                <li><a href="announcements_user.php">Announcements</a></li>
+                <li><a href="user_announcements.php">Announcements</a></li>
                 <li><a href="user_billing.php">Billing</a></li>
                 <li><a href="user_payments.php">Payment</a></li>
                 <li><a href="user_history.php">History</a></li>
