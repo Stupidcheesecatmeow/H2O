@@ -35,63 +35,63 @@ $receipts = $conn->query("
 </head>
 <body>
 
-<div class="layout">
+    <div class="layout">
 
-<div class="sidebar">
-<h2>Accountant</h2>
-<ul>
-    <li><a href="accountant_dashboard.php">Dashboard</a></li>
-    <li><a href="payments.php">Payments</a></li>
-    <li><a href="receipts.php">Receipts</a></li>
-    <li><a href="reports_accountant.php">Reports</a></li>
-    <li><a href="balance.php">Balance Tracker</a></li>
-    <li><a href="profile.php">Profile</a></li>
-    <li><a href="logout.php">Logout</a></li>
-</ul>
-</div>
+        <div class="sidebar">
+            <h2>Accountant</h2>
+            <ul>
+                <li><a href="accountant_dashboard.php">Dashboard</a></li>
+                <li><a href="payments.php">Payments</a></li>
+                <li><a href="receipts.php">Receipts</a></li>
+                <li><a href="reports_accountant.php">Reports</a></li>
+                <li><a href="balance.php">Balance Tracker</a></li>
+                <li><a href="profile.php">Profile</a></li>
+                <li><a href="logout.php">Logout</a></li>
+            </ul>
+        </div>
 
-<div class="main">
+        <div class="main">
 
-<h1>Receipt Generator / Receipt History</h1>
+            <h1>Receipt Generator / Receipt History</h1>
 
-<table>
-<tr>
-    <th>Receipt No.</th>
-    <th>Invoice No.</th>
-    <th>Customer</th>
-    <th>Amount</th>
-    <th>MOP</th>
-    <th>Reference No.</th>
-    <th>Issued At</th>
-    <th>Print Receipt</th>
-    <th>Invoice</th>
-</tr>
+            <table>
+                <tr>
+                    <th>Receipt No.</th>
+                    <th>Invoice No.</th>
+                    <th>Customer</th>
+                    <th>Amount</th>
+                    <th>MOP</th>
+                    <th>Reference No.</th>
+                    <th>Issued At</th>
+                    <th>Print Receipt</th>
+                    <th>Invoice</th>
+                </tr>
 
-<?php while($r = $receipts->fetch_assoc()): ?>
-<tr>
-    <td><?php echo $r['receipt_no']; ?></td>
-    <td><?php echo $r['invoice_no']; ?></td>
-    <td><?php echo $r['first_name']." ".$r['last_name']; ?></td>
-    <td>₱<?php echo number_format($r['amount'], 2); ?></td>
-    <td><?php echo $r['payment_method']; ?></td>
-    <td><?php echo $r['reference_no']; ?></td>
-    <td><?php echo $r['issued_at']; ?></td>
-    <td>
-        <a href="print_receipt.php?id=<?php echo $r['id']; ?>" target="_blank">
-            <button type="button">Print Receipt</button>
-        </a>
-    </td>
-    <td>
-        <a href="print_invoice.php?id=<?php echo $r['invoice_id']; ?>" target="_blank">
-            <button type="button">Print Invoice</button>
-        </a>
-    </td>
-</tr>
-<?php endwhile; ?>
-</table>
+                <?php while($r = $receipts->fetch_assoc()): ?>
+                <tr>
+                    <td><?php echo $r['receipt_no']; ?></td>
+                    <td><?php echo $r['invoice_no']; ?></td>
+                    <td><?php echo $r['first_name']." ".$r['last_name']; ?></td>
+                    <td>₱<?php echo number_format($r['amount'], 2); ?></td>
+                    <td><?php echo $r['payment_method']; ?></td>
+                    <td><?php echo $r['reference_no']; ?></td>
+                    <td><?php echo $r['issued_at']; ?></td>
+                    <td>
+                        <a href="print_receipt.php?id=<?php echo $r['id']; ?>" target="_blank">
+                            <button type="button">Print Receipt</button>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="print_invoice.php?id=<?php echo $r['invoice_id']; ?>" target="_blank">
+                            <button type="button">Print Invoice</button>
+                        </a>
+                    </td>
+                </tr>
+                <?php endwhile; ?>
+            </table>
 
-</div>
-</div>
+        </div>
+    </div>
 
 </body>
 </html>

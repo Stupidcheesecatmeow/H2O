@@ -35,34 +35,34 @@ if(isset($_POST['reset'])){
 </head>
 <body>
 
-<div class="container">
-    <div class="left">
-        <img src="assets/logo_name.png" class="logo">
+    <div class="container">
+        <div class="left">
+            <img src="assets/logo_name.png" class="logo">
 
-        <form method="POST">
-            <h2>Create New Password</h2>
-            <p class="subtitle">Enter your new password below.</p>
+            <form method="POST">
+                <h2>Create New Password</h2>
+                <p class="subtitle">Enter your new password below.</p>
 
-            <label>New Password</label>
-            <input type="password" name="password" placeholder="Minimum 8 characters" required>
+                <label>New Password</label>
+                <input type="password" name="password" placeholder="Minimum 8 characters" required>
 
-            <label>Confirm Password</label>
-            <input type="password" name="confirm_password" placeholder="Repeat new password" required>
+                <label>Confirm Password</label>
+                <input type="password" name="confirm_password" placeholder="Repeat new password" required>
 
-            <button name="reset" id="forgotBtn">Update Password</button>
+                <button name="reset" id="forgotBtn">Update Password</button>
 
-            <div class="back-link">
-                <a href="forgot_password.php">Back</a>
-            </div>
-        </form>
+                <div class="back-link">
+                    <a href="forgot_password.php">Back</a>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        document.body.style.opacity = "1";
-    });
-</script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            document.body.style.opacity = "1";
+        });
+    </script>
 
 </body>
 </html>

@@ -69,89 +69,89 @@ if(isset($_POST['register'])){
 </head>
 <body>
 
-<div class="container">
+    <div class="container">
 
-    <div class="left">
-        <img src="assets/spongy.png" alt="logo" class="logo">
+        <div class="left">
+            <img src="assets/spongy.png" alt="logo" class="logo">
 
-        <form method="POST" class="register-form">
+            <form method="POST" class="register-form">
 
-            <div class="form-row">
-                <div class="field">
-                    <label>First Name</label>
-                    <input type="text" name="first_name" required>
+                <div class="form-row">
+                    <div class="field">
+                        <label>First Name</label>
+                        <input type="text" name="first_name" required>
+                    </div>
+
+                    <div class="field">
+                        <label>Last Name</label>
+                        <input type="text" name="last_name" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="field">
+                        <label>Email</label>
+                        <input type="email" name="email" required>
+                    </div>
+
+                    <div class="field">
+                        <label>Contact No.</label>
+                        <input type="text" name="contact_no" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="field">
+                        <label>Barangay</label>
+                        <select name="barangay" required>
+                            <option value="">Select Barangay</option>
+
+                            <?php foreach($barangays as $b): ?>
+                                <option value="<?php echo $b; ?>">
+                                    <?php echo $b; ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label>Street</label>
+                        <input type="text" name="street" required>
+                    </div>
                 </div>
 
                 <div class="field">
-                    <label>Last Name</label>
-                    <input type="text" name="last_name" required>
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="field">
-                    <label>Email</label>
-                    <input type="email" name="email" required>
+                    <label>Meter Number</label>
+                    <input type="text" name="meter_number" required>
                 </div>
 
-                <div class="field">
-                    <label>Contact No.</label>
-                    <input type="text" name="contact_no" required>
-                </div>
-            </div>
+                <div class="form-row">
+                    <div class="field">
+                        <label>Password</label>
+                        <input type="password" name="password" required>
+                    </div>
 
-            <div class="form-row">
-                <div class="field">
-                    <label>Barangay</label>
-                    <select name="barangay" required>
-                        <option value="">Select Barangay</option>
-
-                        <?php foreach($barangays as $b): ?>
-                            <option value="<?php echo $b; ?>">
-                                <?php echo $b; ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
+                    <div class="field">
+                        <label>Verify Password</label>
+                        <input type="password" name="verify_password" required>
+                    </div>
                 </div>
 
-                <div class="field">
-                    <label>Street</label>
-                    <input type="text" name="street" required>
-                </div>
-            </div>
-
-            <div class="field">
-                <label>Meter Number</label>
-                <input type="text" name="meter_number" required>
-            </div>
-
-            <div class="form-row">
-                <div class="field">
-                    <label>Password</label>
-                    <input type="password" name="password" required>
+                <div class="form-actions">
+                    <button type="submit" name="register">Register</button>
+                    <a href="index.php" class="btn-secondary">Back to Login</a>
                 </div>
 
-                <div class="field">
-                    <label>Verify Password</label>
-                    <input type="password" name="verify_password" required>
-                </div>
-            </div>
-
-            <div class="form-actions">
-                <button type="submit" name="register">Register</button>
-                <a href="index.php" class="btn-secondary">Back to Login</a>
-            </div>
-
-        </form>
-    </div>
-
-    <div class="right">
-        <div class="overlay">
-            <h2>Steady Flow, <br>Easy Go</h2>
+            </form>
         </div>
-    </div>
 
-</div>
+        <div class="right">
+            <div class="overlay">
+                <h2>Steady Flow, <br>Easy Go</h2>
+            </div>
+        </div>
+
+    </div>
 
 </body>
 </html>

@@ -81,138 +81,138 @@ while($c = $collection_graph->fetch_assoc()){
 </head>
 <body>
 
-<div class="layout">
+    <div class="layout">
 
-<div class="sidebar">
-<h2>Admin</h2>
-<ul>
-    <li><a href="admin_dashboard.php">Dashboard</a></li>
-    <li><a href="announcements.php">Announcements</a></li>
-    <li><a href="user_management.php">User Management</a></li>
-    <li><a href="agent_management.php">Field Agents</a></li>
-    <li><a href="invoices.php">Invoices</a></li>
-    <li><a href="transactions.php">Transactions</a></li>
-    <li><a href="complaints_admin.php">Complaints</a></li>
-    <li><a href="reports.php">Reports</a></li>
-    <li><a href="profile.php">Profile</a></li>
-    <li><a href="logout.php">Logout</a></li>
-</ul>
-</div>
+        <div class="sidebar">
+            <h2>Admin</h2>
+            <ul>
+                <li><a href="admin_dashboard.php">Dashboard</a></li>
+                <li><a href="announcements.php">Announcements</a></li>
+                <li><a href="user_management.php">User Management</a></li>
+                <li><a href="agent_management.php">Field Agents</a></li>
+                <li><a href="invoices.php">Invoices</a></li>
+                <li><a href="transactions.php">Transactions</a></li>
+                <li><a href="complaints_admin.php">Complaints</a></li>
+                <li><a href="reports.php">Reports</a></li>
+                <li><a href="profile.php">Profile</a></li>
+                <li><a href="logout.php">Logout</a></li>
+            </ul>
+        </div>
 
-<div class="main">
+        <div class="main">
 
-<h1>Reports</h1>
+            <h1>Reports</h1>
 
-<a href="print_report.php" target="_blank">
-    <button type="button">Export Report</button>
-</a>
+            <a href="print_report.php" target="_blank">
+                <button type="button">Export Report</button>
+            </a>
 
-<div class="tables">
+            <div class="tables">
 
-<div class="table-box">
-<h2>Collection Summary Graph</h2>
-<canvas id="collectionChart"></canvas>
-</div>
+                <div class="table-box">
+                    <h2>Collection Summary Graph</h2>
+                    <canvas id="collectionChart"></canvas>
+                </div>
 
-<div class="table-box">
-<h2>Usage Trend Graph</h2>
-<canvas id="usageChart"></canvas>
-</div>
+                <div class="table-box">
+                    <h2>Usage Trend Graph</h2>
+                    <canvas id="usageChart"></canvas>
+                </div>
 
-</div>
+            </div>
 
-<div class="tables">
+            <div class="tables">
 
-<div class="table-box">
-<h2>Monthly Revenue</h2>
+                <div class="table-box">
+                    <h2>Monthly Revenue</h2>
 
-<table>
-<tr>
-    <th>Month</th>
-    <th>Total Revenue</th>
-</tr>
+                    <table>
+                        <tr>
+                            <th>Month</th>
+                            <th>Total Revenue</th>
+                        </tr>
 
-<?php while($m = $monthly_revenue->fetch_assoc()): ?>
-<tr>
-    <td><?php echo $m['month']; ?></td>
-    <td>₱<?php echo number_format($m['total'], 2); ?></td>
-</tr>
-<?php endwhile; ?>
-</table>
-</div>
+                        <?php while($m = $monthly_revenue->fetch_assoc()): ?>
+                        <tr>
+                            <td><?php echo $m['month']; ?></td>
+                            <td>₱<?php echo number_format($m['total'], 2); ?></td>
+                        </tr>
+                        <?php endwhile; ?>
+                    </table>
+                </div>
 
-<div class="table-box">
-<h2>Annual Collection</h2>
+                <div class="table-box">
+                    <h2>Annual Collection</h2>
 
-<table>
-<tr>
-    <th>Year</th>
-    <th>Total Collection</th>
-</tr>
+                    <table>
+                        <tr>
+                            <th>Year</th>
+                            <th>Total Collection</th>
+                        </tr>
 
-<?php while($a = $annual_collection->fetch_assoc()): ?>
-<tr>
-    <td><?php echo $a['year']; ?></td>
-    <td>₱<?php echo number_format($a['total'], 2); ?></td>
-</tr>
-<?php endwhile; ?>
-</table>
-</div>
+                        <?php while($a = $annual_collection->fetch_assoc()): ?>
+                        <tr>
+                            <td><?php echo $a['year']; ?></td>
+                            <td>₱<?php echo number_format($a['total'], 2); ?></td>
+                        </tr>
+                        <?php endwhile; ?>
+                    </table>
+                </div>
 
-</div>
+            </div>
 
-<h2>Unpaid Bills</h2>
+            <h2>Unpaid Bills</h2>
 
-<table>
-<tr>
-    <th>Invoice No.</th>
-    <th>Customer</th>
-    <th>Meter No.</th>
-    <th>Amount</th>
-    <th>Due Date</th>
-    <th>Status</th>
-</tr>
+            <table>
+                <tr>
+                    <th>Invoice No.</th>
+                    <th>Customer</th>
+                    <th>Meter No.</th>
+                    <th>Amount</th>
+                    <th>Due Date</th>
+                    <th>Status</th>
+                </tr>
 
-<?php while($u = $unpaid->fetch_assoc()): ?>
-<tr>
-    <td><?php echo $u['invoice_no']; ?></td>
-    <td><?php echo $u['first_name']." ".$u['last_name']; ?></td>
-    <td><?php echo $u['meter_number']; ?></td>
-    <td>₱<?php echo number_format($u['amount'], 2); ?></td>
-    <td><?php echo $u['due_date']; ?></td>
-    <td><?php echo strtoupper($u['status']); ?></td>
-</tr>
-<?php endwhile; ?>
-</table>
+                <?php while($u = $unpaid->fetch_assoc()): ?>
+                <tr>
+                    <td><?php echo $u['invoice_no']; ?></td>
+                    <td><?php echo $u['first_name']." ".$u['last_name']; ?></td>
+                    <td><?php echo $u['meter_number']; ?></td>
+                    <td>₱<?php echo number_format($u['amount'], 2); ?></td>
+                    <td><?php echo $u['due_date']; ?></td>
+                    <td><?php echo strtoupper($u['status']); ?></td>
+                </tr>
+                <?php endwhile; ?>
+            </table>
 
-</div>
-</div>
+        </div>
+    </div>
 
-<script>
-new Chart(document.getElementById("collectionChart"), {
-    type: "bar",
-    data: {
-        labels: <?php echo json_encode($collectionLabels); ?>,
-        datasets: [{
-            label: "Monthly Collection",
-            data: <?php echo json_encode($collectionData); ?>,
-            borderWidth: 1
-        }]
-    }
-});
+    <script>
+        new Chart(document.getElementById("collectionChart"), {
+            type: "bar",
+            data: {
+                labels: <?php echo json_encode($collectionLabels); ?>,
+                datasets: [{
+                    label: "Monthly Collection",
+                    data: <?php echo json_encode($collectionData); ?>,
+                    borderWidth: 1
+                }]
+            }
+        });
 
-new Chart(document.getElementById("usageChart"), {
-    type: "line",
-    data: {
-        labels: <?php echo json_encode($usageLabels); ?>,
-        datasets: [{
-            label: "Water Usage",
-            data: <?php echo json_encode($usageData); ?>,
-            borderWidth: 2
-        }]
-    }
-});
-</script>
+        new Chart(document.getElementById("usageChart"), {
+            type: "line",
+            data: {
+                labels: <?php echo json_encode($usageLabels); ?>,
+                datasets: [{
+                    label: "Water Usage",
+                    data: <?php echo json_encode($usageData); ?>,
+                    borderWidth: 2
+                }]
+            }
+        });
+    </script>
 
 </body>
 </html>
