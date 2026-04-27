@@ -64,39 +64,27 @@ $complaints = $conn->query("
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>H.O.H Complaints</title>
-    <link rel="stylesheet" href="styles/dashboard.css">
+    <link rel="stylesheet" href="styles/user_complaints.css">
 </head>
-<body>
+<body id="mainBody">
 
-    <div class="layout">
-
-        <div class="sidebar">
-            <h2><?php echo $user['first_name']; ?></h2>
-            <ul>
-                <li><a href="user_dashboard.php">Dashboard</a></li>
-                <li><a href="user_notifications.php">Notifications</a></li>
-                <li><a href="user_billing.php">Billing</a></li>
-                <li><a href="user_payments.php">Payment</a></li>
-                <li><a href="user_history.php">History</a></li>
-                <li><a href="user_complaints.php">Complaints</a></li>
-                <li><a href="profile.php">Profile</a></li>
-                <li><a href="logout.php">Logout</a></li>
-            </ul>
+    <div class="main-content">
+        <div class="header-row">
+            <h1>CUSTOMER COMPLAINTS</h1>
         </div>
 
-        <div class="main">
-
-            <h1>Complaints</h1>
-
-            <div class="table-box">
+        <!-- NEW COMPLAINT FORM -->
+        <div class="glass-panel">
+            <div class="panel-title-bar">Submit a New Concern</div>
+            <div class="content-area">
                 <form method="POST" action="user_complaints.php">
-
-                    <label>Complaint Type</label>
+                    <label>Complaint Category</label>
                     <select name="complaint_type" required>
-                        <option value="">Select type</option>
+                        <option value="">-- Choose Category --</option>
                         <option value="Billing Concern">Billing Concern</option>
                         <option value="Water Interruption">Water Interruption</option>
                         <option value="Meter Problem">Meter Problem</option>
@@ -104,37 +92,77 @@ $complaints = $conn->query("
                         <option value="Others">Others</option>
                     </select>
 
-                    <label>Description</label>
-                    <textarea name="description" placeholder="Describe your concern..." required></textarea>
+                    <label>Description of Issue</label>
+                    <textarea name="description" placeholder="Provide as much detail as possible to help us assist you..." required></textarea>
 
-                    <button type="submit" name="submit_complaint">Submit Complaint</button>
-
+                    <button type="submit" name="submit_complaint" class="submit-btn">SUBMIT COMPLAINT</button>
                 </form>
             </div>
+        </div>
 
-            <h2>Your Complaints</h2>
-
-            <table>
-                <tr>
-                    <th>Type</th>
-                    <th>Description</th>
-                    <th>Reply</th>
-                    <th>Status</th>
-                </tr>
-
-                <?php while($c = $complaints->fetch_assoc()): ?>
-                <tr>
-                    <td><?php echo $c['complaint_type'] ?? $c['subject'] ?></td>
-                    <td><?php echo $c['description'] ?? $c['message'] ?></td>
-                    <td><?php echo $c['reply'] ?? "No reply yet"; ?></td>
-                    <td><?php echo $c['status'] ?? "open"; ?></td>
-                </tr>
-                <?php endwhile; ?>
-
-            </table>
-
+        <!-- COMPLAINT HISTORY -->
+        <div class="glass-panel">
+            <div class="panel-title-bar">Your Complaint History</div>
+            <div class="table-area">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Description</th>
+                            <th>Admin Reply</th>
+                            <th style="text-align:center">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php while($c = $complaints->fetch_assoc()): 
+                            $status = $c['status'] ?? 'open';
+                        ?>
+                        <tr>
+                            <td><strong><?php echo $c['complaint_type'] ?? $c['subject'] ?></strong></td>
+                            <td><small style="opacity:0.8;"><?php echo $c['description'] ?? $c['message'] ?></small></td>
+                            <td>
+                                <i style="color: var(--accent-blue);">
+                                    <?php echo $c['reply'] ?? "Waiting for response..."; ?>
+                                </i>
+                            </td>
+                            <td style="text-align:center">
+                                <span class="status-pill <?php echo $status; ?>">
+                                    <?php echo strtoupper(str_replace('_', ' ', $status)); ?>
+                                </span>
+                            </td>
+                        </tr>
+                        <?php endwhile; ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
+    <!-- SIDEBAR -->
+    <div class="sidebar-right">
+        <img src="assets/logo_name.png" class="side-logo">
+        <div class="agent-info">
+            <h3><?php echo strtoupper($user['first_name'] . " " . $user['last_name']); ?></h3>
+            <p>CONSUMER ACCOUNT</p>
+        </div>
+        
+        <nav class="nav-menu">
+            <a href="user_dashboard.php" class="nav-item">DASHBOARD</a>
+            <a href="user_notifications.php" class="nav-item">NOTIFICATIONS</a>
+            <a href="user_billing.php" class="nav-item">BILLING</a>
+            <a href="user_payments.php" class="nav-item">PAYMENTS</a>
+            <a href="user_history.php" class="nav-item">HISTORY</a>
+            <a href="user_complaints.php" class="nav-item active">COMPLAINTS</a>
+            <a href="profile.php" class="nav-item">PROFILE</a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <a href="logout.php" class="logout-btn-container">LOG OUT</a>
+        </div>
+    </div>
+
+    <script>
+        window.onload = () => { document.body.classList.add('fade-in'); };
+    </script>
 </body>
 </html>

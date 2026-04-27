@@ -105,6 +105,7 @@ ORDER BY i.created_at DESC
             <a href="user_billing.php" class="nav-item active">BILLING</a>
             <a href="user_payments.php" class="nav-item">PAYMENTS</a>
             <a href="user_history.php" class="nav-item">HISTORY</a>
+            <a href="user_complaints.php" class="nav-item">COMPLAINTS</a>
             <a href="profile.php" class="nav-item">PROFILE</a>
         </nav>
 
