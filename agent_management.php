@@ -105,119 +105,119 @@ $agents = $conn->query("
 </head>
 <body>
 
-<div class="layout">
+    <div class="layout">
 
-    <div class="sidebar">
-        <h2>Admin</h2>
-        <ul>
-            <li><a href="admin_dashboard.php">Dashboard</a></li>
-            <li><a href="announcements.php">Announcements</a></li>
-            <li><a href="user_management.php">User Management</a></li>
-            <li><a href="agent_management.php">Field Agents</a></li>
-            <li><a href="invoices.php">Invoices</a></li>
-            <li><a href="transactions.php">Transactions</a></li>
-            <li><a href="complaints_admin.php">Complaints</a></li>
-            <li><a href="reports.php">Reports</a></li>
-            <li><a href="profile.php">Profile</a></li>
-            <li><a href="logout.php">Logout</a></li>
-        </ul>
-    </div>
-
-    <div class="main">
-
-        <h1>Field Agent Management</h1>
-
-        <div class="cards">
-            <div class="card">
-                Total Field Agents<br>
-                <strong>
-                    <?php echo $conn->query("SELECT COUNT(*) AS total FROM users WHERE role='agent'")->fetch_assoc()['total']; ?>
-                </strong>
-            </div>
-
-            <div class="card">
-                Active Agents<br>
-                <strong>
-                    <?php echo $conn->query("SELECT COUNT(*) AS total FROM users WHERE role='agent' AND status='active'")->fetch_assoc()['total']; ?>
-                </strong>
-            </div>
-
-            <div class="card">
-                Assigned Areas<br>
-                <strong>
-                    <?php echo $conn->query("SELECT COUNT(*) AS total FROM agent_assignments")->fetch_assoc()['total']; ?>
-                </strong>
-            </div>
+        <div class="sidebar">
+            <h2>Admin</h2>
+            <ul>
+                <li><a href="admin_dashboard.php">Dashboard</a></li>
+                <li><a href="announcements.php">Announcements</a></li>
+                <li><a href="user_management.php">User Management</a></li>
+                <li><a href="agent_management.php">Field Agents</a></li>
+                <li><a href="invoices.php">Invoices</a></li>
+                <li><a href="transactions.php">Transactions</a></li>
+                <li><a href="complaints_admin.php">Complaints</a></li>
+                <li><a href="reports.php">Reports</a></li>
+                <li><a href="profile.php">Profile</a></li>
+                <li><a href="logout.php">Logout</a></li>
+            </ul>
         </div>
 
-        <div class="table-box">
-            <h3>Assign / Update Area</h3>
+        <div class="main">
 
-            <form method="POST">
-                <select name="agent_id" required>
-                    <option value="">Select Field Agent</option>
+            <h1>Field Agent Management</h1>
 
-                    <?php while($a = $agent_options->fetch_assoc()): ?>
-                        <option value="<?php echo $a['id']; ?>">
-                            <?php echo ($a['user_code'] ?? $a['id'])." - ".$a['first_name']." ".$a['last_name']; ?>
-                        </option>
-                    <?php endwhile; ?>
-                </select>
+            <div class="cards">
+                <div class="card">
+                    Total Field Agents<br>
+                    <strong>
+                        <?php echo $conn->query("SELECT COUNT(*) AS total FROM users WHERE role='agent'")->fetch_assoc()['total']; ?>
+                    </strong>
+                </div>
 
-                <select name="area" required>
-                    <option value="">Select Assigned Barangay</option>
+                <div class="card">
+                    Active Agents<br>
+                    <strong>
+                        <?php echo $conn->query("SELECT COUNT(*) AS total FROM users WHERE role='agent' AND status='active'")->fetch_assoc()['total']; ?>
+                    </strong>
+                </div>
 
-                    <?php foreach($barangays as $b): ?>
-                        <option value="<?php echo $b; ?>">
-                            <?php echo $b; ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
+                <div class="card">
+                    Assigned Areas<br>
+                    <strong>
+                        <?php echo $conn->query("SELECT COUNT(*) AS total FROM agent_assignments")->fetch_assoc()['total']; ?>
+                    </strong>
+                </div>
+            </div>
 
-                <button type="submit" name="assign_area">Save Assignment</button>
-            </form>
-        </div>
+            <div class="table-box">
+                <h3>Assign / Update Area</h3>
 
-        <h3>Field Agent List</h3>
+                <form method="POST">
+                    <select name="agent_id" required>
+                        <option value="">Select Field Agent</option>
 
-        <table>
-            <tr>
-                <th>Agent ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Contact</th>
-                <th>Assigned Area</th>
-                <th>Status</th>
-                <th>Action</th>
-            </tr>
+                        <?php while($a = $agent_options->fetch_assoc()): ?>
+                            <option value="<?php echo $a['id']; ?>">
+                                <?php echo ($a['user_code'] ?? $a['id'])." - ".$a['first_name']." ".$a['last_name']; ?>
+                            </option>
+                        <?php endwhile; ?>
+                    </select>
 
-            <?php while($row = $agents->fetch_assoc()): ?>
-            <tr>
-                <td><?php echo $row['user_code'] ?? $row['agent_id']; ?></td>
-                <td><?php echo $row['first_name']." ".$row['last_name']; ?></td>
-                <td><?php echo $row['email']; ?></td>
-                <td><?php echo $row['contact_no']; ?></td>
-                <td><?php echo $row['area'] ?? "Not assigned"; ?></td>  
-                <td><?php echo $row['status']; ?></td>
-                <td>
-                    <a href="?toggle_status=<?php echo $row['agent_id']; ?>">
-                        <button type="button">
-                            <?php echo ($row['status'] == 'active') ? 'Deactivate' : 'Activate'; ?>
-                        </button>
-                    </a>
+                    <select name="area" required>
+                        <option value="">Select Assigned Barangay</option>
 
-                    <?php if($row['assignment_id']): ?>
-                        <a href="?delete_assignment=<?php echo $row['assignment_id']; ?>" onclick="return confirm('Delete this assignment?')">
-                            <button type="button">Delete Assignment</button>
+                        <?php foreach($barangays as $b): ?>
+                            <option value="<?php echo $b; ?>">
+                                <?php echo $b; ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+
+                    <button type="submit" name="assign_area">Save Assignment</button>
+                </form>
+            </div>
+
+            <h3>Field Agent List</h3>
+
+            <table>
+                <tr>
+                    <th>Agent ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Contact</th>
+                    <th>Assigned Area</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+
+                <?php while($row = $agents->fetch_assoc()): ?>
+                <tr>
+                    <td><?php echo $row['user_code'] ?? $row['agent_id']; ?></td>
+                    <td><?php echo $row['first_name']." ".$row['last_name']; ?></td>
+                    <td><?php echo $row['email']; ?></td>
+                    <td><?php echo $row['contact_no']; ?></td>
+                    <td><?php echo $row['area'] ?? "Not assigned"; ?></td>  
+                    <td><?php echo $row['status']; ?></td>
+                    <td>
+                        <a href="?toggle_status=<?php echo $row['agent_id']; ?>">
+                            <button type="button">
+                                <?php echo ($row['status'] == 'active') ? 'Deactivate' : 'Activate'; ?>
+                            </button>
                         </a>
-                    <?php endif; ?>
-                </td>
-            </tr>
-            <?php endwhile; ?>
-        </table>
 
+                        <?php if($row['assignment_id']): ?>
+                            <a href="?delete_assignment=<?php echo $row['assignment_id']; ?>" onclick="return confirm('Delete this assignment?')">
+                                <button type="button">Delete Assignment</button>
+                            </a>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+                <?php endwhile; ?>
+            </table>
+
+        </div>
     </div>
-</div>
 
 </body>
 </html>

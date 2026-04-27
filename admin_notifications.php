@@ -104,7 +104,7 @@ $others     = getNotifs($conn, "general");
                 }
 
                 echo "</div>";
-            }
+            } 
 
             renderSection("Complaints", $complaints);
             renderSection("Meter Reading", $readings);

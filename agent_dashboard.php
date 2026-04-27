@@ -95,78 +95,78 @@ $history = $conn->query("
 
 <div class="layout">
 
-<div class="sidebar">
-<h2>Field Agent</h2>
-<ul>
-    <li><a href="agent_dashboard.php">Dashboard</a></li>
-    <li><a href="meter_reading.php">Meter Reading</a></li>
-    <li><a href="profile.php">Profile</a></li>
-    <li><a href="logout.php">Logout</a></li>
-</ul>
-</div>
+    <div class="sidebar">
+        <h2>Field Agent</h2>
+        <ul>
+            <li><a href="agent_dashboard.php">Dashboard</a></li>
+            <li><a href="meter_reading.php">Meter Reading</a></li>
+            <li><a href="profile.php">Profile</a></li>
+            <li><a href="logout.php">Logout</a></li>
+        </ul>
+    </div>
 
-<div class="main">
+    <div class="main">
 
-<h1>Agent Dashboard</h1>
+        <h1>Agent Dashboard</h1>
 
-<!-- ASSIGNED BARANGAY -->
-<div class="card" style="margin-bottom:15px;">
-    Assigned Barangay<br>
-    <strong><?php echo $assigned_barangay; ?></strong>
-</div>
+        <!-- ASSIGNED BARANGAY -->
+        <div class="card" style="margin-bottom:15px;">
+            Assigned Barangay<br>
+            <strong><?php echo $assigned_barangay; ?></strong>
+        </div>
 
-<!-- DASHBOARD CARDS -->
-<div class="cards">
-    <div class="card">Assigned Households<br><strong><?php echo $assigned; ?></strong></div>
-    <div class="card">Completed Readings<br><strong><?php echo $completed; ?></strong></div>
-    <div class="card">Pending Readings<br><strong><?php echo $pending; ?></strong></div>
-</div>
+        <!-- DASHBOARD CARDS -->
+        <div class="cards">
+            <div class="card">Assigned Households<br><strong><?php echo $assigned; ?></strong></div>
+            <div class="card">Completed Readings<br><strong><?php echo $completed; ?></strong></div>
+            <div class="card">Pending Readings<br><strong><?php echo $pending; ?></strong></div>
+        </div>
 
-<!-- CUSTOMER LIST -->
-<h2>Customers (<?php echo $assigned_barangay; ?>)</h2>
+        <!-- CUSTOMER LIST -->
+        <h2>Customers (<?php echo $assigned_barangay; ?>)</h2>
 
-<table>
-<tr>
-    <th>ID</th>
-    <th>Name</th>
-    <th>Street</th>
-    <th>Meter</th>
-</tr>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Street</th>
+                <th>Meter</th>
+            </tr>
 
-<?php while($c = $customers->fetch_assoc()): ?>
-<tr>
-    <td><?php echo $c['user_code']; ?></td>
-    <td><?php echo $c['first_name']." ".$c['last_name']; ?></td>
-    <td><?php echo $c['street']; ?></td>
-    <td><?php echo $c['meter_number']; ?></td>
-</tr>
-<?php endwhile; ?>
-</table>
+            <?php while($c = $customers->fetch_assoc()): ?>
+            <tr>
+                <td><?php echo $c['user_code']; ?></td>
+                <td><?php echo $c['first_name']." ".$c['last_name']; ?></td>
+                <td><?php echo $c['street']; ?></td>
+                <td><?php echo $c['meter_number']; ?></td>
+            </tr>
+            <?php endwhile; ?>
+        </table>
 
-<!-- RECENT READINGS -->
-<h2>Recent Readings</h2>
+        <!-- RECENT READINGS -->
+        <h2>Recent Readings</h2>
 
-<table>
-<tr>
-    <th>Customer</th>
-    <th>Meter</th>
-    <th>Previous</th>
-    <th>Current</th>
-    <th>Consumption</th>
-    <th>Date</th>
-</tr>
+        <table>
+            <tr>
+                <th>Customer</th>
+                <th>Meter</th>
+                <th>Previous</th>
+                <th>Current</th>
+                <th>Consumption</th>
+                <th>Date</th>
+            </tr>
 
-<?php while($h = $history->fetch_assoc()): ?>
-<tr>
-    <td><?php echo $h['first_name']." ".$h['last_name']; ?></td>
-    <td><?php echo $h['meter_number']; ?></td>
-    <td><?php echo $h['previous_reading']; ?></td>
-    <td><?php echo $h['current_reading']; ?></td>
-    <td><?php echo $h['consumption']; ?></td>
-    <td><?php echo $h['reading_date']; ?></td>
-</tr>
-<?php endwhile; ?>
-</table>
+            <?php while($h = $history->fetch_assoc()): ?>
+            <tr>
+                <td><?php echo $h['first_name']." ".$h['last_name']; ?></td>
+                <td><?php echo $h['meter_number']; ?></td>
+                <td><?php echo $h['previous_reading']; ?></td>
+                <td><?php echo $h['current_reading']; ?></td>
+                <td><?php echo $h['consumption']; ?></td>
+                <td><?php echo $h['reading_date']; ?></td>
+            </tr>
+            <?php endwhile; ?>
+        </table>
 
-</div>
+    </div>
 </div>

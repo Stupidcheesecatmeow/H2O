@@ -1,4 +1,4 @@
-/* ===== PAYMENT TABLE ===== */
+/* =PAYMENT TABLE */
 .payment-table {
     width: 100%;
     border-collapse: collapse;
@@ -26,7 +26,7 @@
     background: #f1f5f9;
 }
 
-/* ===== PROOF IMAGE ===== */
+/* PROOF IMAGE */
 .proof-img {
     width: 70px;
     border-radius: 8px;
@@ -38,7 +38,7 @@
     transform: scale(1.1);
 }
 
-/* ===== BUTTONS ===== */
+/* BUTTONS */
 .btn-verify {
     background: #22c55e;
     color: white;
@@ -74,7 +74,7 @@
     cursor: not-allowed;
 }
 
-/* ===== FILTER BOX ===== */
+/* FILTER BOX */
 .payment-filter {
     background: white;
     padding: 10px;
@@ -87,7 +87,7 @@
     border-radius: 5px;
 }
 
-/* ===== STATUS COLORS ===== */
+/* STATUS COLORS */
 .status-pending {
     color: orange;
     font-weight: bold;
@@ -103,7 +103,7 @@
     font-weight: bold;
 }
 
-/* ===== MODAL ===== */
+/* MODAL */
 .proof-modal {
     display: none;
     position: fixed;
