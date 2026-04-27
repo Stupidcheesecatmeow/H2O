@@ -36,6 +36,7 @@ if (isset($_GET['release_invoice'])) {
     $invoice_no = "INV-" . date("Ymd") . "-" . rand(1000, 9999);
     $consumption = $reading['consumption'];
 
+    // RATE CALCULATION
 $minimum_charge = 165.00;
 $amount = 0;
 
