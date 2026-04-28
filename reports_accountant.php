@@ -94,7 +94,7 @@ while($s = $status_chart->fetch_assoc()){
 <body id="mainBody">
 
     <div class="main-content">
-        <div class="header-row" style="display: flex; justify-content: space-between; align-items: center;">
+        <div class="header-row">
             <h1>FINANCIAL REPORTS</h1>
             <a href="print_accountant_report.php" target="_blank" class="export-btn">
                 EXPORT PDF REPORT
@@ -105,28 +105,28 @@ while($s = $status_chart->fetch_assoc()){
         <div class="flex-grid">
             <div class="glass-panel">
                 <div class="panel-title-bar">Daily Collection Graph</div>
-                <div class="content-area">
+                <div class="content-area" style="height: 300px; padding: 20px;">
                     <canvas id="dailyChart"></canvas>
                 </div>
             </div>
             <div class="glass-panel">
                 <div class="panel-title-bar">Monthly Revenue Trend</div>
-                <div class="content-area">
+                <div class="content-area" style="height: 300px; padding: 20px;">
                     <canvas id="monthlyChart"></canvas>
                 </div>
             </div>
         </div>
 
-        <div class="glass-panel">
+        <div class="glass-panel" style="margin-bottom: 25px;">
             <div class="panel-title-bar">Payment Status Overview</div>
-            <div class="content-area" style="max-height: 300px;">
+            <div class="content-area" style="height: 250px; padding: 20px;">
                 <canvas id="statusChart"></canvas>
             </div>
         </div>
 
         <!-- COLLECTION SUMMARY -->
         <div class="flex-grid">
-            <div class="glass-panel">
+            <div class="glass-panel scrollable-small">
                 <div class="panel-title-bar">Daily Collection Log</div>
                 <div class="table-area">
                     <table class="data-table">
@@ -145,7 +145,7 @@ while($s = $status_chart->fetch_assoc()){
                 </div>
             </div>
 
-            <div class="glass-panel">
+            <div class="glass-panel scrollable-small">
                 <div class="panel-title-bar">Monthly Revenue Summary</div>
                 <div class="table-area">
                     <table class="data-table">
@@ -166,7 +166,7 @@ while($s = $status_chart->fetch_assoc()){
         </div>
 
         <!-- FULL HISTORY -->
-        <div class="glass-panel">
+        <div class="glass-panel scrollable-queue">
             <div class="panel-title-bar">Detailed Customer Payment History</div>
             <div class="table-area">
                 <table class="data-table">
@@ -195,16 +195,15 @@ while($s = $status_chart->fetch_assoc()){
                 </table>
             </div>
         </div>
-    </div>
+    </div> 
 
-    <!-- SIDEBAR -->
     <div class="sidebar-right">
         <img src="assets/logo_name.png" class="side-logo">
-        <div class="agent-info" style="color: white; text-align: center; margin-bottom: 30px;">
+        <div class="agent-info">
             <h3>ACCOUNTANT</h3>
-            <p style="font-size: 0.7rem; opacity: 0.6;">FINANCE DEPT</p>
+            <p>FINANCE DEPT</p>
         </div>
-        <nav class="nav-menu" style="width: 100%;">
+        <nav class="nav-menu">
             <a href="accountant_dashboard.php" class="nav-item">DASHBOARD</a>
             <a href="payments.php" class="nav-item">PAYMENTS</a>
             <a href="receipts.php" class="nav-item">RECEIPTS</a>
@@ -222,7 +221,6 @@ while($s = $status_chart->fetch_assoc()){
 
         Chart.defaults.color = '#bdc3c7';
         Chart.defaults.borderColor = 'rgba(255,255,255,0.1)';
-
         const commonOptions = { responsive: true, maintainAspectRatio: false };
 
         new Chart(document.getElementById("dailyChart"), {
