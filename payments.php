@@ -188,11 +188,24 @@ $payments = $conn->query("
                             <td style="color: var(--success); font-weight: 800;">₱<?= number_format($p['amount'], 2) ?></td>
                             <td><?= $p['payment_method'] ?></td>
                             <td>
-                                <?php if($p['payment_method'] != "Cash" && !empty($p['proof_image'])): ?>
-                                    <img src="payment_proofs/<?= $p['proof_image'] ?>" style="width:35px; height:35px; border-radius:4px; cursor:pointer; border:1px solid var(--accent-blue);" onclick="window.open(this.src)">
-                                <?php else: ?>
-                                    <span style="opacity:0.4">N/A</span>
-                                <?php endif; ?>
+                                <?php if($p['payment_method'] == "Cash"){
+                                    echo "<span style='opacity:0.4'>Cash Payment</span>";
+                                } 
+                                else{
+                                    if(!empty($p['proof_image'])){
+                                ?>
+                                    <img src="payment_proofs/<?php echo $p['proof_image']; ?>"
+                                    class="proof-img"
+                                    onclick="showProof('payment_proofs/<?php echo $p['proof_image']; ?>')"
+                                    >
+                                <?php 
+                                } else{
+                                    echo "<span style='opacity:0.4; color:#e74c3c;'>No proof uploaded</span>";
+                                
+                                    }
+                                }
+                                    ?>
+                                    
                             </td>
                             <td><span class="status-<?= $p['status'] ?>"><?= strtoupper($p['status']) ?></span></td>
                             <td>
@@ -231,7 +244,18 @@ $payments = $conn->query("
         </div>
     </div>
 
+    <div id="proofModal" class="proof-modal">
+        <img id="proofImg">
+    </div>
+
     <script>
+        function showProof(src){
+            document.getElementById('proofModal').style.display = 'flex';
+            document.getElementById('proofImg').src = src;
+        }
+        document.getElementById("proofModal").onclick = function() {
+            this.style.display = 'none';
+        }
         // Fade in on load
         window.addEventListener('DOMContentLoaded', () => {
             document.body.classList.add('fade-in');
