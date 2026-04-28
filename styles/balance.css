@@ -73,7 +73,13 @@ body.fade-in { opacity: 1; }
     backdrop-filter: blur(10px);
     margin-bottom: 25px;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.scrollable-queue {
+    height: 700px;
 }
 
 .panel-title-bar {
@@ -85,11 +91,36 @@ body.fade-in { opacity: 1; }
 }
 
 /* --- DATA TABLE --- */
-.table-area { padding: 0; }
+.table-area {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 0;
+}
+
+.table-area::-webkit-scrollbar { width: 6px; }
+.table-area::-webkit-scrollbar-track { background: transparent; }
+.table-area::-webkit-scrollbar-thumb { 
+    background: rgba(255, 255, 255, 0.2); 
+    border-radius: 10px; 
+}
+.table-area::-webkit-scrollbar-thumb:hover { background: var(--accent-blue); }
 
 .data-table {
     width: 100%;
     border-collapse: collapse;
+}
+
+.data-table thead th {
+    position: sticky;
+    top: 0;
+    background: #243b55; 
+    z-index: 10;
+    text-align: left;
+    padding: 15px 12px;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    color: var(--blue-light);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
 }
 
 .data-table th {
@@ -108,12 +139,15 @@ body.fade-in { opacity: 1; }
 }
 
 .overdue-badge {
-    background: rgba(231, 76, 60, 0.2);
+    background: rgba(231, 76, 60, 0.2); /* Soft red */
     color: var(--danger);
     padding: 2px 8px;
     border-radius: 4px;
-    font-weight: bold;
+    font-size: 0.7rem;
+    font-weight: 800;
+    border: 1px solid rgba(231, 76, 60, 0.3);
 }
+
 
 /* --- SIDEBAR RIGHT --- */
 .sidebar-right {

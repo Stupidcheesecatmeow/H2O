@@ -87,11 +87,11 @@ body.fade-in { opacity: 1; }
 
 /* FIXED CONTAINER SIZES */
 .scrollable-small {
-    height: 350px;
+    height: 200px;
 }
 
 .scrollable-queue {
-    height: 700px;
+    height: 450px;
 }
 
 .panel-title-bar {
