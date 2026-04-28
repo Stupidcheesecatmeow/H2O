@@ -126,6 +126,8 @@ $history = $conn->query("
             </div>
         </div>
 
+    <div class="dashboard-grid">
+
         <!-- CUSTOMER LIST -->
         <div class="glass-panel">
             <div class="panel-title-bar">Active Customers - <?php echo $assigned_barangay; ?></div>
@@ -187,6 +189,8 @@ $history = $conn->query("
                 </table>
             </div>
         </div>
+    </div>
+
     </div>
 
         <!-- SIDEBAR -->
