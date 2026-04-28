@@ -1,4 +1,3 @@
-/* --- UNIVERSAL VARIABLES --- */
 :root {
     --navy-dark: #122136;
     --navy-panel: rgba(36, 59, 85, 0.8); /* 80% Opacity */
@@ -73,6 +72,9 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 25px;
 }
 
 .panel-title-bar {
@@ -83,7 +85,24 @@ body {
     text-transform: uppercase;
 }
 
-.content-area { padding: 20px; }
+.scrollable-panel {
+    height: 160px; 
+}
+
+.scrollable-panel .content-area {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.data-table thead th {
+    position: sticky;
+    top: 0;
+    background: #243b55; 
+    z-index: 5;
+}
+
+.content-area::-webkit-scrollbar { width: 5px; }
+.content-area::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
 
 /* --- DATA TABLES --- */
 .data-table { width: 100%; border-collapse: collapse; }

@@ -148,7 +148,7 @@ while($m = $monthly_chart->fetch_assoc()){
 
         <!-- TABLES -->
         <div class="flex-grid">
-            <div class="glass-panel">
+            <div class="glass-panel scrollable-panel">
                 <div class="panel-title-bar">Pending Verifications</div>
                 <div class="content-area">
                     <?php if($pending_list->num_rows > 0): ?>
@@ -178,7 +178,7 @@ while($m = $monthly_chart->fetch_assoc()){
                 </div>
             </div>
 
-            <div class="glass-panel">
+            <div class="glass-panel scrollable-panel">
                 <div class="panel-title-bar">Recent Activity</div>
                 <div class="content-area">
                     <table class="data-table">
