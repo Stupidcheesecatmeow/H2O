@@ -60,7 +60,7 @@
             <div class="watermark">
                 <img src="assets/logo_blk_name.png" alt="Watermark">
             </div>
-            
+
             <div id="page1">
                 <h2>TERMS AND CONDITIONS</h2>
                 <p class="modal-sub">Hydro Operations Hub (H.O.H) System</p>
