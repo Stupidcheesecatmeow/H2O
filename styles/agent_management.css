@@ -71,6 +71,23 @@ body {
     overflow: hidden;
 }
 
+.scrollable-queue {
+    height: 300px; 
+    display: flex;
+    flex-direction: column;
+}
+
+.table-area {
+    flex-grow: 1;
+    overflow-y: auto; 
+}
+
+.data-table thead th {
+    position: sticky;
+    top: 0;
+    background: #243b55; 
+}
+
 .panel-title-bar {
     background: rgba(255, 255, 255, 0.1);
     padding: 12px 25px;
@@ -116,7 +133,6 @@ select {
 .save-btn:hover { background: #2980b9; transform: translateY(-2px); }
 
 /* --- DATA TABLE --- */
-.table-area { padding: 0; }
 .data-table { width: 100%; border-collapse: collapse; }
 .data-table th {
     text-align: left; padding: 15px 25px;

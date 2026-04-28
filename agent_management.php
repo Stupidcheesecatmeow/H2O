@@ -166,7 +166,7 @@ $agents = $conn->query("
         </div>
 
         <!-- AGENT LIST -->
-        <div class="glass-panel">
+        <div class="glass-panel scrollable-queue">
             <div class="panel-title-bar">Active Field Personnel</div>
             <div class="table-area">
                 <table class="data-table">
