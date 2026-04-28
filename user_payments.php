@@ -88,6 +88,7 @@ LIMIT 1
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>H.O.H Make Payment</title>
     <link rel="stylesheet" href="styles/user_design.css">
+    <link rel="stylesheet" href="styles/user_payments.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <body id="mainBody">
