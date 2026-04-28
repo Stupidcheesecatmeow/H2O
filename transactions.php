@@ -37,7 +37,7 @@ $transactions = $conn->query("
         </div>
 
         <!-- TRANSACTIONS TABLE PANEL -->
-        <div class="glass-panel">
+        <div class="glass-panel scrollable-queue">
             <div class="panel-title-bar">System-Wide Payment Records</div>
             <div class="table-area">
                 <table class="data-table">
