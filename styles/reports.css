@@ -84,7 +84,37 @@ body {
 .content-area { padding: 20px; height: 260px; }
 
 /* --- DATA TABLE --- */
-.table-area { padding: 0; }
+.table-area {
+    max-height: 400px;     
+    overflow-y: auto;       
+    overflow-x: auto;       
+    position: relative;
+    border-radius: 0 0 8px 8px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.data-table thead th {
+    position: sticky;
+    top: 0;
+    background-color: #1a1a1a;
+    z-index: 10;
+    box-shadow: 0 2px 2px -1px rgba(0,0,0,0.4);
+}
+
+.table-area::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.table-area::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.table-area::-webkit-scrollbar-thumb {
+    background: var(--accent-blue, #3498db);
+    border-radius: 10px;
+}
+
 .data-table { width: 100%; border-collapse: collapse; }
 .data-table th {
     text-align: left; padding: 15px 25px;
