@@ -18,7 +18,7 @@ body {
     background: linear-gradient(to bottom, #7fb3d5, #122136);
     background-attachment: fixed;
     height: 100vh;
-    display: flex; /* Sidebar Right Layout */
+    display: flex; 
     overflow: hidden;
     color: white;
     opacity: 0; 
@@ -45,6 +45,8 @@ body.fade-in { opacity: 1; }
 
 /* --- COMPLAINT FORM PANEL --- */
 .glass-panel {
+    display: flex;
+    flex-direction: column;
     background: var(--navy-panel);
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -52,6 +54,13 @@ body.fade-in { opacity: 1; }
     margin-bottom: 30px;
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.table-area {
+    height: 550px;        
+    overflow-y: auto;      
+    overflow-x: hidden;   
+    border-radius: 0 0 8px 8px; 
 }
 
 .panel-title-bar {
@@ -113,6 +122,13 @@ textarea {
 .data-table {
     width: 100%;
     border-collapse: collapse;
+}
+
+.data-table thead th {
+    position: sticky;
+    top: 0;
+    background-color: #1a1a1a; 
+    z-index: 10;
 }
 
 .data-table th {
@@ -221,3 +237,4 @@ textarea {
     background: var(--danger);
     color: white;
 }
+
