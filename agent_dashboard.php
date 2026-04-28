@@ -11,13 +11,21 @@ $agent_id = $_SESSION['user_id'];
 
 /* GET ASSIGNMENT */
 $assignment = $conn->query("
-    SELECT area, total_households 
+    SELECT area
     FROM agent_assignments 
     WHERE agent_id='$agent_id'
 ")->fetch_assoc();
 
 $assigned_barangay = $assignment['area'] ?? "Not Assigned";
-$assigned = $assignment['total_households'] ?? 0;
+
+/* TOTAL USERS / HOUSEHOLDS HANDLED BY AGENT */
+$total_users = $conn->query("
+    SELECT COUNT(*) AS total
+    FROM users
+    WHERE role='user'
+    AND status='active'
+    AND barangay='$assigned_barangay'
+")->fetch_assoc()['total'];
 
 /* SAVE READING */
 if(isset($_POST['save'])){
@@ -48,7 +56,6 @@ if(isset($_POST['save'])){
     $stmt->bind_param("iiiiis", $user_id, $agent_id, $prev, $curr, $consumption, $date);
     $stmt->execute();
 
-    /* NOTIFICATION */
     $conn->query("
         INSERT INTO notifications (user_id, role_target, title, message, type, status)
         VALUES ('$agent_id','admin','Meter Reading Completed','Field agent submitted reading','reading','unread')
@@ -58,19 +65,21 @@ if(isset($_POST['save'])){
     exit();
 }
 
-/* COMPLETED */
+/* COMPLETED THIS MONTH */
 $completed = $conn->query("
-    SELECT COUNT(*) as total 
+    SELECT COUNT(DISTINCT mr.user_id) AS total
     FROM meter_readings mr
     JOIN users u ON mr.user_id = u.id
     WHERE mr.agent_id='$agent_id'
     AND u.barangay='$assigned_barangay'
+    AND MONTH(mr.reading_date) = MONTH(CURDATE())
+    AND YEAR(mr.reading_date) = YEAR(CURDATE())
 ")->fetch_assoc()['total'];
 
-/* PENDING */
-$pending = max($assigned - $completed, 0);
+/* PENDING THIS MONTH */
+$pending = max($total_users - $completed, 0);
 
-/* CUSTOMER LIST (FILTERED) */
+/* CUSTOMER LIST */
 $customers = $conn->query("
     SELECT * 
     FROM users 
@@ -106,114 +115,154 @@ $history = $conn->query("
             <h1>FIELD AGENT DASHBOARD</h1>
         </div>
 
-        <!-- STATS -->
         <div class="stats-grid">
             <div class="stat-card">
                 <span class="stat-label">Assigned Barangay</span>
                 <span class="stat-value"><?php echo strtoupper($assigned_barangay); ?></span>
             </div>
+
             <div class="stat-card">
-                <span class="stat-label">Total Households</span>
-                <span class="stat-value"><?php echo $assigned; ?></span>
+                <span class="stat-label">Total Assigned Users</span>
+                <span class="stat-value"><?php echo $total_users; ?></span>
             </div>
+
             <div class="stat-card">
                 <span class="stat-label">Readings Completed</span>
                 <span class="stat-value" style="color: var(--success);"><?php echo $completed; ?></span>
             </div>
+
             <div class="stat-card">
                 <span class="stat-label">Pending Readings</span>
-                <span class="stat-value" style="color: #f1c40f;"><?php echo $pending; ?></span>
+                <span class="stat-value" style="color: #f1c40f;">
+                    <?php echo $pending . "/" . $total_users; ?>
+                </span>
             </div>
         </div>
 
-    <div class="dashboard-grid">
+        <div class="dashboard-grid">
 
-        <!-- CUSTOMER LIST -->
-        <div class="glass-panel">
-            <div class="panel-title-bar">Active Customers - <?php echo $assigned_barangay; ?></div>
-            <div class="table-area">
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>User ID</th>
-                            <th>Full Name</th>
-                            <th>Street</th>
-                            <th>Meter No.</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php if($customers->num_rows > 0): ?>
-                            <?php while($c = $customers->fetch_assoc()): ?>
+            <div class="glass-panel">
+                <div class="panel-title-bar">Active Customers - <?php echo $assigned_barangay; ?></div>
+                <div class="table-area">
+                    <table class="data-table">
+                        <thead>
                             <tr>
-                                <td><span class="type-badge"><?php echo $c['user_code']; ?></span></td>
-                                <td><strong><?php echo strtoupper($c['first_name']." ".$c['last_name']); ?></strong></td>
-                                <td><?php echo strtoupper($c['street']); ?></td>
-                                <td><?php echo $c['meter_number']; ?></td>
+                                <th>User ID</th>
+                                <th>Full Name</th>
+                                <th>Street</th>
+                                <th>Meter No.</th>
                             </tr>
-                            <?php endwhile; ?>
-                        <?php else: ?>
-                            <tr><td colspan="4" style="text-align:center; opacity:0.5; padding:20px;">No active customers found.</td></tr>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            <?php if($customers->num_rows > 0): ?>
+                                <?php while($c = $customers->fetch_assoc()): ?>
+                                <tr>
+                                    <td><span class="type-badge"><?php echo $c['user_code']; ?></span></td>
+                                    <td><strong><?php echo strtoupper($c['first_name']." ".$c['last_name']); ?></strong></td>
+                                    <td><?php echo strtoupper($c['street']); ?></td>
+                                    <td><?php echo $c['meter_number']; ?></td>
+                                </tr>
+                                <?php endwhile; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td colspan="4" style="text-align:center; opacity:0.5; padding:20px;">
+                                        No active customers found.
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
 
-        <!-- RECENT READINGS HISTORY -->
-        <div class="glass-panel">
-            <div class="panel-title-bar">Recent Reading History</div>
-            <div class="table-area">
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Customer</th>
-                            <th>Meter</th>
-                            <th>Prev</th>
-                            <th>Curr</th>
-                            <th>Cons.</th>
-                            <th>Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php while($h = $history->fetch_assoc()): ?>
-                        <tr>
-                            <td><?php echo $h['first_name']." ".$h['last_name']; ?></td>
-                            <td><?php echo $h['meter_number']; ?></td>
-                            <td><?php echo $h['previous_reading']; ?></td>
-                            <td><?php echo $h['current_reading']; ?></td>
-                            <td style="color: var(--accent-blue); font-weight:bold;"><?php echo $h['consumption']; ?> m³</td>
-                            <td style="font-size:0.75rem; opacity:0.7;"><?php echo date('M d, Y', strtotime($h['reading_date'])); ?></td>
-                        </tr>
-                        <?php endwhile; ?>
-                    </tbody>
-                </table>
+            <div class="glass-panel">
+                <div class="panel-title-bar">Recent Reading History</div>
+                <div class="table-area">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Customer</th>
+                                <th>Meter</th>
+                                <th>Prev</th>
+                                <th>Curr</th>
+                                <th>Cons.</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if($history->num_rows > 0): ?>
+                                <?php while($h = $history->fetch_assoc()): ?>
+                                <tr>
+                                    <td><?php echo $h['first_name']." ".$h['last_name']; ?></td>
+                                    <td><?php echo $h['meter_number']; ?></td>
+                                    <td><?php echo $h['previous_reading']; ?></td>
+                                    <td><?php echo $h['current_reading']; ?></td>
+                                    <td style="color: var(--accent-blue); font-weight:bold;"><?php echo $h['consumption']; ?> m³</td>
+                                    <td style="font-size:0.75rem; opacity:0.7;"><?php echo date('M d, Y', strtotime($h['reading_date'])); ?></td>
+                                </tr>
+                                <?php endwhile; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td colspan="6" style="text-align:center; opacity:0.5; padding:20px;">
+                                        No reading history found.
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
+
         </div>
     </div>
 
-    </div>
+    <div class="sidebar-right">
+        <img src="assets/logo_name.png" class="side-logo">
 
-        <!-- SIDEBAR -->
-        <div class="sidebar-right">
-            <img src="assets/logo_name.png" class="side-logo">
-            <div class="agent-info">
-                <h3>AGENT PORTAL</h3>
-                <p>FIELD AGENT</p>
-            </div>
-            
-            <nav class="nav-menu">
-                <a href="agent_dashboard.php" class="nav-item active">DASHBOARD</a>
-                <a href="meter_reading.php" class="nav-item">METER READING</a>
-                <a href="profile.php" class="nav-item">PROFILE</a>
-            </nav>
-
-            <div class="sidebar-footer">
-                <a href="logout.php" class="logout-btn-container">LOG OUT</a>
-            </div>
+        <div class="agent-info">
+            <h3>AGENT PORTAL</h3>
+            <p>FIELD AGENT</p>
         </div>
+        
+        <nav class="nav-menu">
+            <a href="agent_dashboard.php" class="nav-item active">DASHBOARD</a>
+            <a href="meter_reading.php" class="nav-item">METER READING</a>
+            <a href="profile.php" class="nav-item">PROFILE</a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <a href="logout.php" class="logout-btn-container">LOG OUT</a>
+        </div>
+    </div>
 
     <script>
-        window.onload = () => { document.body.style.opacity = "1"; };
-    </script>
+window.onload = () => { 
+    document.body.style.opacity = "1"; 
+};
+
+const sidebar = document.querySelector('.sidebar-right');
+
+if (sidebar) {
+    const toggleBtn = document.createElement('button');
+    toggleBtn.id = 'sidebar-toggle-btn';
+    toggleBtn.innerHTML = '☰';
+
+    toggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        sidebar.classList.toggle('minimized');
+    });
+
+    sidebar.prepend(toggleBtn);
+
+    document.addEventListener('click', function(e) {
+        const clickedInsideSidebar = sidebar.contains(e.target);
+
+        if (!clickedInsideSidebar && !sidebar.classList.contains('minimized')) {
+            sidebar.classList.add('minimized');
+        }
+    });
+}
+</script>
+
 </body>
 </html>

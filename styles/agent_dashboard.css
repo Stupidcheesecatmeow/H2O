@@ -193,3 +193,97 @@ body {
     background: var(--danger);
     color: white;
 }
+
+
+@media (max-width: 768px) {
+    body {
+        display: block;
+        overflow: auto;
+    }
+
+    .main-content {
+        height: auto;
+        min-height: 100vh;
+        padding: 16px;
+    }
+
+    .sidebar-toggle {
+        display: block;
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        z-index: 1001;
+    }
+
+    .header-row {
+        padding-right: 55px;
+        margin-top: 55px;
+    }
+
+    .header-row h1 {
+        font-size: 1.35rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .stat-card {
+        min-height: 95px;
+        padding: 18px;
+    }
+
+    .glass-panel {
+        height: 260px;
+    }
+
+    .sidebar-right {
+        position: fixed;
+        top: 0;
+        right: -280px;
+        width: 260px;
+        height: 100vh;
+        z-index: 1000;
+        box-shadow: -10px 0 30px rgba(0,0,0,0.35);
+    }
+
+    .sidebar-right.mobile-open {
+        right: 0;
+    }
+}
+
+/* Styling para sa toggle button */
+#sidebar-toggle-btn {
+  position: absolute;
+  left: -40px; /* Nakalabas sa kaliwa ng sidebar */
+  top: 20px;
+  width: 40px;
+  height: 40px;
+  background: #3498db;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  border-radius: 5px 0 0 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001;
+}
+
+/* Smooth transition para sa pag-slide */
+.sidebar-right {
+  transition: transform 0.3s ease;
+  right: 0px !important; /* Siguraduhin na nasa tamang pwesto */
+}
+
+/* State kapag nakatago (minimized) */
+.sidebar-right.minimized {
+  transform: translateX(100%);
+}
+
+/* Adjust button position kapag minimized */
+.sidebar-right.minimized #sidebar-toggle-btn {
+  left: -50px; 
+}
