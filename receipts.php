@@ -40,7 +40,7 @@ $receipts = $conn->query("
             <h1>Receipt History</h1>
         </div>
 
-        <div class="glass-panel">
+        <div class="glass-panel scrollable-queue">
             <div class="panel-title-bar">Generated Official Receipts</div>
             <div class="table-area">
                 <table class="data-table">

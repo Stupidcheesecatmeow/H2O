@@ -49,9 +49,54 @@ body.fade-in { opacity: 1; }
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
-    margin-bottom: 25px;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+}
+
+.scrollable-queue {
+    height: 700px; 
+    margin-bottom: 30px;
+}
+
+.scrollable-queue .table-area {
+    flex-grow: 1;
+    overflow-y: auto; 
+    padding-bottom: 20px; 
+}
+
+.data-table thead th {
+    position: sticky;
+    top: 0;
+    background: #243b55; 
+    z-index: 10;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.table-area::-webkit-scrollbar { width: 6px; }
+.table-area::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); }
+.table-area::-webkit-scrollbar-thumb { 
+    background: rgba(255, 255, 255, 0.2); 
+    border-radius: 10px; 
+}
+.table-area::-webkit-scrollbar-thumb:hover { background: var(--accent-blue); }
+
+/* --- DATA TABLE --- */
+.table-area {
+    padding: 0;
+    overflow-x: hidden; 
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto; 
+}
+
+/* Row Hover for better visibility in the large empty space */
+.data-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.03);
+    transition: 0.2s;
 }
 
 .panel-title-bar {
