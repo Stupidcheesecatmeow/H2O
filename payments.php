@@ -165,7 +165,7 @@ $payments = $conn->query("
         </div>
 
         <!-- TABLE -->
-        <div class="glass-panel">
+        <div class="glass-panel scrollable-queue">
             <div class="panel-title-bar">Transaction Queue</div>
             <div class="table-area">
                 <table class="data-table">
