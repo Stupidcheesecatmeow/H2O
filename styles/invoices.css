@@ -59,7 +59,16 @@ h2 {
     backdrop-filter: blur(10px);
     margin-bottom: 30px;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    display: flex; 
+    flex-direction: column;
+}
+
+#pendingPanel {
+    height: 350px;
+}
+
+#historyPanel {
+    height: 200px;
 }
 
 .panel-title-bar {
@@ -70,12 +79,23 @@ h2 {
     text-transform: uppercase;
 }
 
-.table-area { padding: 0; }
+.table-area {
+    flex-grow: 1;
+    overflow-y: auto;
+}
 
 /* --- DATA TABLE --- */
 .data-table {
     width: 100%;
     border-collapse: collapse;
+}
+
+.data-table thead th {
+    position: sticky;
+    top: 0;
+    background: #243b55; /* Matches your glass-panel color */
+    z-index: 10;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .data-table th {
@@ -92,6 +112,9 @@ h2 {
     font-size: 0.8rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
+
+.table-area::-webkit-scrollbar { width: 6px; }
+.table-area::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
 
 /* --- BUTTONS --- */
 .btn-action {

@@ -131,7 +131,7 @@ $invoices = $conn->query("
 
         <!-- PENDING READINGS -->
         <h2>Pending Meter Readings</h2>
-        <div class="glass-panel">
+        <div class="glass-panel" id="pendingPanel">
             <div class="panel-title-bar">Awaiting Invoice Release</div>
             <div class="table-area">
                 <table class="data-table">
@@ -171,7 +171,7 @@ $invoices = $conn->query("
 
         <!-- RELEASED INVOICES -->
         <h2>Released Invoices</h2>
-        <div class="glass-panel">
+        <div class="glass-panel" id="historyPanel">
             <div class="panel-title-bar">Billing History Records</div>
             <div class="table-area">
                 <table class="data-table">
