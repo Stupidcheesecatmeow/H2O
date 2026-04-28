@@ -59,7 +59,6 @@ body {
 
 .dashboard-grid {
     display: grid;
-    /* grid-template-columns: 1fr 1fr; Split into 2 equal halves */
     gap: 20px;
     margin-top: 20px;
 }
@@ -71,7 +70,6 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
     
-    /* FIX THE SIZE HERE */
     height: 200px; 
     display: flex;
     flex-direction: column;
@@ -90,19 +88,16 @@ body {
 
 .table-area {
     flex-grow: 1;
-    overflow-x: auto; /* THIS MAKES IT SCROLLABLE */
-    /* padding: 0 20px 20px 20px; */
+    overflow-x: auto; 
 }
 
-/* Optional: Make the header stay at the top while scrolling */
 .data-table thead th {
     position: sticky;
     top: 0;
-    background: #243b55; /* Match your panel color */
+    background: #243b55; 
     z-index: 10;
 }
 
-/* Custom scrollbar to look cleaner */
 .table-area::-webkit-scrollbar { width: 5px; }
 .table-area::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
 
@@ -123,7 +118,7 @@ body {
     font-family: monospace;
 }
 
-/* --- SIDEBAR RIGHT --- */
+/* --- SIDEBAR --- */
 .sidebar-right {
     width: 280px;
     background-color: rgba(26, 50, 77, 0.9);
