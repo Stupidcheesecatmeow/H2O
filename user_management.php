@@ -70,31 +70,30 @@ $users = $conn->query("SELECT * FROM users");
     <link rel="stylesheet" href="styles/user_management.css">
 </head>
 <body id="mainBody">
-
+]
     <div class="main-content">
         <div class="header-row">
             <h1>USER MANAGEMENT</h1>
         </div>
 
-        <!-- ADD USER FORM PANEL -->
         <div class="glass-panel">
             <div class="panel-title-bar">Register New Account</div>
-            <div class="table-area" style="padding: 25px;">
+            <div class="table-area" style="padding: 20px;">
                 <form method="POST" class="mgmt-form-grid">
                     <div class="input-group">
                         <label>First Name</label>
-                        <input name="first_name" placeholder="Enter first name" required>
+                        <input name="first_name" placeholder="First name" required>
                     </div>
                     <div class="input-group">
                         <label>Last Name</label>
-                        <input name="last_name" placeholder="Enter last name" required>
+                        <input name="last_name" placeholder="Last name" required>
                     </div>
                     <div class="input-group">
                         <label>Email Address</label>
                         <input type="email" name="email" placeholder="email@example.com" required>
                     </div>
                     <div class="input-group">
-                        <label>Contact Number</label>
+                        <label>Contact No.</label>
                         <input name="contact_no" placeholder="09XXXXXXXXX" required>
                     </div>
                     <div class="input-group">
@@ -116,7 +115,7 @@ $users = $conn->query("SELECT * FROM users");
                     </div>
                     <div class="input-group">
                         <label>Meter Number</label>
-                        <input name="meter_number" placeholder="Enter meter ID">
+                        <input name="meter_number" placeholder="Meter ID">
                     </div>
                     <div class="input-group">
                         <label>Account Status</label>
@@ -125,9 +124,9 @@ $users = $conn->query("SELECT * FROM users");
                             <option value="inactive">Inactive</option>
                         </select>
                     </div>
-                    <div class="input-group">
+                    <div class="input-group" style="grid-column: span 1;">
                         <label>Password</label>
-                        <input type="password" name="password" placeholder="Set default password" required>
+                        <input type="password" name="password" placeholder="Default password" required>
                     </div>
 
                     <button name="add_user" class="btn-add">REGISTER ACCOUNT</button>
@@ -136,7 +135,7 @@ $users = $conn->query("SELECT * FROM users");
         </div>
 
         <!-- USER LIST PANEL -->
-        <div class="glass-panel">
+        <div class="glass-panel scrollable-queue">
             <div class="panel-title-bar">All Registered Users</div>
             <div class="table-area">
                 <table class="data-table">
@@ -151,36 +150,39 @@ $users = $conn->query("SELECT * FROM users");
                         </tr>
                     </thead>
                     <tbody>
-                        <?php while($u=$users->fetch_assoc()): ?>
-                        <tr>
-                            <td><span class="id-badge"><?php echo $u['user_code']; ?></span></td>
-                            <td><strong><?php echo strtoupper($u['first_name']." ".$u['last_name']); ?></strong></td>
-                            <td><?php echo $u['email']; ?></td>
-                            <td><span class="role-tag"><?php echo strtoupper($u['role']); ?></span></td>
-                            <td>
-                                <span class="status-pill <?php echo ($u['status']=='active') ? 'paid' : 'unpaid'; ?>">
-                                    <?php echo strtoupper($u['status']); ?>
-                                </span>
-                            </td>
-                            <td style="text-align:center">
-                                <a href="?delete=<?php echo $u['id']; ?>" onclick="return confirm('Permanently delete this user?')">
-                                    <button class="btn-delete">DELETE</button>
-                                </a>
-                            </td>
-                        </tr>
-                        <?php endwhile; ?>
+                        <?php if($users->num_rows > 0): ?>
+                            <?php while($u=$users->fetch_assoc()): ?>
+                            <tr>
+                                <td><span class="id-badge"><?php echo $u['user_code']; ?></span></td>
+                                <td><strong><?php echo strtoupper($u['first_name']." ".$u['last_name']); ?></strong></td>
+                                <td><?php echo $u['email']; ?></td>
+                                <td><span class="role-tag"><?php echo strtoupper($u['role']); ?></span></td>
+                                <td>
+                                    <span class="status-pill <?php echo ($u['status']=='active') ? 'paid' : 'unpaid'; ?>">
+                                        <?php echo strtoupper($u['status']); ?>
+                                    </span>
+                                </td>
+                                <td style="text-align:center">
+                                    <a href="?delete=<?php echo $u['id']; ?>" onclick="return confirm('Permanently delete this user?')">
+                                        <button class="btn-delete">DELETE</button>
+                                    </a>
+                                </td>
+                            </tr>
+                            <?php endwhile; ?>
+                        <?php else: ?>
+                            <tr><td colspan="6" style="text-align:center; padding:50px; opacity:0.5;">No users registered yet.</td></tr>
+                        <?php endif; ?>
                     </tbody>
                 </table>
             </div>
         </div>
-    </div>
+    </div> 
 
-    <!-- SIDEBAR RIGHT -->
     <div class="sidebar-right">
         <img src="assets/logo_name.png" class="side-logo">
-        <div class="agent-info" style="color: white; text-align: center; margin-bottom: 30px;">
+        <div class="agent-info">
             <h3>ADMIN</h3>
-            <p style="font-size: 0.7rem; opacity: 0.6;">ADMIN DEPT</p>
+            <p>ADMIN DEPT</p>
         </div>
         <nav class="nav-menu">
             <a href="admin_dashboard.php" class="nav-item">DASHBOARD</a>
@@ -204,3 +206,4 @@ $users = $conn->query("SELECT * FROM users");
     </script>
 </body>
 </html>
+
