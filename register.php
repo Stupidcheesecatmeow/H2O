@@ -32,19 +32,19 @@ if(isset($_POST['register'])){
     $user_code = "USR-" . date("Ymd") . "-" . rand(1000,9999);
 
     $stmt = $conn->prepare("INSERT INTO users 
-    (user_code, first_name, last_name, email, contact_no, password, role, meter_number, barangay, street, status)
-    VALUES (?, ?, ?, ?, ?, ?, 'user', ?, ?, ?, 'active')");
+        (first_name, last_name, email, contact_no, password, role, meter_number, barangay, street, status, user_code)
+        VALUES (?, ?, ?, ?, ?, 'user', ?, ?, ?, 'active', ?)");
 
     $stmt->bind_param("sssssssss", 
-        $user_code,
-        $fname, 
-        $lname, 
-        $email, 
-        $contact, 
-        $password, 
-        $meter, 
-        $barangay, 
-        $street
+        $fname,        
+        $lname,        
+        $email,        
+        $contact,      
+        $password,     
+        $meter,       
+        $barangay,   
+        $street,       
+        $user_code     
     );
 
     if($stmt->execute()){
@@ -85,11 +85,11 @@ if(isset($_POST['register'])){
         </div>
         <div class="form-group">
             <label>Contact Number</label>
-            <input type="text" name="contact" required>
+            <input type="text" name="contact_no" required>
         </div>
         <div class="form-group">
             <label>Meter Number</label>
-            <input type="text" name="meter_no" required>
+            <input type="text" name="meter_number" required>
         </div>
 
         <div class="form-group">
@@ -118,13 +118,13 @@ if(isset($_POST['register'])){
         </div>
         <div class="form-group full-width">
             <label>Confirm Password</label>
-            <input type="password" name="confirm_password" placeholder="Enter your password again" required>
+            <input type="password" name="verify_password" placeholder="Enter your password again" required>
         </div>
 
         <div class="login-links_regis">
             <p>Already have an account? <a href="index.php">Sign In</a></p>
         </div>
-        <button type="submit" id="registerBtn">Register</button>
+        <button type="submit" name="register" id="registerBtn">Register</button>
     </form>
     </div>
 </div>
