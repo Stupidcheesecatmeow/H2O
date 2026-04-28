@@ -1,4 +1,4 @@
-.profile-card{
+/*.profile-card{
     background:#fff;
     padding:25px;
     border-radius:16px;
@@ -126,7 +126,8 @@
 
 .card button:hover{
     background:#1e88c7;
-}
+} 
+*/
 
 @media(max-width:768px){
 
@@ -151,4 +152,423 @@
         width:110px;
         height:110px;
     }
+}
+
+
+/* PROFILE */
+/* --- PROFILE IMAGE LAYOUT MATCH --- */
+
+.profile-container-box {
+    background: var(--navy-panel);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    margin-bottom: 25px;
+    backdrop-filter: blur(10px);
+}
+
+.profile-header-section {
+    padding: 35px;
+    background: rgba(0, 0, 0, 0.1);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+}
+
+.profile-flex {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.avatar-large {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: white;
+    padding: 4px;
+    object-fit: cover;
+    border: 3px solid var(--accent-blue);
+}
+
+.user-name-title { margin: 0; font-size: 2rem; font-weight: 800; }
+.user-role-label { margin: 5px 0 15px 0; font-weight: bold; opacity: 0.6; letter-spacing: 2px; }
+
+.profile-actions-row { display: flex; gap: 10px; }
+.profile-actions-row button {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 8px 15px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    cursor: pointer;
+}
+
+.dash-title {
+    text-transform: uppercase;
+}
+/* THE INFO BAR */
+.account-info-bar {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 12px;
+    text-align: center;
+    font-weight: 800;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+.account-details-content { padding: 35px; }
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+/* --- FORM PANELS FIX --- */
+.glass-panel {
+    background: var(--navy-panel);
+    border-radius: 12px;
+    margin-bottom: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    height: auto !important; /* FIXED: No longer cut off */
+    overflow: hidden;
+}
+
+.panel-title-bar {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px 25px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.hidden-form {
+    display: none;
+}
+
+
+/* SIDEBAR RIGHT */
+.sidebar-right {
+    width: 280px;
+    background-color: rgba(26, 50, 77, 0.9);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 30px;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nav-item.active { background-color: rgba(52, 152, 219, 0.3); border-left: 4px solid var(--accent-blue); }
+
+.logout-btn-container {
+    display: block; width: 85%; margin: auto auto 30px auto;
+    background: rgba(231, 76, 60, 0.2);
+    color: white; text-align: center; padding: 12px;
+    border-radius: 5px; font-weight: bold; text-decoration: none;
+}
+
+.profile-container-box {
+    background: var(--navy-panel);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    margin-bottom: 25px;
+    backdrop-filter: blur(10px);
+}
+
+.profile-header-section {
+    padding: 35px;
+    background: rgba(255, 255, 255, 0.02);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+}
+
+.profile-flex {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.avatar-large {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: white;
+    padding: 4px;
+    object-fit: cover;
+    border: 3px solid var(--accent-blue);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.user-name-title {
+    margin: 0;
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: white;
+    letter-spacing: 1px;
+}
+
+.user-role-label {
+    margin: 5px 0 15px 0;
+    font-weight: bold;
+    opacity: 0.6;
+    letter-spacing: 2px;
+}
+
+.profile-actions-row {
+    display: flex;
+    gap: 10px;
+}
+
+.profile-actions-row button {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.profile-actions-row button:hover {
+    background: var(--accent-blue);
+}
+
+/* THE INFO BAR (Matches the gray divider in your image) */
+.account-info-bar {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 10px;
+    text-align: center;
+    font-weight: 800;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.account-details-content {
+    padding: 35px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.info-grid strong {
+    color: var(--accent-blue);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.info-grid p {
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.hidden-form {
+    display: none;
+    margin-top: 15px;
+    animation: fadeIn 0.4s ease;
+}
+
+/* Ensure the form has plenty of room now that Info is hidden */
+#avatarForm.glass-panel {
+    margin-top: 0; /* Remove gap since info is gone */
+    border-top: none; 
+    border-radius: 0 0 12px 12px; /* Blend it into the main container bottom */
+}
+
+/* Style the file input to be large and clear */
+input[type="file"] {
+    display: block;
+    width: 100%;
+    max-width: 400px; /* Limits width so it doesn't look stretched */
+    padding: 15px;
+    background: #ffffff;
+    color: #333;
+    border-radius: 8px;
+    margin: 20px 0;
+    cursor: pointer;
+}
+
+/* Adjust the padding in the form area */
+#avatarForm .table-area {
+    padding: 50px 40px; /* Significant breathing room */
+}
+
+/* --- EDIT PROFILE FULL WIDTH FIX --- */
+
+#editForm .table-area {
+    padding: 40px; /* More breathing room */
+}
+
+.edit-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    gap: 25px;
+    width: 100%;
+}
+
+/* Make Email and Contact take up the full width (both columns) */
+.full-width {
+    grid-column: span 2;
+}
+
+/* Style the inputs to be consistent and large */
+.edit-grid input {
+    width: 100%;
+    padding: 14px;
+    border-radius: 8px;
+    border: none;
+    background: #ffffff;
+    color: #122136;
+    font-size: 1rem;
+    margin-top: 8px;
+}
+
+.edit-grid label {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #bdc3c7;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* The Save Button at the bottom */
+.save-btn {
+    grid-column: span 2;
+    background: var(--accent-blue);
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    border: none;
+    font-weight: 800;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: 0.3s;
+}
+
+.save-btn:hover {
+    background: #2980b9;
+    transform: translateY(-2px);
+}
+
+/* --- INLINE FORM LAYOUT (IMAGE MATCH) --- */
+
+.inline-form-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-row {
+    display: flex;
+    gap: 40px; /* Space between the two columns */
+}
+
+.input-group {
+    display: flex;
+    align-items: center; /* Aligns label and input vertically center */
+    flex: 1; /* Makes both groups equal width */
+    gap: 15px; /* Space between label and its input */
+}
+
+.input-group label {
+    font-size: 0.8rem;
+    font-weight: 900;
+    color: white;
+    white-space: nowrap; /* Prevents label from wrapping to next line */
+    min-width: 100px; /* Ensures all labels have the same width for alignment */
+}
+
+.input-group input {
+    flex: 1; /* Input takes up the remaining space */
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: none;
+    background: rgba(255, 255, 255, 0.9);
+    color: #122136;
+    font-weight: bold;
+}
+
+/* Save Button Styling */
+.save-btn {
+    background: var(--accent-blue);
+    color: white;
+    padding: 14px;
+    border-radius: 8px;
+    border: none;
+    font-weight: 800;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.save-btn:hover {
+    background: #2980b9;
+}
+
+/* --- INLINE SECURITY LAYOUT --- */
+
+.inline-form-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 25px; /* Space between rows */
+}
+
+.form-row {
+    display: flex;
+    gap: 40px; /* Space between columns */
+    width: 100%;
+}
+
+.input-group {
+    display: flex;
+    align-items: center; 
+    flex: 1;
+    gap: 15px;
+}
+
+.input-group label {
+    font-size: 0.75rem;
+    font-weight: 900;
+    color: white;
+    white-space: nowrap;
+    min-width: 140px; /* Adjusted slightly wider for password labels */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.input-group input {
+    flex: 1;
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: none;
+    background: #ffffff;
+    color: #122136;
+    font-size: 0.9rem;
+}
+
+/* Ensure the Save Button sits nicely at the bottom */
+.save-btn {
+    background: var(--accent-blue);
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 800;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+.save-btn:hover {
+    background: #2980b9;
+    transform: translateY(-2px);
 }

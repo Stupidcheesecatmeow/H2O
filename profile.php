@@ -153,13 +153,14 @@ $avatar = !empty($user['avatar']) ? $user['avatar'] : "default.png";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>H.O.H Profile Settings</title>
+    <link rel="stylesheet" href="styles/profile.css">
     <link rel="stylesheet" href="styles/user_design.css">
 </head>
 <body id="mainBody">
 
     <div class="main-content">
         <div class="header-row">
-            <h1><?php echo ($role == 'agent') ? 'AGENT DASHBOARD' : 'USER DASHBOARD'; ?></h1>
+            <h1 class="dash-title"><?php echo ucfirst($role); ?> DASHBOARD</h1>
         </div>
 
         <!-- SHARED PROFILE CONTAINER (Matches your image) -->
@@ -181,6 +182,7 @@ $avatar = !empty($user['avatar']) ? $user['avatar'] : "default.png";
                     </div>
                 </div>
             </div>
+            
 
             <!-- THE HEADER BAR (From your image) -->
             <div class="account-info-bar">ACCOUNT INFORMATION</div>
@@ -208,7 +210,8 @@ $avatar = !empty($user['avatar']) ? $user['avatar'] : "default.png";
             <div class="table-area" style="padding: 30px;">
                 <form method="POST" enctype="multipart/form-data">
                     <p style="font-size: 0.75rem; color: #bdc3c7; margin-bottom: 10px; font-weight: bold; text-transform: uppercase;">Choose Image File</p>
-                    <input type="file" name="avatar" accept="image/*" required 
+                    
+                    <input type="file" name="avatar" id="avatarInput" accept="image/*" required 
                            style="margin-bottom:20px; background: #f8f9fa; color: #333; padding: 12px; border-radius: 8px; width: 100%; border: 1px solid #ccc;">
                     <button type="submit" name="upload_avatar" class="print-btn" style="width:100%; padding: 15px; font-weight: 800;">UPLOAD PHOTO</button>
                 </form>
@@ -221,6 +224,7 @@ $avatar = !empty($user['avatar']) ? $user['avatar'] : "default.png";
     <div class="table-area" style="padding: 40px;">
         <form method="POST" class="inline-form-grid">
             
+            <?php if($role == "user"): ?>
             <!-- Row 1: First Name & Last Name -->
             <div class="form-row">
                 <div class="input-group">
@@ -255,6 +259,32 @@ $avatar = !empty($user['avatar']) ? $user['avatar'] : "default.png";
                     <input type="text" name="contact_no" value="<?php echo $user['contact_no']; ?>" required>
                 </div>
             </div>
+
+            <?php else: ?>
+
+                <div class="form-row">
+                <div class="input-group">
+                    <label>FIRST NAME:</label>
+                    <input type="text" name="first_name" value="<?php echo $user['first_name']; ?>" required>
+                </div>
+                <div class="input-group">
+                    <label>LAST NAME:</label>
+                    <input type="text" name="last_name" value="<?php echo $user['last_name']; ?>" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="input-group">
+                    <label>EMAIL:</label>
+                    <input type="email" name="email" value="<?php echo $user['email']; ?>" required>
+                </div>
+                <div class="input-group">
+                    <label>CONTACT:</label>
+                    <input type="text" name="contact_no" value="<?php echo $user['contact_no']; ?>" required>
+                </div>
+            </div>
+
+            <?php endif; ?>
 
             <button type="submit" name="update_profile" class="save-btn">SAVE CHANGES</button>
             
@@ -306,15 +336,33 @@ $avatar = !empty($user['avatar']) ? $user['avatar'] : "default.png";
             <p><?php echo strtoupper($role); ?></p>
         </div>
         <nav class="nav-menu">
-            <?php if($role == "user"): ?>
+            <?php if($role == "admin"): ?>
+                <a href="admin_dashboard.php" class="nav-item">DASHBOARD</a>
+                <a href="announcements.php" class="nav-item">ANNOUNCEMENTS</a>
+                <a href="agent_management.php" class="nav-item">USER MANAGEMENT</a>
+                <a href="invoices.php" class="nav-item">INVOICES</a>
+                <a href="transactions.php" class="nav-item">TRANSACTIONS</a>
+                <a href="complaints_admin.php" class="nav-item">COMPLAINTS</a>
+                <a href="reports.php" class="nav-item">REPORTS</a>
+
+            <?php elseif($role == "accountant"): ?>
+                <a href="accountant_dashboard.php" class="nav-item">DASHBOARD</a>
+                <a href="payments.php" class="nav-item">PAYMENTS</a>
+                <a href="receipts.php" class="nav-item">RECEIPTS</a>
+                <a href="reports_accountant.php" class="nav-item">REPORTS</a>
+                <a href="balance.php" class="nav-item">BALANCE TRACKER</a>
+
+            <?php elseif($role == "agent"): ?>
+                <a href="agent_dashboard.php" class="nav-item">DASHBOARD</a>
+                <a href="meter_reading.php" class="nav-item">METER READINGS</a>
+                
+            <?php elseif($role == "user"): ?>
                 <a href="user_dashboard.php" class="nav-item">DASHBOARD</a>
                 <a href="user_notifications.php" class="nav-item">NOTIFICATIONS</a>
                 <a href="user_billing.php" class="nav-item">BILLING</a>
                 <a href="user_payments.php" class="nav-item">PAYMENT</a>
                 <a href="user_history.php" class="nav-item">HISTORY</a>
-            <?php elseif($role == "agent"): ?>
-                <a href="agent_dashboard.php" class="nav-item">DASHBOARD</a>
-                <a href="meter_reading.php" class="nav-item">READINGS</a>
+           
             <?php endif; ?>
             <a href="profile.php" class="nav-item active">PROFILE</a>
         </nav>
@@ -339,6 +387,17 @@ $avatar = !empty($user['avatar']) ? $user['avatar'] : "default.png";
             // Smooth scroll to the form
             target.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
+
+        document.getElementById('avatarInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('previewAvatar').src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
 
         function toggleForm(id) {
     // 1. Hide all toggleable forms
