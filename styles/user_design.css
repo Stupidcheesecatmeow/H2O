@@ -83,6 +83,35 @@ body {
     border: 1px solid rgba(255,255,255,0.1);
 }
 
+/* Webkit Browsers (Chrome, Edge, Safari) */
+.table-area::-webkit-scrollbar,
+.main-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.table-area::-webkit-scrollbar-track,
+.main-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.table-area::-webkit-scrollbar-thumb,
+.main-content::-webkit-scrollbar-thumb {
+    background: rgba(52, 152, 219, 0.4);
+    border-radius: 10px;
+}
+
+.table-area::-webkit-scrollbar-thumb:hover,
+.main-content::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-blue, #3498db);
+}
+
+/* Firefox Support (Standard syntax) */
+.table-area,
+.main-content {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(52, 152, 219, 0.4) transparent;
+}
+
 .panel-title-bar {
     background: rgba(255,255,255,0.1);
     padding: 15px 25px;
@@ -92,13 +121,12 @@ body {
     letter-spacing: 1px;
 }
 
-/* .table-area { padding: 0 25px 15px 25px; } */
-
 /* TABLE */
 .data-table {
     width: 100%;
     border-collapse: collapse;
 }
+
 
 .data-table th {
     background: rgba(255,255,255,0.05);
