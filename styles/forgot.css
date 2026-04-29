@@ -133,10 +133,6 @@ button#forgotBtn:hover {
     text-decoration: underline;
 }
 
-@media (max-width: 600px) {
-    .left { flex: 0 0 95%; padding: 30px 20px; }
-}
-
 .peek-water{
     position: absolute;
     width: 120px;
