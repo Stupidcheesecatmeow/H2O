@@ -19,7 +19,7 @@
 }
 
 .profile-flex {
-    display: flex;
+    display: flex;  
     align-items: center;
     gap: 30px;
 }
@@ -127,10 +127,14 @@
 
 .nav-menu { width: 100%; }
 
-.nav-item {
+.nav-items {
     display: block;
-    width: 100%;
-    padding: 10px;
+    display: block;
+  width: 279.2px;
+  height: 37.6px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  box-sizing: border-box;
     text-decoration: none;
     color: white;
     text-align: center;
@@ -140,8 +144,10 @@
     transition: 0.3s;
 }
 
-.nav-item:hover,
-.nav-item.active { background-color: rgba(52, 152, 219, 0.3); border-left: 4px solid var(--accent-blue); }
+.nav-items:hover,
+.nav-items.actives { 
+    background-color: rgba(52, 152, 219, 0.3);
+     border-left: 4px solid var(--accent-blue); }
 
 .logout-btn-container {
     display: block; width: 85%; margin: auto auto 30px auto;

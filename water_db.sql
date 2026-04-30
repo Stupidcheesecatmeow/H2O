@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 27, 2026 at 08:03 AM
+-- Generation Time: Apr 30, 2026 at 09:48 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -40,7 +40,7 @@ CREATE TABLE `agent_assignments` (
 --
 
 INSERT INTO `agent_assignments` (`id`, `agent_id`, `area`, `total_households`, `created_at`) VALUES
-(1, 3, 'Diwa', NULL, '2026-04-25 13:01:43'),
+(1, 3, 'Diwa', 0, '2026-04-25 13:01:43'),
 (2, 8, 'Alauli', NULL, '2026-04-26 03:22:14');
 
 -- --------------------------------------------------------
@@ -66,7 +66,12 @@ CREATE TABLE `announcements` (
 
 INSERT INTO `announcements` (`id`, `title`, `message`, `barangay`, `target_type`, `posted_by`, `announcement_date`, `created_at`) VALUES
 (1, 'hello', 'wassup', 'Ala-Uli', 'barangay', 1, '2026-04-25', '2026-04-25 15:46:40'),
-(2, 'Water Interruption', 'Good Day! There will be a scheduled water interruption on April 27, 2016 from 6:00 am to 1:oo pm. We advise everyone to secure enough water to last until the interruption ends.', '', 'everyone', 1, '2026-04-26', '2026-04-26 09:49:11');
+(2, 'Water Interruption', 'Good Day! There will be a scheduled water interruption on April 27, 2016 from 6:00 am to 1:oo pm. We advise everyone to secure enough water to last until the interruption ends.', '', 'everyone', 1, '2026-04-26', '2026-04-26 09:49:11'),
+(3, 'Water Reading Schedule', 'Good day! We would like to inform you that the scheduled water reading will be held today wiii', '', 'everyone', 1, '2026-04-28', '2026-04-28 01:07:39'),
+(4, 'Librang tubig', 'wassup doi libre tubig for this month', '', 'everyone', 1, '2026-04-28', '2026-04-28 13:09:05'),
+(5, 'huwat', 'goodness graciousss ikaww ung nagshopliftt!!!!', '', 'everyone', 1, '2026-04-30', '2026-04-30 05:44:39'),
+(6, 'wat es that', 'dfghjklpoiuytrsaxcvbnm,', '', 'everyone', 1, '2026-04-30', '2026-04-30 05:45:05'),
+(7, 'Water Interruption', 'Good day everyone! There will be scheduled water interruption on May 1, 2026 from 8:00am to 10:00am. In reson of there will water tubes that needed replacement. Thank you!', 'Alauli', 'barangay', 1, '2026-05-01', '2026-04-30 07:03:16');
 
 -- --------------------------------------------------------
 
@@ -93,7 +98,8 @@ INSERT INTO `complaints` (`id`, `user_id`, `subject`, `message`, `reply`, `statu
 (1, 6, 'Others', 'kulay matcha yung tubig doi', 'awit sah may flavor, aucn k bukas sah', 'in_progress', '2026-04-25 15:49:38', '2026-04-25 23:53:16'),
 (2, 7, 'Meter Problem', 'kuya natanggal', 'awit doi, gew pakabit ko', 'resolved', '2026-04-26 11:09:23', '2026-04-26 20:47:34'),
 (3, 7, 'Payment Concern', 'pede b hulugan', 'awit doi ano kmi homecredit? bawal', 'resolved', '2026-04-26 12:56:01', '2026-04-27 03:02:00'),
-(4, 7, 'Others', 'wadup', 'wassup sah', 'in_progress', '2026-04-26 19:00:29', '2026-04-27 03:02:17');
+(4, 7, 'Others', 'wadup', 'wassup sah', 'in_progress', '2026-04-26 19:00:29', '2026-04-27 03:02:17'),
+(5, 6, 'Water Interruption', 'doi ala kaming tubig', 'wala akong apke', 'resolved', '2026-04-28 13:03:24', '2026-04-28 21:12:52');
 
 -- --------------------------------------------------------
 
@@ -123,7 +129,11 @@ INSERT INTO `invoices` (`id`, `user_id`, `reading_id`, `invoice_no`, `consumptio
 (1, 6, 1, 'INV-20260425-3121', 123, 10.00, 1230.00, '2026-05-10', 'paid', 1, '2026-04-25 15:47:36'),
 (2, 7, 4, 'INV-20260426-1596', 123, 0.00, 2600.04, '2026-05-11', 'paid', 1, '2026-04-26 09:53:25'),
 (3, 6, 5, 'INV-20260426-2754', 2, 0.00, 165.00, '2026-05-11', 'paid', 1, '2026-04-26 19:49:39'),
-(4, 7, 6, 'INV-20260427-9509', 3, 0.00, 165.00, '2026-05-12', 'paid', 1, '2026-04-26 22:43:38');
+(4, 7, 6, 'INV-20260427-9509', 3, 0.00, 165.00, '2026-05-12', 'paid', 1, '2026-04-26 22:43:38'),
+(5, 7, 7, 'INV-20260427-7994', 0, 0.00, 165.00, '2026-05-12', 'paid', 1, '2026-04-27 13:48:34'),
+(6, 6, 8, 'INV-20260427-6704', 3, 0.00, 165.00, '2026-05-12', 'unpaid', 1, '2026-04-27 16:13:37'),
+(7, 7, 9, 'INV-20260428-9080', 4, 0.00, 165.00, '2026-05-13', 'paid', 1, '2026-04-28 13:10:40'),
+(8, 7, 10, 'INV-20260430-8471', 10, 0.00, 165.00, '2026-05-15', 'unpaid', 1, '2026-04-30 07:04:51');
 
 -- --------------------------------------------------------
 
@@ -153,7 +163,11 @@ INSERT INTO `meter_readings` (`id`, `user_id`, `agent_id`, `previous_reading`, `
 (3, 0, 3, 125, 456, 331, '2026-04-26', 'completed', '2026-04-26 02:51:09'),
 (4, 7, 3, 0, 123, 123, '2026-04-26', 'completed', '2026-04-26 03:53:20'),
 (5, 6, 8, 123, 125, 2, '2026-04-26', 'completed', '2026-04-26 19:48:11'),
-(6, 7, 3, 123, 126, 3, '2026-04-27', 'completed', '2026-04-26 22:42:24');
+(6, 7, 3, 123, 126, 3, '2026-04-27', 'completed', '2026-04-26 22:42:24'),
+(7, 7, 3, 126, 126, 0, '2026-04-27', 'completed', '2026-04-27 13:45:51'),
+(8, 6, 8, 125, 128, 3, '2026-04-27', 'completed', '2026-04-27 16:08:45'),
+(9, 7, 3, 126, 130, 4, '2026-04-28', 'completed', '2026-04-28 13:05:53'),
+(10, 7, 3, 130, 140, 10, '2026-04-30', 'completed', '2026-04-30 06:57:00');
 
 -- --------------------------------------------------------
 
@@ -212,14 +226,14 @@ INSERT INTO `notifications` (`id`, `user_id`, `role_target`, `title`, `message`,
 (32, 3, 'admin', 'Meter Reading Completed', 'Field agent completed assigned reading.', 'unread', '2026-04-26 03:23:17', 'reading', NULL),
 (33, 3, 'admin', 'Meter Reading Completed', 'Field agent completed assigned reading.', 'unread', '2026-04-26 03:23:21', 'reading', NULL),
 (34, 3, 'admin', 'Meter Reading Completed', 'Field agent submitted meter reading.', 'unread', '2026-04-26 03:53:20', 'reading', NULL),
-(35, 7, 'admin', 'New Complaint', 'A new complaint has been submitted.', 'unread', '2026-04-26 05:05:16', 'complaint', NULL),
+(35, 7, 'admin', 'New Complaint', 'A new complaint has been submitted.', 'read', '2026-04-26 05:05:16', 'complaint', NULL),
 (36, 6, 'admin', 'New Complaint', 'A new complaint has been submitted.', 'read', '2026-04-26 05:08:21', 'complaint', NULL),
 (37, 6, 'admin', 'New Complaint', 'A new complaint has been submitted.', 'read', '2026-04-26 05:52:53', 'complaint', NULL),
 (38, 6, 'admin', 'New Complaint', 'A new complaint has been submitted.', 'unread', '2026-04-26 09:44:13', 'complaint', NULL),
 (39, 7, 'admin', 'New Complaint', 'A new complaint has been submitted.', 'unread', '2026-04-26 09:49:46', 'complaint', NULL),
 (40, 7, 'admin', 'New Complaint Submitted', 'Complaint Type: Water Interruption | Description: akala ko ba 27 pa bat ngayon palang wala na kaming tubig doi', 'read', '2026-04-26 09:51:46', 'complaint', NULL),
 (41, 7, 'user', 'New Bill Released', 'A new billing invoice has been released. Please check your billing page.', 'read', '2026-04-26 09:53:25', 'bill', NULL),
-(42, 7, 'admin', 'New Complaint', 'A new complaint has been submitted.', 'unread', '2026-04-26 09:55:05', 'complaint', NULL),
+(42, 7, 'admin', 'New Complaint', 'A new complaint has been submitted.', 'read', '2026-04-26 09:55:05', 'complaint', NULL),
 (43, 7, 'admin', 'New Complaint', 'A new complaint has been submitted.', 'unread', '2026-04-26 09:56:36', 'complaint', NULL),
 (44, 7, 'admin', 'New Complaint', 'A new complaint has been submitted.', 'unread', '2026-04-26 09:59:10', 'complaint', NULL),
 (45, 7, 'admin', 'New Complaint', 'A new complaint has been submitted.', 'unread', '2026-04-26 10:48:24', 'complaint', NULL),
@@ -233,10 +247,10 @@ INSERT INTO `notifications` (`id`, `user_id`, `role_target`, `title`, `message`,
 (53, 7, 'admin', 'New Complaint', 'A new complaint has been submitted.', 'unread', '2026-04-26 11:09:00', 'complaint', NULL),
 (54, 7, 'admin', 'New Complaint Submitted', 'Complaint Type: Meter Problem | Description: kuya natanggal', 'unread', '2026-04-26 11:09:23', 'complaint', 'complaints_admin.php'),
 (55, 7, 'user', 'Complaint Successfully Sent', 'Your complaint about \'Meter Problem\' was submitted successfully. You can review its status anytime.', 'read', '2026-04-26 11:09:23', 'complaint', 'user_complaints.php'),
-(56, 7, 'admin', 'New Complaint', 'A new complaint has been submitted.', 'unread', '2026-04-26 12:48:15', 'complaint', NULL),
-(57, 7, 'admin', 'New Complaint Submitted', 'Complaint Type: Payment Concern | Description: pede b hulugan', 'unread', '2026-04-26 12:56:01', 'complaint', 'complaints_admin.php'),
+(56, 7, 'admin', 'New Complaint', 'A new complaint has been submitted.', 'read', '2026-04-26 12:48:15', 'complaint', NULL),
+(57, 7, 'admin', 'New Complaint Submitted', 'Complaint Type: Payment Concern | Description: pede b hulugan', 'read', '2026-04-26 12:56:01', 'complaint', 'complaints_admin.php'),
 (58, 7, 'user', 'Complaint Successfully Sent', 'Your complaint about \'Payment Concern\' was submitted successfully. You can review its status anytime.', 'read', '2026-04-26 12:56:01', 'complaint', 'user_complaints.php'),
-(59, 7, 'admin', 'New Complaint Submitted', 'Complaint Type: Others | Description: wadup', 'unread', '2026-04-26 19:00:29', 'complaint', 'complaints_admin.php'),
+(59, 7, 'admin', 'New Complaint Submitted', 'Complaint Type: Others | Description: wadup', 'read', '2026-04-26 19:00:29', 'complaint', 'complaints_admin.php'),
 (60, 7, 'user', 'Complaint Successfully Sent', 'Your complaint about \'Others\' was submitted successfully. You can review its status anytime.', 'read', '2026-04-26 19:00:29', 'complaint', 'user_complaints.php'),
 (61, 7, 'user', 'Complaint Update', 'Your complaint \'Payment Concern\' has been reviewed. Status: resolved. Click to view reply.', 'read', '2026-04-26 19:02:00', 'complaint', 'user_complaints.php'),
 (62, 7, 'user', 'Complaint Update', 'Your complaint \'Others\' has been reviewed. Status: in_progress. Click to view reply.', 'read', '2026-04-26 19:02:17', 'complaint', 'user_complaints.php'),
@@ -254,7 +268,26 @@ INSERT INTO `notifications` (`id`, `user_id`, `role_target`, `title`, `message`,
 (74, 3, 'admin', 'Meter Reading Completed', 'Field agent submitted meter reading.', 'unread', '2026-04-26 22:42:24', 'reading', NULL),
 (75, 7, 'user', 'New Bill Released', 'A new water bill has been released. Please check your billing page.', 'read', '2026-04-26 22:43:38', 'bill', 'user_billing.php'),
 (76, 7, 'user', 'Payment Rejected', 'Your payment was rejected. Please review and submit again.', 'read', '2026-04-26 22:59:38', 'payment', 'user_payments.php'),
-(77, 7, 'user', 'Payment Verified', 'Your payment has been verified. Receipt is now available.', 'read', '2026-04-26 23:55:48', 'payment', 'user_history.php');
+(77, 7, 'user', 'Payment Verified', 'Your payment has been verified. Receipt is now available.', 'read', '2026-04-26 23:55:48', 'payment', 'user_history.php'),
+(78, 7, 'admin', 'User Profile Updated', 'Kier Baciles updated profile information.', 'read', '2026-04-27 12:38:58', 'profile', NULL),
+(79, 7, 'admin', 'User Profile Updated', 'Kier Baciles updated profile information.', 'unread', '2026-04-27 13:35:11', 'profile', NULL),
+(80, 7, 'admin', 'User Profile Updated', 'Kier Baciles updated profile information.', 'unread', '2026-04-27 13:35:31', 'profile', NULL),
+(81, 7, 'admin', 'User Profile Updated', 'Kier Baciles updated profile information.', 'unread', '2026-04-27 13:35:45', 'profile', NULL),
+(82, 3, 'admin', 'Meter Reading Completed', 'Field agent submitted meter reading.', 'unread', '2026-04-27 13:45:51', 'reading', NULL),
+(83, 7, 'user', 'New Bill Released', 'A new water bill has been released. Please check your billing page.', 'read', '2026-04-27 13:48:34', 'bill', 'user_billing.php'),
+(84, 8, 'admin', 'Meter Reading Completed', 'Field agent submitted meter reading.', 'read', '2026-04-27 16:08:45', 'reading', NULL),
+(85, 6, 'user', 'New Bill Released', 'A new water bill has been released. Please check your billing page.', 'unread', '2026-04-27 16:13:37', 'bill', 'user_billing.php'),
+(86, 7, 'user', 'Payment Verified', 'Your payment has been verified. Receipt is now available.', 'read', '2026-04-28 05:20:02', 'payment', 'user_history.php'),
+(87, 6, 'admin', 'New Complaint Submitted', 'Complaint Type: Water Interruption | Description: doi ala kaming tubig', 'read', '2026-04-28 13:03:24', 'complaint', 'complaints_admin.php'),
+(88, 6, 'user', 'Complaint Successfully Sent', 'Your complaint about \'Water Interruption\' was submitted successfully. You can review its status anytime.', 'unread', '2026-04-28 13:03:24', 'complaint', 'user_complaints.php'),
+(89, 3, 'admin', 'Meter Reading Completed', 'Field agent submitted meter reading.', 'unread', '2026-04-28 13:05:53', 'reading', NULL),
+(90, 7, 'user', 'New Bill Released', 'A new water bill has been released. Please check your billing page.', 'unread', '2026-04-28 13:10:40', 'bill', 'user_billing.php'),
+(91, 6, 'user', 'Complaint Update', 'Your complaint \'Water Interruption\' has been reviewed. Status: resolved. Click to view reply.', 'unread', '2026-04-28 13:12:52', 'complaint', 'user_complaints.php'),
+(92, 3, 'admin', 'Meter Reading Completed', 'Field agent submitted meter reading.', 'unread', '2026-04-30 06:57:00', 'reading', NULL),
+(93, 7, 'user', 'New Bill Released', 'A new water bill has been released. Please check your billing page.', 'unread', '2026-04-30 07:04:51', 'bill', 'user_billing.php'),
+(94, 6, 'user', 'Payment Verified', 'Your payment has been verified. Receipt is now available.', 'read', '2026-04-30 07:21:50', 'payment', NULL),
+(95, 6, 'user', 'Payment Rejected', 'Your payment was rejected. Please review and submit again.', 'unread', '2026-04-30 07:21:50', 'payment', 'user_payments.php'),
+(96, 7, 'user', 'Payment Verified', 'Your payment has been verified. Receipt is now available.', 'unread', '2026-04-30 07:22:08', 'payment', 'user_history.php');
 
 -- --------------------------------------------------------
 
@@ -289,7 +322,10 @@ INSERT INTO `payments` (`id`, `invoice_id`, `user_id`, `transaction_no`, `amount
 (4, 3, 6, 'TRX-20260426-9788', 165.00, 'GCash', 'TRX-20260426-9788', 'rejected', 2, '2026-04-26 20:09:30', NULL, NULL, NULL),
 (5, 3, 6, 'TRX-20260427-9089', 165.00, 'GCash', 'TRX-20260427-9089', 'verified', 2, '2026-04-26 22:16:06', 'proof_6_1777241766.png', 'QR-7daa7fb64e33225c', '2026-04-27 00:31:06'),
 (6, 4, 7, 'TRX-20260427-6797', 165.00, 'Maya', 'TRX-20260427-6797', 'rejected', 2, '2026-04-26 22:45:31', 'proof_7_1777243531.jpg', 'QR-dd37ae477ea51b5e', '2026-04-27 01:00:31'),
-(7, 4, 7, 'TRX-20260427-6978', 165.00, 'Bank Transfer', 'TRX-20260427-6978', 'verified', 2, '2026-04-26 23:55:03', 'proof_7_1777247703.jpg', 'QR-bb6049ec06fab771', '2026-04-27 02:10:03');
+(7, 4, 7, 'TRX-20260427-6978', 165.00, 'Bank Transfer', 'TRX-20260427-6978', 'verified', 2, '2026-04-26 23:55:03', 'proof_7_1777247703.jpg', 'QR-bb6049ec06fab771', '2026-04-27 02:10:03'),
+(8, 5, 7, 'TRX-20260428-2587', 165.00, 'Bank Transfer', 'TRX-20260428-2587', 'verified', 2, '2026-04-28 05:18:47', 'proof_7_1777353527.jpg', 'QR-33f7456524add47c', '2026-04-28 07:33:47'),
+(9, 7, 7, 'TRX-20260429-3693', 165.00, 'Maya', 'TRX-20260429-3693', 'verified', 2, '2026-04-29 04:09:13', 'proof_7_1777435753.jpg', 'QR-edd2a74df9633952', '2026-04-29 06:24:13'),
+(10, 6, 6, 'TRX-20260430-9017', 165.00, 'GCash', 'TRX-20260430-9017', 'rejected', 2, '2026-04-30 07:16:50', 'proof_6_1777533410.png', 'QR-5dedae85a31a2439', '2026-04-30 09:31:50');
 
 -- --------------------------------------------------------
 
@@ -312,7 +348,9 @@ INSERT INTO `receipts` (`id`, `payment_id`, `receipt_no`, `issued_at`) VALUES
 (1, 1, 'REC-20260425-2218', '2026-04-25 15:50:27'),
 (2, 2, 'REC-20260426-8522', '2026-04-26 10:00:21'),
 (3, 5, 'REC-20260427-9250', '2026-04-26 22:37:50'),
-(4, 7, 'REC-20260427-9533', '2026-04-26 23:55:48');
+(4, 7, 'REC-20260427-9533', '2026-04-26 23:55:48'),
+(5, 8, 'REC-20260428-9854', '2026-04-28 05:20:02'),
+(6, 9, 'REC-20260430-8022', '2026-04-30 07:22:08');
 
 -- --------------------------------------------------------
 
@@ -343,11 +381,13 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `contact_no`, `password`, `role`, `meter_number`, `barangay`, `street`, `status`, `created_at`, `user_code`, `avatar`) VALUES
 (1, 'Admin', 'User', 'admin@gmail.com', '09111111111', '123', 'admin', NULL, NULL, NULL, 'active', '2026-04-25 13:01:43', NULL, 'default.png'),
-(2, 'Accountant', 'User', 'accountant@gmail.com', '09222222222', '123', 'accountant', NULL, NULL, NULL, 'active', '2026-04-25 13:01:43', NULL, 'avatar_2_1777256233.jpg'),
+(2, 'Hello', 'Ganda', 'accountant@gmail.com', '09222222222', '123', 'accountant', NULL, NULL, NULL, 'active', '2026-04-25 13:01:43', NULL, 'avatar_2_1777396864.jpg'),
 (3, 'Field', 'Agent', 'agent@gmail.com', '09333333333', '123', 'agent', NULL, 'Barangay 1', 'Area A', 'active', '2026-04-25 13:01:43', NULL, 'default.png'),
 (6, 'Jewel', 'Baciles', 'jkmcbaciles24@bpsu.edu.ph', '03483022253', '159asd', 'user', '24-02397', 'Alauli', 'ewan', 'active', '2026-04-25 14:59:51', NULL, 'default.png'),
 (7, 'Kier', 'Baciles', 'bacilesjewel10@gmail.com', '09279554267', '456123', 'user', '24-03385', 'Diwa', 'wiwoo', 'active', '2026-04-25 23:30:48', 'USR-20260426-7233', 'default.png'),
-(8, 'budoy', 'buday', 'agent2@gmail.com', '1235789510', '147', 'agent', '', '', '', 'active', '2026-04-26 03:21:52', NULL, 'default.png');
+(8, 'budoy', 'buday', 'agent2@gmail.com', '1235789510', '147', 'agent', '', '', '', 'active', '2026-04-26 03:21:52', NULL, 'default.png'),
+(9, 'nueve', 'Baciles-Acar', 'nueve@gmail.com', '09112233344', '789asd', 'user', '07-15005', 'Pantingan', 'howaw', 'active', '2026-04-28 04:48:29', 'USR-20260428-4118', 'default.png'),
+(10, 'Robert ', 'Dajero', 'robert@gmail.com', '0912358469', '789123', 'user', '24-8520', 'Alauli', 'huwat', 'active', '2026-04-30 06:53:02', 'USR-20260430-5818', 'default.png');
 
 --
 -- Indexes for dumped tables
@@ -422,49 +462,49 @@ ALTER TABLE `agent_assignments`
 -- AUTO_INCREMENT for table `announcements`
 --
 ALTER TABLE `announcements`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `complaints`
 --
 ALTER TABLE `complaints`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `invoices`
 --
 ALTER TABLE `invoices`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `meter_readings`
 --
 ALTER TABLE `meter_readings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
 
 --
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `receipts`
 --
 ALTER TABLE `receipts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

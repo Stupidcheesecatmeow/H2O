@@ -337,36 +337,36 @@ $avatar = !empty($user['avatar']) ? $user['avatar'] : "default.png";
         </div>
         <nav class="nav-menu">
             <?php if($role == "admin"): ?>
-                <a href="admin_dashboard.php" class="nav-item">DASHBOARD</a>
-                <a href="admin_notifications.php" class="nav-item">NOTIFICATIONS</a>
-                <a href="announcements.php" class="nav-item">ANNOUNCEMENTS</a>
-                <a href="user_management.php" class="nav-item">USER MANAGEMENT</a>
-                <a href="agent_management.php" class="nav-item">FIELD AGENTS</a>
-                <a href="invoices.php" class="nav-item">INVOICES</a>
-                <a href="transactions.php" class="nav-item">TRANSACTIONS</a>
-                <a href="complaints_admin.php" class="nav-item">COMPLAINTS</a>
-                <a href="reports.php" class="nav-item">REPORTS</a>
+                <a href="admin_dashboard.php" class="nav-items">DASHBOARD</a>
+                <a href="admin_notifications.php" class="nav-items">NOTIFICATIONS</a>
+                <a href="announcements.php" class="nav-items">ANNOUNCEMENTS</a>
+                <a href="user_management.php" class="nav-items">USER MANAGEMENT</a>
+                <a href="agent_management.php" class="nav-items">FIELD AGENTS</a>
+                <a href="invoices.php" class="nav-items">INVOICES</a>
+                <a href="transactions.php" class="nav-items">TRANSACTIONS</a>
+                <a href="complaints_admin.php" class="nav-items">COMPLAINTS</a>
+                <a href="reports.php" class="nav-items">REPORTS</a>
 
             <?php elseif($role == "accountant"): ?>
-                <a href="accountant_dashboard.php" class="nav-item">DASHBOARD</a>
-                <a href="payments.php" class="nav-item">PAYMENTS</a>
-                <a href="receipts.php" class="nav-item">RECEIPTS</a>
-                <a href="reports_accountant.php" class="nav-item">REPORTS</a>
-                <a href="balance.php" class="nav-item">BALANCE TRACKER</a>
+                <a href="accountant_dashboard.php" class="nav-items">DASHBOARD</a>
+                <a href="payments.php" class="nav-items">PAYMENTS</a>
+                <a href="receipts.php" class="nav-items">RECEIPTS</a>
+                <a href="reports_accountant.php" class="nav-items">REPORTS</a>
+                <a href="balance.php" class="nav-items">BALANCE TRACKER</a>
 
             <?php elseif($role == "agent"): ?>
-                <a href="agent_dashboard.php" class="nav-item">DASHBOARD</a>
-                <a href="meter_reading.php" class="nav-item">METER READINGS</a>
-                
+                <a href="agent_dashboard.php" class="nav-items">DASHBOARD</a>
+                <a href="meter_reading.php" class="nav-items">METER READINGS</a>
+
             <?php elseif($role == "user"): ?>
-                <a href="user_dashboard.php" class="nav-item">DASHBOARD</a>
-                <a href="user_notifications.php" class="nav-item">NOTIFICATIONS</a>
-                <a href="user_billing.php" class="nav-item">BILLING</a>
-                <a href="user_payments.php" class="nav-item">PAYMENT</a>
+                <a href="user_dashboard.php" class="nav-items">DASHBOARD</a>
+                <a href="user_notifications.php" class="nav-items">NOTIFICATIONS</a>
+                <a href="user_billing.php" class="nav-items">BILLING</a>
+                <a href="user_payments.php" class="nav-items">PAYMENT</a>
                 <a href="user_history.php" class="nav-item">HISTORY</a>
            
             <?php endif; ?>
-            <a href="profile.php" class="nav-item active">PROFILE</a>
+            <a href="profile.php" class="nav-items actives">PROFILE</a>
         </nav>
         <div class="sidebar-footer">
             <a href="logout.php" class="logout-btn-container">LOG OUT</a>
