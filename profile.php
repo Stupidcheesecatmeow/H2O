@@ -338,8 +338,10 @@ $avatar = !empty($user['avatar']) ? $user['avatar'] : "default.png";
         <nav class="nav-menu">
             <?php if($role == "admin"): ?>
                 <a href="admin_dashboard.php" class="nav-item">DASHBOARD</a>
+                <a href="admin_notifications.php" class="nav-item">NOTIFICATIONS</a>
                 <a href="announcements.php" class="nav-item">ANNOUNCEMENTS</a>
-                <a href="agent_management.php" class="nav-item">USER MANAGEMENT</a>
+                <a href="user_management.php" class="nav-item">USER MANAGEMENT</a>
+                <a href="agent_management.php" class="nav-item">FIELD AGENTS</a>
                 <a href="invoices.php" class="nav-item">INVOICES</a>
                 <a href="transactions.php" class="nav-item">TRANSACTIONS</a>
                 <a href="complaints_admin.php" class="nav-item">COMPLAINTS</a>
