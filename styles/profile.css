@@ -104,6 +104,43 @@
     border-left: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+.side-logo { width: 100px; margin-bottom: 10px; }
+
+.agent-info {
+    color: white;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.agent-info h3 {
+    margin: 5px 0;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+.agent-info p {
+    margin: 0;
+    font-size: 0.7rem;
+    opacity: 0.6;
+    text-transform: uppercase;
+}
+
+.nav-menu { width: 100%; }
+
+.nav-item {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    text-decoration: none;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.8rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    transition: 0.3s;
+}
+
+.nav-item:hover,
 .nav-item.active { background-color: rgba(52, 152, 219, 0.3); border-left: 4px solid var(--accent-blue); }
 
 .logout-btn-container {
